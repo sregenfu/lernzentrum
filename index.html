@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Englisch von A3 nach B1</title>
-    <meta name="description" content="Praxisnaher Englisch-Trainer für den Weg von A3 nach B1 mit Grammatik, Vokabeln und Fehleranalyse.">
+    <title>Lernzentrum</title>
+    <meta name="description" content="Lernzentrum mit Bereichen für Englisch, Zeiten, KI Lernzentrum, D3.js sowie Verwaltung und SAP-Fachtool.">
     <script src="js/theme.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -18,53 +18,82 @@
             <p class="section-text">Wähle deinen Bereich. Du kannst jederzeit wechseln.</p>
             <p id="modeSelectionHint" class="mode-selection-hint" aria-live="polite"></p>
             <button id="continueLastMode" class="primary-button mode-continue-button" type="button">Weiter mit letzter Auswahl</button>
-            <div class="mode-selection-grid">
-                <button id="chooseEnglishMode" class="mode-card" type="button" aria-label="Englisch Trainer starten">
-                    <span class="panel-label">Sprachtraining</span>
-                    <h2>Englisch</h2>
-                    <p>Interaktiver Trainer mit Einstufungstest, Vokabellabor und Lernplan.</p>
-                </button>
-                <button id="chooseD3Mode" class="mode-card" type="button" aria-label="D3.js Lernbereich öffnen">
-                    <span class="panel-label">Visualisierung</span>
-                    <h2>D3.js</h2>
-                    <p>Direkt in dein D3-Projekt mit Übungen und klarem Lernpfad wechseln.</p>
-                </button>
-                <button id="chooseAbnehmMode" class="mode-card" type="button" aria-label="Abnehmtagebuch öffnen">
-                    <span class="panel-label">Gesundheit</span>
-                    <h2>Abnehmtagebuch</h2>
-                    <p>Gewicht und Körpermaße tracken, Fortschritt visualisieren und Punkte sammeln.</p>
-                </button>
-                <a class="mode-card" href="projektstatus.html" aria-label="Projektstatus öffnen">
-                    <span class="panel-label">Management</span>
-                    <h2>Projektstatus</h2>
-                    <p>Projektstatus übersichtlich erfassen und verwalten.</p>
-                </a>
-                <a class="mode-card" href="terminplaner.html" aria-label="Terminplaner öffnen">
-                    <span class="panel-label">Planung</span>
-                    <h2>Terminplaner</h2>
-                    <p>Termine planen und chronologisch sortieren.</p>
-                </a>
-                <a class="mode-card" href="schulungen.html" aria-label="Schulungen öffnen">
-                    <span class="panel-label">Bildung</span>
-                    <h2>Schulungen</h2>
-                    <p>Schulungen erfassen und PDF-Zertifikate verwalten.</p>
-                </a>
-                <a class="mode-card" href="zeiten.html" aria-label="Englisch Zeiten öffnen">
-                    <span class="panel-label">Grammatik</span>
-                    <h2>Zeiten</h2>
-                    <p>Englische Zeiten trainieren und vertiefen.</p>
-                </a>
-                <a class="mode-card" href="systemvergleich.html" aria-label="Systemvergleich öffnen">
-                    <span class="panel-label">Vergleich</span>
-                    <h2>Systemvergleich</h2>
-                    <p>Systeme und Einstellungen schnell vergleichen.</p>
-                </a>
-                <a class="mode-card" href="ki-lernzentrum.html" aria-label="KI Lernzentrum öffnen">
-                    <span class="panel-label">KI Praxis</span>
-                    <h2>KI Lernzentrum</h2>
-                    <p>Prompting, Chatbots, MCP-Agenten und Grundlagen zu ML, DL und Python lernen.</p>
-                </a>
-            </div>
+            <section class="mode-group" aria-labelledby="learningGroupHeading">
+                <div class="mode-group-header">
+                    <div>
+                        <p class="mode-group-kicker">Lernbereich</p>
+                        <h2 id="learningGroupHeading">Trainieren und verstehen</h2>
+                    </div>
+                    <p class="mode-group-text">Hier findest du nur die eigentlichen Lernmodule.</p>
+                </div>
+                <div class="mode-selection-grid mode-group-grid">
+                    <button id="chooseEnglishMode" class="mode-card" type="button" aria-label="Englisch Trainer starten">
+                        <span class="panel-label">Sprachtraining</span>
+                        <h2>Englisch</h2>
+                        <p>Interaktiver Trainer mit Einstufungstest, Vokabellabor und Lernplan.</p>
+                    </button>
+                    <a id="chooseD3Mode" class="mode-card" href="../d3js-project/index.html" aria-label="D3.js Lernbereich öffnen">
+                        <span class="panel-label">Visualisierung</span>
+                        <h2>D3.js</h2>
+                        <p>Direkt in dein D3-Projekt mit Übungen und klarem Lernpfad wechseln.</p>
+                    </a>
+                    <a class="mode-card" href="zeiten.html" aria-label="Englisch Zeiten öffnen">
+                        <span class="panel-label">Grammatik</span>
+                        <h2>Zeiten</h2>
+                        <p>Englische Zeiten trainieren und vertiefen.</p>
+                    </a>
+                    <a class="mode-card" href="ki-lernzentrum.html" aria-label="KI Lernzentrum öffnen">
+                        <span class="panel-label">KI Praxis</span>
+                        <h2>KI Lernzentrum</h2>
+                        <p>Prompting, Chatbots, MCP-Agenten und Grundlagen zu ML, DL und Python lernen.</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="mode-group" aria-labelledby="kiGroupHeading">
+                <div class="mode-group-header">
+                    <div>
+                        <p class="mode-group-kicker">KI</p>
+                        <h2 id="kiGroupHeading">Direkt in ein KI-Thema einsteigen</h2>
+                    </div>
+                    <p class="mode-group-text">Themenspezifischer Direkteinstieg ohne Umweg über das KI Lernzentrum.</p>
+                </div>
+                <div class="mode-selection-grid mode-group-grid mode-group-grid-single">
+                    <a class="mode-card" href="ki-thema-chatbot.html" aria-label="Chatbot-Bereich direkt öffnen">
+                        <span class="panel-label">Direkteinstieg</span>
+                        <h2>Chatbot</h2>
+                        <p>Springe direkt in den Bereich Chatbot-Aufbau mit Planung, Datenbasis und Dialogdesign.</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="mode-group" aria-labelledby="organizationGroupHeading">
+                <div class="mode-group-header">
+                    <div>
+                        <p class="mode-group-kicker">Verwaltung</p>
+                        <h2 id="organizationGroupHeading">Planen und verwalten</h2>
+                    </div>
+                    <p class="mode-group-text">Hier organisierst du Aufgaben, Termine und externe Kurse.</p>
+                </div>
+                <div class="mode-selection-grid mode-group-grid">
+                    <a class="mode-card" href="projektstatus.html" aria-label="Projektstatus öffnen">
+                        <span class="panel-label">Verwaltung</span>
+                        <h2>Projektstatus</h2>
+                        <p>Projekte, Status und Notizen strukturiert pflegen.</p>
+                    </a>
+                    <a class="mode-card" href="terminplaner.html" aria-label="Terminplaner öffnen">
+                        <span class="panel-label">Verwaltung</span>
+                        <h2>Terminplaner</h2>
+                        <p>Termine anlegen, sortieren und schnell wiederfinden.</p>
+                    </a>
+                    <a class="mode-card" href="schulungen.html" aria-label="Schulungsverwaltung öffnen">
+                        <span class="panel-label">Verwaltung</span>
+                        <h2>Schulungen</h2>
+                        <p>Kurse aus anderen Lernportalen mit Status und Fristen verwalten.</p>
+                    </a>
+                </div>
+            </section>
+
             <section class="mode-help-card mode-training-card" aria-labelledby="trainingOverviewHeading">
                 <div class="mode-help-header">
                     <span class="panel-label">Schulungen</span>
@@ -87,26 +116,14 @@
                         </tbody>
                     </table>
                 </div>
-                <a class="secondary-button tool-link" href="schulungen.html">Schulungen erfassen</a>
+                <a class="secondary-button tool-link" href="schulungen.html">Zur Schulungsverwaltung</a>
             </section>
 
-            <section class="mode-tools-preview" aria-label="Projektstatus, Termine und Uhrzeit">
+            <section class="mode-tools-preview" aria-label="Organisation und Uhrzeit">
                 <article class="panel-card sidebar-tool-card mode-tool-card">
                     <span class="panel-label">Uhrzeit</span>
                     <p id="modeLiveClockTime" class="clock-time">--:--:--</p>
                     <p id="modeLiveClockDate" class="clock-date">--.--.----</p>
-                </article>
-
-                <article class="panel-card sidebar-tool-card mode-tool-card">
-                    <span class="panel-label">Projektstatus</span>
-                    <ul id="modeProjectStatusPreviewList" class="compact-list"></ul>
-                    <a class="secondary-button tool-link" href="projektstatus.html">Projektstatus bearbeiten</a>
-                </article>
-
-                <article class="panel-card sidebar-tool-card mode-tool-card">
-                    <span class="panel-label">Terminplaner</span>
-                    <ul id="modePlannerPreviewList" class="compact-list"></ul>
-                    <a class="secondary-button tool-link" href="terminplaner.html">Termine bearbeiten</a>
                 </article>
             </section>
 
@@ -139,25 +156,21 @@
     <div class="page-shell">
         <nav class="global-switcher" aria-label="Bereiche">
             <a class="switch-link active" href="index.html#english">Englisch</a>
-            <a class="switch-link" href="d3js-project/index.html">D3.js</a>
-            <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
-            <a class="switch-link" href="projektstatus.html">Projektstatus</a>
-            <a class="switch-link" href="terminplaner.html">Terminplaner</a>
-            <a class="switch-link" href="schulungen.html">Schulungen</a>
-            <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
-            <a class="switch-link" href="index.html">Lernzentrum</a>
+            <a class="switch-link" href="zeiten.html">Zeiten</a>
+            <a class="switch-link" href="ki-lernzentrum.html">KI Lernzentrum</a>
+            <a class="switch-link" href="../d3js-project/index.html">D3.js</a>
         </nav>
 
         <section class="context-box" aria-labelledby="englishContextHeading">
-            <span class="context-label">Wo bin ich gerade?</span>
+            <span class="context-label">Lernbereich</span>
             <p id="englishContextHeading">Du bist im Englisch-Trainer. Hier kombinierst du Einstufung, Übungen, Vokabeltraining und persönliche Wiederholung in einem Lernbereich.</p>
         </section>
 
         <section class="hero-with-sidebar" aria-label="Einstieg und Status">
             <header class="hero">
                 <div class="hero-copy">
-                    <p class="eyebrow">Berufsenglisch mit Struktur</p>
-                    <h1 id="pageTitle">Englisch von A3 nach B1</h1>
+                    <p class="eyebrow">Lernbereich</p>
+                    <h1 id="pageTitle">Lernzentrum</h1>
                     <p id="pageIntro" class="hero-text">
                         Ein klarer Lernpfad für Grammatik, Wortschatz und typische Fehler, damit dein Englisch im Arbeitsalltag sicherer wird.
                     </p>
@@ -165,6 +178,7 @@
                         <button id="jumpToTrainer" class="primary-button" type="button">Training starten</button>
                         <button id="jumpToPlan" class="secondary-button" type="button">Zum 30-Tage-Plan</button>
                         <button id="jumpToJournal" class="secondary-button" type="button">Fehlerjournal ansehen</button>
+                            <a class="secondary-button" href="ki-thema-chatbot.html">Zum Chatbot</a>
                         <button id="openModeSelection" class="secondary-button" type="button">Zur Startauswahl</button>
                     </div>
                 </div>
@@ -208,23 +222,11 @@
                 </div>
             </header>
 
-            <aside class="start-right-tools" aria-label="Projektstatus, Termine und Uhrzeit">
+            <aside class="start-right-tools" aria-label="Uhrzeit">
                 <article class="panel-card sidebar-tool-card">
                     <span class="panel-label">Uhrzeit</span>
                     <p id="liveClockTime" class="clock-time">--:--:--</p>
                     <p id="liveClockDate" class="clock-date">--.--.----</p>
-                </article>
-
-                <article class="panel-card sidebar-tool-card">
-                    <span class="panel-label">Projektstatus</span>
-                    <ul id="projectStatusPreviewList" class="compact-list"></ul>
-                    <a class="secondary-button tool-link" href="projektstatus.html">Projektstatus bearbeiten</a>
-                </article>
-
-                <article class="panel-card sidebar-tool-card">
-                    <span class="panel-label">Terminplaner</span>
-                    <ul id="plannerPreviewList" class="compact-list"></ul>
-                    <a class="secondary-button tool-link" href="terminplaner.html">Termine bearbeiten</a>
                 </article>
             </aside>
         </section>
@@ -305,11 +307,6 @@
                         <h3>Zeiten – Kochrezept</h3>
                         <p>Alle Zeitformen als Kochrezept: Formel, Signalwörter und Beispiele – plus interaktiver Test mit 10 Fragen je Zeit.</p>
                         <a class="secondary-button tool-link" href="zeiten.html" style="margin-top:12px;display:inline-flex">Zeiten-Übersicht öffnen</a>
-                    </article>
-                    <article class="info-card">
-                        <h3>SAP Systemvergleich</h3>
-                        <p>Vergleiche CSV-Dateien aus Systemlandschaften für Produkte, Preise, Usage Charge Pläne, Vertriebswege und externe Objekte.</p>
-                        <a class="secondary-button tool-link" href="systemvergleich.html" style="margin-top:12px;display:inline-flex">Systemvergleich öffnen</a>
                     </article>
                 </div>
             </section>

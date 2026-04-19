@@ -143,6 +143,47 @@ body.mode-selection-open .mode-selection-screen {
     gap: 16px;
 }
 
+.mode-group {
+    margin-top: 24px;
+}
+
+.mode-group-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.mode-group-header h2 {
+    margin: 6px 0 0;
+    font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+}
+
+.mode-group-kicker {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.mode-group-text {
+    margin: 0;
+    max-width: 38rem;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.mode-group-grid {
+    margin-top: 0;
+}
+
+.mode-group-grid-single {
+    grid-template-columns: minmax(0, 1fr);
+}
+
 .mode-selection-hint {
     margin: 8px 0 0;
     color: var(--primary-dark);
@@ -327,33 +368,34 @@ button {
 .global-switcher {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 18px;
+    gap: 8px;
+    margin-bottom: 32px;
 }
 
 .switch-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: 0.72rem 1rem;
+    padding: 0.55rem 1rem;
     border-radius: 999px;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
     text-decoration: none;
-    background: rgba(255, 255, 255, 0.72);
-    color: var(--text);
-    border: 1px solid rgba(37, 99, 235, 0.18);
-    transition: transform 160ms ease, border-color 160ms ease, background-color 160ms ease;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 
 .switch-link:hover {
-    transform: translateY(-1px);
-    border-color: rgba(37, 99, 235, 0.4);
+    color: var(--primary);
+    border-color: var(--primary);
 }
 
 .switch-link.active {
-    background: rgba(37, 99, 235, 0.12);
-    border-color: rgba(37, 99, 235, 0.4);
-    color: var(--primary-dark);
-    font-weight: 700;
+    color: #fff;
+    background: var(--primary);
+    border-color: var(--primary);
 }
 
 .switch-link-shortcut {
@@ -1671,6 +1713,11 @@ button {
 }
 
 @media (max-width: 980px) {
+    .mode-group-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .mode-selection-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
