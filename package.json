@@ -1,0 +1,17 @@
+{
+  "name": "lernzentrum",
+  "version": "1.0.0",
+  "description": "KI-Lernzentrum mit verschiedenen Lernmodulen und Schulungen",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "deploy": "gh-pages -d ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sregenfu/lernzentrum.git"
+  },
+  "author": "sregenfu",
+  "license": "MIT",
+  "homepage": "https://sregenfu.github.io/lernzentrum/"
+}
