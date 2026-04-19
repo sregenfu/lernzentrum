@@ -50,6 +50,7 @@ const chooseD3Mode = document.getElementById('chooseD3Mode');
 const chooseAbnehmMode = document.getElementById('chooseAbnehmMode');
 const modeSelectionHint = document.getElementById('modeSelectionHint');
 const continueLastModeButton = document.getElementById('continueLastMode');
+const openD3SwitcherLink = document.getElementById('openD3SwitcherLink');
 
 const pageTitle = document.getElementById('pageTitle');
 const pageIntro = document.getElementById('pageIntro');
@@ -256,6 +257,12 @@ function initializeModeSelection() {
 
     chooseEnglishMode.addEventListener('click', showEnglishTrainer);
     chooseD3Mode.addEventListener('click', openD3JsArea);
+    if (openD3SwitcherLink) {
+        openD3SwitcherLink.addEventListener('click', async (event) => {
+            event.preventDefault();
+            await openD3JsArea();
+        });
+    }
     if (chooseAbnehmMode) {
         chooseAbnehmMode.addEventListener('click', openAbnehmApp);
     }
