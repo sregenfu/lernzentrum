@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminplaner</title>
+    <meta name="description" content="Termine erfassen und pflegen.">
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <nav class="global-switcher" aria-label="Bereiche">
+            <a class="switch-link" href="index.html#english">Englisch</a>
+            <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+            <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
+            <a class="switch-link" href="projektstatus.html">Projektstatus</a>
+            <a class="switch-link active" href="terminplaner.html">Terminplaner</a>
+            <a class="switch-link" href="schulungen.html">Schulungen</a>
+            <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
+            <a class="switch-link" href="index.html">Lernzentrum</a>
+        </nav>
+
+        <section class="context-box" aria-labelledby="plannerContextHeading">
+            <span class="context-label">Wo bin ich gerade?</span>
+            <p id="plannerContextHeading">Hier pflegst du deine Termine. Die nächsten Termine werden auf der Startseite rechts angezeigt.</p>
+        </section>
+
+        <header class="hero tool-page-header">
+            <div class="hero-copy">
+                <p class="eyebrow">Planung</p>
+                <h1>Terminplaner</h1>
+                <p class="hero-text">Lege Termine mit Datum, Uhrzeit und Notiz an. Alles bleibt lokal im Browser gespeichert.</p>
+                <div class="hero-actions">
+                    <a class="primary-button tool-link" href="index.html">Zur Startauswahl</a>
+                    <a class="secondary-button tool-link" href="projektstatus.html">Zum Projektstatus</a>
+                </div>
+            </div>
+            <div class="hero-panel">
+                <div class="panel-card accent-card">
+                    <span class="panel-label">Tipp</span>
+                    <strong>Chronologisch planen</strong>
+                    <div class="shortcut-features">
+                        <a class="shortcut-item" href="#plannerFormHeading" aria-label="Zum Datum-Formular springen">
+                            <span class="shortcut-icon">📅</span>
+                            <span class="shortcut-label">Datum</span>
+                        </a>
+                        <a class="shortcut-item" href="#plannerWeekHeading" aria-label="Zur Wochenübersicht springen">
+                            <span class="shortcut-icon">⏰</span>
+                            <span class="shortcut-label">Zeit</span>
+                        </a>
+                        <a class="shortcut-item" href="#plannerListHeading" aria-label="Zur Terminliste springen">
+                            <span class="shortcut-icon">🔄</span>
+                            <span class="shortcut-label">Auto-Sort</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section-block" aria-labelledby="plannerFormHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Eingabe</p>
+                    <h2 id="plannerFormHeading">Neuen Termin anlegen</h2>
+                </div>
+                <form id="plannerForm" class="tool-form-grid">
+                    <div>
+                        <label class="input-label" for="plannerTitle">Titel</label>
+                        <input id="plannerTitle" class="text-field" type="text" maxlength="90" required>
+                    </div>
+                    <div>
+                        <label class="input-label" for="plannerDate">Datum</label>
+                        <input id="plannerDate" class="text-field" type="date" required>
+                    </div>
+                    <div>
+                        <label class="input-label" for="plannerTime">Uhrzeit</label>
+                        <input id="plannerTime" class="text-field" type="time">
+                    </div>
+                    <div>
+                        <label class="input-label" for="plannerCategory">Kategorie</label>
+                        <select id="plannerCategory" class="text-field">
+                            <option value="Meeting">Meeting</option>
+                            <option value="Abgabe">Abgabe</option>
+                            <option value="Review">Review</option>
+                            <option value="Sonstiges">Sonstiges</option>
+                        </select>
+                    </div>
+                    <div class="full-width">
+                        <label class="input-label" for="plannerNote">Notiz</label>
+                        <textarea id="plannerNote" class="text-answer-input compact" rows="3" maxlength="180" placeholder="Optional: kurze Zusatzinfo"></textarea>
+                    </div>
+                    <div class="full-width hero-actions">
+                        <button id="savePlannerButton" class="primary-button" type="submit">Speichern</button>
+                        <button id="clearPlannerForm" class="secondary-button" type="button">Eingabe leeren</button>
+                    </div>
+                </form>
+                <p id="plannerFeedback" class="inline-note" aria-live="polite"></p>
+            </section>
+
+            <section class="section-block" aria-labelledby="plannerListHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Übersicht</p>
+                    <h2 id="plannerListHeading">Geplante Termine</h2>
+                </div>
+                <ul id="plannerEntries" class="tool-list"></ul>
+            </section>
+
+            <section class="section-block" aria-labelledby="plannerWeekHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Wochenansicht</p>
+                    <h2 id="plannerWeekHeading">Diese Woche auf einen Blick</h2>
+                </div>
+                <p class="planner-week-help">Tipp: Termine in der Wochenansicht per Drag-and-Drop sortieren oder mit Strg/Cmd + Pfeil hoch bzw. runter priorisieren.</p>
+                <div id="plannerWeekGrid" class="planner-week-grid"></div>
+            </section>
+        </main>
+
+        <a class="floating-start-button" href="index.html">Zur Startauswahl</a>
+    </div>
+
+    <script src="js/planner-status.js"></script>
+</body>
+</html>
+

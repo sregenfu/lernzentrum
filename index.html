@@ -3,721 +3,525 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KI Lernzentrum - Themenhub</title>
-    <meta name="description" content="Themenhub für MCP, Machine Learning, Deep Learning, Modelle/Tools, Chatbot-Aufbau und themenspezifische Quizzes.">
+    <title>Englisch von A3 nach B1</title>
+    <meta name="description" content="Praxisnaher Englisch-Trainer für den Weg von A3 nach B1 mit Grammatik, Vokabeln und Fehleranalyse.">
     <script src="js/theme.js"></script>
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .ki-shell {
-            width: 100%;
-            max-width: none;
-            margin: 0;
-            padding: 0 0 64px;
-        }
-
-        .ki-hero,
-        .ki-card,
-        .ki-board {
-            background: var(--surface, #ffffff);
-            border: 1px solid var(--line, #d7dce3);
-            border-radius: 20px;
-            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
-        }
-
-        .ki-hero {
-            position: relative;
-            padding: 30px;
-            padding-right: 460px;
-            margin-bottom: 22px;
-            background:
-                radial-gradient(circle at top right, rgba(7, 152, 167, 0.2), transparent 35%),
-                radial-gradient(circle at bottom left, rgba(201, 111, 59, 0.14), transparent 35%),
-                var(--surface, #ffffff);
-        }
-
-        .ki-shortcut-card {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            width: 400px;
-            max-width: calc(100% - 60px);
-        }
-
-        .ki-kicker {
-            margin: 0 0 8px;
-            color: var(--accent, #0798a7);
-            font-size: 0.82rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 700;
-        }
-
-        .ki-title {
-            margin: 0;
-            font-size: clamp(2rem, 4vw, 3.3rem);
-            line-height: 1.06;
-        }
-
-        .ki-copy {
-            margin: 14px 0 0;
-            max-width: 830px;
-            color: var(--muted, #586174);
-            line-height: 1.7;
-        }
-
-        .topic-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 14px;
-        }
-
-        .hero-progress-panel {
-            margin-top: 14px;
-            display: grid;
-            gap: 10px;
-            max-width: 760px;
-        }
-
-        .hero-progress-text,
-        .hero-filter-text {
-            margin: 0;
-            color: var(--muted, #586174);
-            font-size: 0.9rem;
-            line-height: 1.45;
-        }
-
-        .hero-progress-track {
-            width: 100%;
-            height: 10px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.12);
-            overflow: hidden;
-        }
-
-        .hero-progress-fill {
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, #0798a7, #6b9345);
-            transition: width 220ms ease;
-        }
-
-        .hero-filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .hero-filter-row label {
-            display: inline-flex;
-            gap: 6px;
-            align-items: center;
-            color: var(--muted, #586174);
-            font-size: 0.88rem;
-            font-weight: 600;
-        }
-
-        .hero-filter-row select {
-            border-radius: 10px;
-            border: 1px solid var(--line, #d7dce3);
-            background: var(--surface, #ffffff);
-            color: inherit;
-            font: inherit;
-            padding: 8px 10px;
-        }
-
-        .ki-card {
-            padding: 22px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            background:
-                linear-gradient(165deg, rgba(255, 255, 255, 0.98), rgba(246, 252, 255, 0.9));
-            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
-            transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
-        }
-
-        .ki-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 20px 34px rgba(15, 23, 42, 0.12);
-            border-color: rgba(7, 152, 167, 0.42);
-        }
-
-        .ki-card h2 {
-            margin: 0;
-            font-size: 1.1rem;
-            min-height: 56px;
-        }
-
-        .ki-card p {
-            margin: 10px 0 14px;
-            color: var(--muted, #586174);
-            line-height: 1.6;
-            min-height: 88px;
-        }
-
-        .topic-controls {
-            display: grid;
-            gap: 8px;
-            margin-top: auto;
-            padding-top: 12px;
-            border-top: 1px solid rgba(15, 23, 42, 0.08);
-        }
-
-        .topic-controls label {
-            display: grid;
-            gap: 4px;
-            font-size: 0.83rem;
-            color: var(--muted, #586174);
-            font-weight: 600;
-        }
-
-        .topic-controls select {
-            width: 100%;
-            border-radius: 10px;
-            border: 1px solid var(--line, #d7dce3);
-            background: var(--surface, #ffffff);
-            color: inherit;
-            font: inherit;
-            padding: 8px 10px;
-        }
-
-        .topic-meta-row {
-            display: grid;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .topic-progress-text,
-        .topic-favorite-text {
-            margin: 0;
-            color: var(--muted, #586174);
-            font-size: 0.84rem;
-            line-height: 1.45;
-        }
-
-        .topic-progress-track {
-            width: 100%;
-            height: 9px;
-            border-radius: 999px;
-            background: rgba(15, 23, 42, 0.1);
-            overflow: hidden;
-        }
-
-        .topic-progress-fill {
-            height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, #0798a7, #6b9345);
-            transition: width 220ms ease;
-        }
-
-        .chip-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 14px;
-            min-height: 72px;
-            align-content: flex-start;
-        }
-
-        .chip {
-            border: 1px solid var(--line, #d7dce3);
-            border-radius: 999px;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-            color: var(--muted, #586174);
-            background: rgba(7, 152, 167, 0.08);
-        }
-
-        .link-button,
-        .ghost-button,
-        .primary-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 999px;
-            padding: 10px 14px;
-            text-decoration: none;
-            font: inherit;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .link-button,
-        .primary-button {
-            border: 1px solid transparent;
-            background: linear-gradient(135deg, #c96f3b, #a44d20);
-            color: #fff;
-        }
-
-        .ghost-button {
-            border: 1px solid var(--line, #d7dce3);
-            background: transparent;
-            color: inherit;
-        }
-
-        .ki-board {
-            margin-top: 24px;
-            padding: 24px;
-            background:
-                radial-gradient(circle at top right, rgba(7, 152, 167, 0.18), transparent 42%),
-                radial-gradient(circle at bottom left, rgba(201, 111, 59, 0.14), transparent 38%),
-                var(--surface, #ffffff);
-        }
-
-        .board-head {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .board-head p {
-            margin: 8px 0 0;
-            color: var(--muted, #586174);
-        }
-
-        .board-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .task-grid {
-            margin-top: 16px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 14px;
-        }
-
-        .task-card {
-            border: 1px solid var(--line, #d7dce3);
-            border-radius: 16px;
-            padding: 14px;
-            background: linear-gradient(165deg, rgba(255, 255, 255, 0.96), rgba(245, 250, 255, 0.88));
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-            display: grid;
-            align-content: start;
-            gap: 8px;
-        }
-
-        .task-card h3 {
-            margin: 0;
-            font-size: 1rem;
-        }
-
-        .task-card p {
-            margin: 8px 0 12px;
-            color: var(--muted, #586174);
-            min-height: 44px;
-        }
-
-        .task-form {
-            display: grid;
-            gap: 8px;
-        }
-
-        .task-form input,
-        .task-form textarea {
-            width: 100%;
-            border-radius: 10px;
-            border: 1px solid var(--line, #d7dce3);
-            padding: 9px 10px;
-            font: inherit;
-            color: inherit;
-            background: rgba(255, 255, 255, 0.88);
-        }
-
-        .task-form .primary-button {
-            width: 100%;
-            margin-top: 2px;
-        }
-
-        .task-form textarea {
-            min-height: 74px;
-            resize: vertical;
-        }
-
-        .task-list {
-            margin-top: 10px;
-            display: grid;
-            gap: 8px;
-            list-style: none;
-            padding: 0;
-        }
-
-        .task-item {
-            border: 1px solid var(--line, #d7dce3);
-            border-radius: 12px;
-            padding: 10px;
-            background: rgba(15, 23, 42, 0.04);
-        }
-
-        .task-item strong {
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .task-item span {
-            color: var(--muted, #586174);
-            font-size: 0.86rem;
-        }
-
-        .status-text {
-            margin-top: 14px;
-            min-height: 1.3em;
-            color: var(--muted, #586174);
-            font-size: 0.9rem;
-        }
-
-        :root[data-theme='dark'] .ki-board {
-            background:
-                radial-gradient(circle at top right, rgba(20, 184, 196, 0.2), transparent 42%),
-                radial-gradient(circle at bottom left, rgba(201, 111, 59, 0.2), transparent 38%),
-                var(--surface, rgba(16, 25, 36, 0.92));
-        }
-
-        :root[data-theme='dark'] .task-card {
-            background: linear-gradient(165deg, rgba(18, 33, 49, 0.95), rgba(13, 24, 37, 0.95));
-            border-color: rgba(159, 176, 202, 0.28);
-            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
-        }
-
-        :root[data-theme='dark'] .task-card h3 {
-            color: #eef5ff;
-        }
-
-        :root[data-theme='dark'] .task-card p {
-            color: #b6c6db;
-        }
-
-        :root[data-theme='dark'] .task-form input,
-        :root[data-theme='dark'] .task-form textarea {
-            background: rgba(8, 17, 28, 0.9);
-            border-color: rgba(159, 176, 202, 0.26);
-            color: #eaf2ff;
-        }
-
-        :root[data-theme='dark'] .task-form input::placeholder,
-        :root[data-theme='dark'] .task-form textarea::placeholder {
-            color: #90a6c2;
-        }
-
-        :root[data-theme='dark'] .task-item {
-            background: rgba(158, 176, 202, 0.12);
-            border-color: rgba(159, 176, 202, 0.26);
-        }
-
-        :root[data-theme='dark'] .task-item strong {
-            color: #f3f7ff;
-        }
-
-        :root[data-theme='dark'] .task-item span {
-            color: #b8c8dc;
-        }
-
-        :root[data-theme='dark'] .task-card .ghost-button {
-            background: rgba(8, 17, 28, 0.72);
-            border-color: rgba(159, 176, 202, 0.28);
-        }
-
-        :root[data-theme='dark'] .task-card .ghost-button:hover {
-            background: rgba(20, 34, 50, 0.94);
-        }
-
-        :root[data-theme='dark'] .ki-card {
-            background: linear-gradient(165deg, rgba(19, 33, 48, 0.96), rgba(13, 24, 37, 0.96));
-            border-color: rgba(159, 176, 202, 0.3);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
-        }
-
-        :root[data-theme='dark'] .ki-card:hover {
-            border-color: rgba(76, 210, 160, 0.44);
-            box-shadow: 0 22px 36px rgba(0, 0, 0, 0.34);
-        }
-
-        :root[data-theme='dark'] .topic-controls {
-            border-top-color: rgba(159, 176, 202, 0.22);
-        }
-
-        :root[data-theme='dark'] .chip {
-            background: rgba(158, 176, 202, 0.16);
-            border-color: rgba(159, 176, 202, 0.34);
-            color: #d8e4f4;
-        }
-
-        @media (max-width: 800px) {
-            .ki-hero {
-                padding: 24px;
-            }
-
-            .ki-shortcut-card {
-                position: static;
-                width: 100%;
-                max-width: 400px;
-                margin-top: 14px;
-            }
-        }
-    </style>
 </head>
-<body>
+<body class="mode-selection-open">
+    <button id="themeToggleButton" class="theme-toggle-button" type="button">Dark Mode</button>
+
+    <section id="modeSelectionScreen" class="mode-selection-screen" aria-labelledby="modeSelectionHeading">
+        <div class="mode-selection-content">
+            <p class="eyebrow">Willkommen</p>
+            <h1 id="modeSelectionHeading">Was möchtest du tun?</h1>
+            <p class="section-text">Wähle deinen Bereich. Du kannst jederzeit wechseln.</p>
+            <p id="modeSelectionHint" class="mode-selection-hint" aria-live="polite"></p>
+            <button id="continueLastMode" class="primary-button mode-continue-button" type="button">Weiter mit letzter Auswahl</button>
+            <div class="mode-selection-grid">
+                <button id="chooseEnglishMode" class="mode-card" type="button" aria-label="Englisch Trainer starten">
+                    <span class="panel-label">Sprachtraining</span>
+                    <h2>Englisch</h2>
+                    <p>Interaktiver Trainer mit Einstufungstest, Vokabellabor und Lernplan.</p>
+                </button>
+                <button id="chooseD3Mode" class="mode-card" type="button" aria-label="D3.js Lernbereich öffnen">
+                    <span class="panel-label">Visualisierung</span>
+                    <h2>D3.js</h2>
+                    <p>Direkt in dein D3-Projekt mit Übungen und klarem Lernpfad wechseln.</p>
+                </button>
+                <button id="chooseAbnehmMode" class="mode-card" type="button" aria-label="Abnehmtagebuch öffnen">
+                    <span class="panel-label">Gesundheit</span>
+                    <h2>Abnehmtagebuch</h2>
+                    <p>Gewicht und Körpermaße tracken, Fortschritt visualisieren und Punkte sammeln.</p>
+                </button>
+                <a class="mode-card" href="projektstatus.html" aria-label="Projektstatus öffnen">
+                    <span class="panel-label">Management</span>
+                    <h2>Projektstatus</h2>
+                    <p>Projektstatus übersichtlich erfassen und verwalten.</p>
+                </a>
+                <a class="mode-card" href="terminplaner.html" aria-label="Terminplaner öffnen">
+                    <span class="panel-label">Planung</span>
+                    <h2>Terminplaner</h2>
+                    <p>Termine planen und chronologisch sortieren.</p>
+                </a>
+                <a class="mode-card" href="schulungen.html" aria-label="Schulungen öffnen">
+                    <span class="panel-label">Bildung</span>
+                    <h2>Schulungen</h2>
+                    <p>Schulungen erfassen und PDF-Zertifikate verwalten.</p>
+                </a>
+                <a class="mode-card" href="zeiten.html" aria-label="Englisch Zeiten öffnen">
+                    <span class="panel-label">Grammatik</span>
+                    <h2>Zeiten</h2>
+                    <p>Englische Zeiten trainieren und vertiefen.</p>
+                </a>
+                <a class="mode-card" href="systemvergleich.html" aria-label="Systemvergleich öffnen">
+                    <span class="panel-label">Vergleich</span>
+                    <h2>Systemvergleich</h2>
+                    <p>Systeme und Einstellungen schnell vergleichen.</p>
+                </a>
+                <a class="mode-card" href="ki-lernzentrum.html" aria-label="KI Lernzentrum öffnen">
+                    <span class="panel-label">KI Praxis</span>
+                    <h2>KI Lernzentrum</h2>
+                    <p>Prompting, Chatbots, MCP-Agenten und Grundlagen zu ML, DL und Python lernen.</p>
+                </a>
+            </div>
+            <section class="mode-help-card mode-training-card" aria-labelledby="trainingOverviewHeading">
+                <div class="mode-help-header">
+                    <span class="panel-label">Schulungen</span>
+                    <h2 id="trainingOverviewHeading">Alle Schulungen auf einen Blick</h2>
+                </div>
+                <div class="mode-training-table-wrapper" role="region" aria-label="Schulungstabelle" tabindex="0">
+                    <table class="mode-training-table">
+                        <thead>
+                            <tr>
+                                <th>Schulung</th>
+                                <th>Anbieter</th>
+                                <th>Status</th>
+                                <th>Zielabschluss</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modeTrainingTableBody">
+                            <tr>
+                                <td colspan="4">Noch keine Schulungen erfasst.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a class="secondary-button tool-link" href="schulungen.html">Schulungen erfassen</a>
+            </section>
+
+            <section class="mode-tools-preview" aria-label="Projektstatus, Termine und Uhrzeit">
+                <article class="panel-card sidebar-tool-card mode-tool-card">
+                    <span class="panel-label">Uhrzeit</span>
+                    <p id="modeLiveClockTime" class="clock-time">--:--:--</p>
+                    <p id="modeLiveClockDate" class="clock-date">--.--.----</p>
+                </article>
+
+                <article class="panel-card sidebar-tool-card mode-tool-card">
+                    <span class="panel-label">Projektstatus</span>
+                    <ul id="modeProjectStatusPreviewList" class="compact-list"></ul>
+                    <a class="secondary-button tool-link" href="projektstatus.html">Projektstatus bearbeiten</a>
+                </article>
+
+                <article class="panel-card sidebar-tool-card mode-tool-card">
+                    <span class="panel-label">Terminplaner</span>
+                    <ul id="modePlannerPreviewList" class="compact-list"></ul>
+                    <a class="secondary-button tool-link" href="terminplaner.html">Termine bearbeiten</a>
+                </article>
+            </section>
+
+            <section class="mode-help-card" aria-labelledby="d3HelpHeading">
+                <div class="mode-help-header">
+                    <span class="panel-label">Hilfeblock</span>
+                    <h2 id="d3HelpHeading">Wie starte und stoppe ich D3.js?</h2>
+                </div>
+                <div class="mode-help-grid">
+                    <div>
+                        <strong>Starten</strong>
+                        <ol class="mode-help-list">
+                            <li>Starte den lokalen Server im Ordner english-trainer.</li>
+                            <li>Öffne danach diese Startseite und klicke auf D3.js.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <strong>Stoppen</strong>
+                        <ol class="mode-help-list">
+                            <li>Wechsle in das laufende Terminal.</li>
+                            <li>Drücke Strg + C, um den Server zu beenden.</li>
+                        </ol>
+                    </div>
+                </div>
+                <p class="mode-help-note">Wichtig: D3.js funktioniert zuverlässig, wenn der Server im Projekt-Root english-trainer läuft und nicht nur im Unterordner src.</p>
+            </section>
+        </div>
+    </section>
+
     <div class="page-shell">
-    <nav class="global-switcher" aria-label="Bereiche">
-        <a class="switch-link" href="index.html#english">Englisch</a>
-        <a class="switch-link" href="d3js-project/index.html">D3.js</a>
-        <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
-        <a class="switch-link" href="projektstatus.html">Projektstatus</a>
-        <a class="switch-link" href="terminplaner.html">Terminplaner</a>
-        <a class="switch-link" href="schulungen.html">Schulungen</a>
-        <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
-        <a class="switch-link active" href="ki-lernzentrum.html">KI Lernzentrum</a>
-    </nav>
+        <nav class="global-switcher" aria-label="Bereiche">
+            <a class="switch-link active" href="index.html#english">Englisch</a>
+            <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+            <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
+            <a class="switch-link" href="projektstatus.html">Projektstatus</a>
+            <a class="switch-link" href="terminplaner.html">Terminplaner</a>
+            <a class="switch-link" href="schulungen.html">Schulungen</a>
+            <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
+            <a class="switch-link" href="index.html">Lernzentrum</a>
+        </nav>
 
-    <main class="ki-shell">
-        <section class="ki-hero">
-            <p class="ki-kicker">Neues Lernkonzept</p>
-            <h1 class="ki-title">KI Lernzentrum als Themenhub</h1>
-            <p class="ki-copy">
-                Alle Themen sind sofort freigeschaltet. Du lernst nicht mehr tageweise mit Sperren,
-                sondern springst direkt in die Unterseiten: MCP, ML, Deep Learning, Modelle & Tools,
-                Chatbot-Aufbau und mehrere Quizzes für ML, DL, Data Science und Python.
-            </p>
-            <div class="panel-card accent-card ki-shortcut-card">
-                <span class="panel-label">Navigation</span>
-                <strong>Lernpfad wählen</strong>
-                <div class="shortcut-features">
-                    <a class="shortcut-item" href="#topicGrid" aria-label="Zu Themengrid springen">
-                        <span class="shortcut-icon">🗂️</span>
-                        <span class="shortcut-label">Themen</span>
-                    </a>
-                    <a class="shortcut-item" href="#aufgabenboard" aria-label="Zum Aufgabenboard springen">
-                        <span class="shortcut-icon">📋</span>
-                        <span class="shortcut-label">Board</span>
-                    </a>
-                    <a class="shortcut-item" href="#topicCompletionFilter" aria-label="Zu Filteroptionen springen">
-                        <span class="shortcut-icon">🔍</span>
-                        <span class="shortcut-label">Filter</span>
-                    </a>
-                </div>
-            </div>
-            <div class="board-actions" style="margin-top:16px;">
-                <a class="ghost-button" href="index.html">Zur Startseite</a>
-                <a class="ghost-button" href="#aufgabenboard">Zum Aufgabenboard</a>
-            </div>
-            <div class="hero-progress-panel">
-                <p id="overallProgressText" class="hero-progress-text">Gesamtfortschritt wird geladen.</p>
-                <p id="weeklyTopText" class="hero-filter-text">Top-Thema dieser Woche wird geladen.</p>
-                <div class="hero-progress-track" aria-hidden="true">
-                    <div id="overallProgressFill" class="hero-progress-fill"></div>
-                </div>
-                <div class="hero-filter-row">
-                    <label for="topicCompletionFilter">Themenfilter:
-                        <select id="topicCompletionFilter">
-                            <option value="all">Alle Themen</option>
-                            <option value="open">Nur offen</option>
-                            <option value="done">Nur erledigt</option>
-                            <option value="progress">Nur mit Fortschritt</option>
-                        </select>
-                    </label>
-                    <button id="resetTopicProgressButton" class="ghost-button" type="button">Fortschritt zurücksetzen</button>
-                </div>
-                <p id="filterStatusText" class="hero-filter-text"></p>
-            </div>
+        <section class="context-box" aria-labelledby="englishContextHeading">
+            <span class="context-label">Wo bin ich gerade?</span>
+            <p id="englishContextHeading">Du bist im Englisch-Trainer. Hier kombinierst du Einstufung, Übungen, Vokabeltraining und persönliche Wiederholung in einem Lernbereich.</p>
         </section>
 
-        <section class="topic-grid" aria-label="Themenauswahl" id="topicGrid">
-            <article class="ki-card" data-topic-key="mcp">
-                <h2>Model Context Protocol (MCP)</h2>
-                <p>Model Context Protocol, Agent-Prompts, Tool-Limits und robuste Kontextmodelle.</p>
-                <div class="chip-list">
-                    <span class="chip">Agenten</span>
-                    <span class="chip">Tool-Scopes</span>
-                    <span class="chip">Sicherheit</span>
+        <section class="hero-with-sidebar" aria-label="Einstieg und Status">
+            <header class="hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Berufsenglisch mit Struktur</p>
+                    <h1 id="pageTitle">Englisch von A3 nach B1</h1>
+                    <p id="pageIntro" class="hero-text">
+                        Ein klarer Lernpfad für Grammatik, Wortschatz und typische Fehler, damit dein Englisch im Arbeitsalltag sicherer wird.
+                    </p>
+                    <div class="hero-actions">
+                        <button id="jumpToTrainer" class="primary-button" type="button">Training starten</button>
+                        <button id="jumpToPlan" class="secondary-button" type="button">Zum 30-Tage-Plan</button>
+                        <button id="jumpToJournal" class="secondary-button" type="button">Fehlerjournal ansehen</button>
+                        <button id="openModeSelection" class="secondary-button" type="button">Zur Startauswahl</button>
+                    </div>
                 </div>
-                <div class="topic-controls">
-                    <label>Schwierigkeit
-                        <select data-level-select>
-                            <option value="basis">Basis</option>
-                            <option value="praxis">Praxis</option>
-                            <option value="profi">Profi</option>
-                        </select>
-                    </label>
-                    <label>Inhalt
-                        <select data-module-select>
-                            <option value="grundlagen">Grundlagen</option>
-                            <option value="agent-prompts">Agent-Prompts</option>
-                            <option value="tool-scopes">Tool-Scopes</option>
-                            <option value="fallbacks">Fallbacks</option>
-                        </select>
-                    </label>
-                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
+                <div class="hero-panel">
+                    <div class="panel-card accent-card">
+                        <span class="panel-label">Zielbild</span>
+                        <strong>B1 für den Job</strong>
+                        <div class="shortcut-features">
+                            <a class="shortcut-item" href="#overviewGrammar" aria-label="Zum Grammatik-Bereich springen">
+                                <span class="shortcut-icon">📚</span>
+                                <span class="shortcut-label">Grammatik</span>
+                            </a>
+                            <a class="shortcut-item" href="#overviewVocabulary" aria-label="Zum Vokabel-Bereich springen">
+                                <span class="shortcut-icon">💬</span>
+                                <span class="shortcut-label">Vokabeln</span>
+                            </a>
+                            <a class="shortcut-item" href="#mistakesHeading" aria-label="Zum Fehler-Bereich springen">
+                                <span class="shortcut-icon">✅</span>
+                                <span class="shortcut-label">Fehler</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-card">
+                        <span class="panel-label">Fokus</span>
+                        <ul class="hero-list">
+                            <li>Grammatik gezielt festigen</li>
+                            <li>Arbeitsrelevante Vokabeln lernen</li>
+                            <li>Eigene Fehler schnell erkennen</li>
+                        </ul>
+                    </div>
+                    <div class="panel-card accent-card">
+                        <span class="panel-label">Vertiefung</span>
+                        <strong>Englische Zeiten</strong>
+                        <div class="shortcut-features">
+                            <a class="shortcut-item" href="zeiten.html" aria-label="Zu Englischen Zeiten springen">
+                                <span class="shortcut-icon">⏰</span>
+                                <span class="shortcut-label">Zeiten trainieren</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </article>
+            </header>
 
-            <article class="ki-card" data-topic-key="ml">
-                <h2>Machine Learning</h2>
-                <p>Konzepte, Daten, Features, Evaluationsmetriken und Prompting für ML-Aufgaben.</p>
-                <div class="chip-list">
-                    <span class="chip">Daten</span>
-                    <span class="chip">Metriken</span>
-                    <span class="chip">Pipelines</span>
-                </div>
-                <div class="topic-controls">
-                    <label>Schwierigkeit
-                        <select data-level-select>
-                            <option value="basis">Basis</option>
-                            <option value="praxis">Praxis</option>
-                            <option value="profi">Profi</option>
-                        </select>
-                    </label>
-                    <label>Inhalt
-                        <select data-module-select>
-                            <option value="daten">Datenbasis</option>
-                            <option value="features">Feature Engineering</option>
-                            <option value="metriken">Metriken</option>
-                            <option value="pipelines">Pipelines</option>
-                        </select>
-                    </label>
-                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
-                </div>
-            </article>
+            <aside class="start-right-tools" aria-label="Projektstatus, Termine und Uhrzeit">
+                <article class="panel-card sidebar-tool-card">
+                    <span class="panel-label">Uhrzeit</span>
+                    <p id="liveClockTime" class="clock-time">--:--:--</p>
+                    <p id="liveClockDate" class="clock-date">--.--.----</p>
+                </article>
 
-            <article class="ki-card" data-topic-key="dl">
-                <h2>Deep Learning</h2>
-                <p>Neurale Networks, Optimierung, Architekturen und Framework-Auswahl.</p>
-                <div class="chip-list">
-                    <span class="chip">Neurale Networks</span>
-                    <span class="chip">Optimierung</span>
-                    <span class="chip">Frameworks</span>
-                </div>
-                <div class="topic-controls">
-                    <label>Schwierigkeit
-                        <select data-level-select>
-                            <option value="basis">Basis</option>
-                            <option value="praxis">Praxis</option>
-                            <option value="profi">Profi</option>
-                        </select>
-                    </label>
-                    <label>Inhalt
-                        <select data-module-select>
-                            <option value="neurale-netzwerke">Neurale Networks</option>
-                            <option value="optimierung">Optimierung</option>
-                            <option value="architekturen">Architekturen</option>
-                            <option value="frameworks">Frameworks</option>
-                        </select>
-                    </label>
-                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
-                </div>
-            </article>
+                <article class="panel-card sidebar-tool-card">
+                    <span class="panel-label">Projektstatus</span>
+                    <ul id="projectStatusPreviewList" class="compact-list"></ul>
+                    <a class="secondary-button tool-link" href="projektstatus.html">Projektstatus bearbeiten</a>
+                </article>
 
-            <article class="ki-card" data-topic-key="modelle-tools">
-                <h2>Modelle und Tools</h2>
-                <p>Tool-Konzepte, Praxistipps und Auswahlhilfen für verschiedene Arbeitskontexte.</p>
-                <div class="chip-list">
-                    <span class="chip">Tools</span>
-                    <span class="chip">Konzept</span>
-                    <span class="chip">Praxistipps</span>
-                </div>
-                <div class="topic-controls">
-                    <label>Schwierigkeit
-                        <select data-level-select>
-                            <option value="basis">Basis</option>
-                            <option value="praxis">Praxis</option>
-                            <option value="profi">Profi</option>
-                        </select>
-                    </label>
-                    <label>Inhalt
-                        <select data-module-select>
-                            <option value="tools">Tools</option>
-                            <option value="konzept">Konzept</option>
-                            <option value="praxistipps">Praxistipps</option>
-                        </select>
-                    </label>
-                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
-                </div>
-            </article>
-
-            <article class="ki-card" data-topic-key="chatbot">
-                <h2>Chatbot-Aufbau</h2>
-                <p>Schritte für Planung, Datenbasis, Dialoglogik, Evaluation und Rollout.</p>
-                <div class="chip-list">
-                    <span class="chip">Planung</span>
-                    <span class="chip">Dialogfluss</span>
-                    <span class="chip">Qualitaet</span>
-                </div>
-                <div class="topic-controls">
-                    <label>Schwierigkeit
-                        <select data-level-select>
-                            <option value="basis">Basis</option>
-                            <option value="praxis">Praxis</option>
-                            <option value="profi">Profi</option>
-                        </select>
-                    </label>
-                    <label>Inhalt
-                        <select data-module-select>
-                            <option value="ziele">Ziele und Scope</option>
-                            <option value="datenbasis">Datenbasis</option>
-                            <option value="dialogdesign">Dialogdesign</option>
-                            <option value="evaluation">Evaluation und Rollout</option>
-                        </select>
-                    </label>
-                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
-                </div>
-            </article>
-
-            <article class="ki-card" data-topic-key="quiz">
-                <h2>Quizzes nach Thema</h2>
-                <p>Mehrere Quiz-Sets für ML, DL, Data Science und Python statt nur ein Wiederholungsquiz.</p>
-                <div class="chip-list">
-                    <span class="chip">ML Quiz</span>
-                    <span class="chip">DL Quiz</span>
-                    <span class="chip">Data Science Quiz</span>
-                    <span class="chip">Python Quiz</span>
-                </div>
-                <div class="topic-controls">
-                    <label>Schwierigkeit
-                        <select data-level-select>
-                            <option value="basis">Basis</option>
-                            <option value="praxis">Praxis</option>
-                            <option value="profi">Profi</option>
-                        </select>
-                    </label>
-                    <label>Inhalt
-                        <select data-module-select>
-                            <option value="ml-quiz">ML Quiz</option>
-                            <option value="dl-quiz">DL Quiz</option>
-                            <option value="ds-quiz">Data Science Quiz</option>
-                            <option value="python-quiz">Python Quiz</option>
-                        </select>
-                    </label>
-                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
-                </div>
-            </article>
+                <article class="panel-card sidebar-tool-card">
+                    <span class="panel-label">Terminplaner</span>
+                    <ul id="plannerPreviewList" class="compact-list"></ul>
+                    <a class="secondary-button tool-link" href="terminplaner.html">Termine bearbeiten</a>
+                </article>
+            </aside>
         </section>
 
-        <section class="ki-board" id="aufgabenboard" aria-labelledby="boardHeading">
-            <div class="board-head">
-                <div>
-                    <p class="ki-kicker">Aufgaben ohne Tagesbindung</p>
-                    <h2 id="boardHeading" style="margin:0;">Aufgabenboard mit Datumsnotiz</h2>
-                    <p>Jede Aufgabe wird frei einem Datum zugeordnet und in der passenden Kategorie gespeichert.</p>
+        <main>
+            <section class="personalization section-block" aria-labelledby="personalizationHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Personalisierung</p>
+                    <h2 id="personalizationHeading">Profil wählen und Niveau kurz einschätzen</h2>
+                    <p class="section-text">Du kannst die Inhalte auf deinen Arbeitskontext ausrichten und mit einem kurzen Test den Lernpfad schärfer einstellen.</p>
                 </div>
-                <div class="board-actions">
-                    <button class="ghost-button" type="button" id="exportTaskBoardButton">Board exportieren</button>
-                    <button class="ghost-button" type="button" id="resetTaskBoardButton">Alle Notizen löschen</button>
+                <div class="personalization-layout">
+                    <div class="profile-panel">
+                        <div id="roleProfileGrid" class="role-profile-grid"></div>
+                        <article class="custom-role-card">
+                            <h3>Eigenes Berufsprofil</h3>
+                            <p class="section-text">Wenn deine Rolle nicht exakt passt, kannst du hier dein Profil kurz beschreiben.</p>
+                            <label class="input-label" for="customRoleTitle">Rolle</label>
+                            <input id="customRoleTitle" class="text-field" type="text" maxlength="60" placeholder="z. B. Teamassistenz Finanzen">
+                            <label class="input-label" for="customRoleContext">Typische Aufgaben</label>
+                            <textarea id="customRoleContext" class="text-answer-input compact" rows="3" placeholder="z. B. Reporting, Rückfragen, Terminabstimmung, Freigaben"></textarea>
+                            <button id="saveCustomRole" class="secondary-button" type="button">Eigenes Profil speichern</button>
+                        </article>
+                        <article class="profile-summary-card">
+                            <span class="topic-meta">Aktuelles Profil</span>
+                            <h3 id="selectedRoleName"></h3>
+                            <p id="selectedRoleSummary" class="section-text"></p>
+                            <ul id="selectedRoleFocus" class="topic-list"></ul>
+                            <p id="selectedRoleModules" class="section-text"></p>
+                        </article>
+                    </div>
+                    <div class="placement-panel">
+                        <div class="section-header compact">
+                            <p class="section-kicker">Einstufungstest</p>
+                            <h3>Starttest mit Spracheinsatz</h3>
+                            <p id="placementIntro" class="section-text">Der Test misst Kernwissen, Schreiben und Hörverstehen getrennt und ordnet dich zwischen Aufbau, Stabilisieren und Ausbau ein.</p>
+                        </div>
+                        <h4 class="subsection-title">Teil 1: Kernfragen</h4>
+                        <div id="placementQuestionList" class="placement-question-list"></div>
+                        <h4 class="subsection-title">Teil 2: Schreiben</h4>
+                        <article class="placement-question-card">
+                            <h3 id="placementWritingPrompt"></h3>
+                            <p id="placementWritingContext" class="section-text"></p>
+                            <textarea id="placementWritingAnswer" class="text-answer-input" rows="4" placeholder="Schreibe 2 bis 3 kurze Sätze."></textarea>
+                            <p id="placementWritingHint" class="input-help"></p>
+                        </article>
+                        <h4 class="subsection-title">Teil 3: Hörverstehen</h4>
+                        <div id="placementListeningList" class="placement-question-list"></div>
+                        <div class="hero-actions placement-actions">
+                            <button id="submitPlacementTest" class="primary-button" type="button">Test auswerten</button>
+                            <button id="resetPlacementTest" class="secondary-button" type="button">Antworten löschen</button>
+                            <button id="jumpToPlanFromTest" class="secondary-button" type="button">Zum Lernplan abhaken</button>
+                        </div>
+                        <div id="placementResultBox" class="feedback-box" aria-live="polite"></div>
+                    </div>
                 </div>
-            </div>
+            </section>
 
-            <div id="taskBoardGrid" class="task-grid" aria-live="polite"></div>
-            <p id="taskBoardStatus" class="status-text"></p>
-        </section>
-    </main>
+            <section class="overview section-block" aria-labelledby="overviewHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Dein Lernsystem</p>
+                    <h2 id="overviewHeading">Drei Bausteine für sichtbaren Fortschritt</h2>
+                </div>
+                <div class="overview-grid">
+                    <article id="overviewGrammar" class="info-card">
+                        <h3>Grammatik</h3>
+                        <p>Trainiere Zeitformen, Fragen, Bedingungen und Satzbau mit kurzen Erklärungen direkt nach jeder Antwort.</p>
+                    </article>
+                    <article id="overviewVocabulary" class="info-card">
+                        <h3>Vokabeln</h3>
+                        <p>Lerne Wortschatz, den du in Meetings, E-Mails, Status-Updates und Rückfragen wirklich brauchst.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Richtig oder falsch?</h3>
+                        <p>Vergleiche typische deutsche Denkfehler mit natürlichem Englisch und entwickle ein besseres Sprachgefühl.</p>
+                    </article>
+                    <article class="info-card">
+                        <h3>Zeiten – Kochrezept</h3>
+                        <p>Alle Zeitformen als Kochrezept: Formel, Signalwörter und Beispiele – plus interaktiver Test mit 10 Fragen je Zeit.</p>
+                        <a class="secondary-button tool-link" href="zeiten.html" style="margin-top:12px;display:inline-flex">Zeiten-Übersicht öffnen</a>
+                    </article>
+                    <article class="info-card">
+                        <h3>SAP Systemvergleich</h3>
+                        <p>Vergleiche CSV-Dateien aus Systemlandschaften für Produkte, Preise, Usage Charge Pläne, Vertriebswege und externe Objekte.</p>
+                        <a class="secondary-button tool-link" href="systemvergleich.html" style="margin-top:12px;display:inline-flex">Systemvergleich öffnen</a>
+                    </article>
+                </div>
+            </section>
 
+            <section class="roadmap section-block" aria-labelledby="roadmapHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Lernpfad</p>
+                    <h2 id="roadmapHeading">Vier Wochen mit klarem Fokus</h2>
+                </div>
+                <div id="roadmapGrid" class="roadmap-grid"></div>
+            </section>
+
+            <section class="work-topics section-block" aria-labelledby="workTopicsHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Arbeitsalltag</p>
+                    <h2 id="workTopicsHeading">Diese Themen trainierst du für deinen Job</h2>
+                    <p class="section-text">Die Inhalte sind auf Situationen ausgerichtet, die im Berufsleben schnell Unsicherheit auslösen: Meetings, E-Mails, Rückfragen, Status-Updates und Systeme wie SAP.</p>
+                </div>
+                <div id="workTopicsGrid" class="work-topics-grid"></div>
+            </section>
+
+            <section class="vocabulary-lab section-block" aria-labelledby="vocabularyLabHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Vokabellabor</p>
+                    <h2 id="vocabularyLabHeading">Vokabellisten mit Audio und Karteikarten</h2>
+                    <p class="section-text">Trainiere wichtige Begriffe nach Thema, höre die Aussprache und wiederhole sie im Karteikartenmodus.</p>
+                </div>
+                <div class="vocabulary-layout">
+                    <div>
+                        <div id="vocabularyListGrid" class="vocabulary-list-grid"></div>
+                    </div>
+                    <article class="flashcard-panel">
+                        <div class="question-meta">
+                            <span class="question-badge">Karteikarte</span>
+                            <span id="flashcardProgress" class="question-progress"></span>
+                        </div>
+                        <h3 id="flashcardTerm"></h3>
+                        <p id="flashcardMeta" class="section-text"></p>
+                        <div id="flashcardBack" class="flashcard-back">
+                            <p id="flashcardTranslation"></p>
+                            <p id="flashcardExample" class="section-text"></p>
+                        </div>
+                        <div class="audio-actions">
+                            <button id="flashcardPlay" class="secondary-button" type="button">Begriff vorlesen</button>
+                            <button id="flashcardReveal" class="secondary-button" type="button">Rückseite zeigen</button>
+                        </div>
+                        <div class="hero-actions">
+                            <button id="flashcardKnown" class="primary-button" type="button">Kannte ich</button>
+                            <button id="flashcardAgain" class="secondary-button" type="button">Nochmal</button>
+                            <button id="flashcardNext" class="secondary-button" type="button">Nächste Karte</button>
+                        </div>
+                        <div id="flashcardStats" class="adaptive-recommendation"></div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="thirty-day-plan section-block" aria-labelledby="thirtyDayPlanHeading">
+                <div class="section-header">
+                    <p class="section-kicker">30 Tage</p>
+                    <h2 id="thirtyDayPlanHeading">Persönlicher Lernplan mit Tagesaufgaben</h2>
+                    <p class="section-text">Jeder Tag ist klein genug, um wirklich machbar zu bleiben. Du kannst erledigte Tage direkt abhaken.</p>
+                    <div class="section-actions">
+                        <button id="jumpToActivePlanDay" class="secondary-button" type="button" disabled>Kein aktiver Tag</button>
+                    </div>
+                </div>
+                <div class="plan-summary">
+                    <article class="stat-card">
+                        <span>Erledigte Tage</span>
+                        <strong id="completedDaysValue">0</strong>
+                    </article>
+                    <article class="stat-card">
+                        <span>Offene Tage</span>
+                        <strong id="openDaysValue">30</strong>
+                    </article>
+                </div>
+                <div id="thirtyDayPlanGrid" class="thirty-day-plan-grid"></div>
+            </section>
+
+            <section class="training-layout section-block">
+                <div class="trainer-panel" id="trainerSection">
+                    <div class="section-header compact">
+                        <p class="section-kicker">Praxisbereich</p>
+                        <h2>Interaktiver Trainer</h2>
+                        <p id="categoryDescription" class="section-text"></p>
+                    </div>
+
+                    <div id="activePlanBanner" class="active-plan-banner" hidden></div>
+
+                    <div id="adaptiveRecommendation" class="adaptive-recommendation"></div>
+
+                    <div id="categoryTabs" class="category-tabs" role="tablist" aria-label="Trainingsbereiche"></div>
+
+                    <div class="stats-grid" aria-label="Trainingsstatistik">
+                        <article class="stat-card">
+                            <span>Trefferquote</span>
+                            <strong id="accuracyValue">0%</strong>
+                        </article>
+                        <article class="stat-card">
+                            <span>Aktuelle Serie</span>
+                            <strong id="streakValue">0</strong>
+                        </article>
+                        <article class="stat-card">
+                            <span>Beste Serie</span>
+                            <strong id="bestStreakValue">0</strong>
+                        </article>
+                        <article class="stat-card">
+                            <span>Beantwortet</span>
+                            <strong id="answeredValue">0</strong>
+                        </article>
+                    </div>
+
+                    <article id="questionCard" class="question-card">
+                        <div class="question-meta">
+                            <span id="questionBadge" class="question-badge"></span>
+                            <span id="questionProgress" class="question-progress"></span>
+                        </div>
+                        <h3 id="questionPrompt"></h3>
+                        <p id="questionHint" class="question-hint"></p>
+                        <div id="answerModeLabel" class="answer-mode-label"></div>
+                        <div class="audio-actions">
+                            <button id="readQuestionButton" class="secondary-button" type="button">Englisch vorlesen</button>
+                            <button id="readFeedbackButton" class="secondary-button" type="button">Modellantwort lesen</button>
+                            <button id="stopAudioButton" class="secondary-button" type="button">Audio stoppen</button>
+                        </div>
+                        <div class="audio-settings" aria-label="Audio-Einstellungen">
+                            <label class="input-label" for="audioVoiceSelect">Stimme</label>
+                            <select id="audioVoiceSelect" class="text-field">
+                                <option value="">Standardstimme</option>
+                            </select>
+                            <label class="input-label" for="audioRateRange">Geschwindigkeit</label>
+                            <div class="rate-row">
+                                <input id="audioRateRange" type="range" min="0.7" max="1.3" step="0.05" value="1">
+                                <span id="audioRateValue" class="topic-meta">1.00x</span>
+                            </div>
+                        </div>
+                        <div id="choiceList" class="choice-list" aria-live="polite"></div>
+                        <div id="textAnswerWrapper" class="text-answer-wrapper">
+                            <label class="sr-only" for="textAnswer">Freitextantwort</label>
+                            <textarea id="textAnswer" class="text-answer-input" rows="4" placeholder="Schreibe deine Antwort auf Englisch."></textarea>
+                            <p id="textAnswerHelp" class="input-help"></p>
+                        </div>
+                        <div id="feedbackBox" class="feedback-box" aria-live="polite"></div>
+                        <div class="question-actions">
+                            <button id="checkAnswer" class="primary-button" type="button">Antwort prüfen</button>
+                            <button id="nextQuestion" class="secondary-button" type="button" disabled>Nächste Aufgabe</button>
+                        </div>
+                    </article>
+                </div>
+
+                <aside class="journal-panel" id="journalSection">
+                    <div class="section-header compact">
+                        <p class="section-kicker">Auswertung</p>
+                        <h2>Was läuft gut und was noch nicht?</h2>
+                    </div>
+
+                    <div class="journal-block">
+                        <h3>Stärken</h3>
+                        <ul id="strengthList" class="feedback-list"></ul>
+                    </div>
+
+                    <div class="journal-block">
+                        <h3>Fehlerjournal</h3>
+                        <ul id="journalList" class="feedback-list"></ul>
+                    </div>
+
+                    <div class="journal-block">
+                        <h3>Skill-Matrix</h3>
+                        <p id="skillSummaryText" class="section-text"></p>
+                        <ul id="skillMatrixList" class="feedback-list"></ul>
+                    </div>
+
+                    <div class="journal-block">
+                        <h3>Export</h3>
+                        <div class="hero-actions">
+                            <button id="exportJsonButton" class="secondary-button" type="button">Lernstand als JSON</button>
+                            <button id="exportPdfButton" class="secondary-button" type="button">PDF-Report drucken</button>
+                        </div>
+                        <div class="export-reminder-panel" aria-label="Export-Erinnerung">
+                            <label class="placement-option compact" for="autoExportReminderToggle">
+                                <input id="autoExportReminderToggle" type="checkbox">
+                                <span>Auto-Backup-Erinnerung aktivieren</span>
+                            </label>
+                            <label class="input-label" for="autoExportReminderInterval">Intervall</label>
+                            <select id="autoExportReminderInterval" class="text-field compact">
+                                <option value="15">Alle 15 Minuten</option>
+                                <option value="30" selected>Alle 30 Minuten</option>
+                                <option value="60">Alle 60 Minuten</option>
+                            </select>
+                            <p id="lastExportInfo" class="section-text">Noch kein Export in dieser Sitzung.</p>
+                        </div>
+                    </div>
+
+                    <button id="resetProgress" class="danger-button" type="button">Fortschritt zurücksetzen</button>
+                </aside>
+            </section>
+
+            <section class="mistakes-guide section-block" aria-labelledby="mistakesHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Typische Stolperstellen</p>
+                    <h2 id="mistakesHeading">Diese Muster solltest du schnell erkennen</h2>
+                </div>
+                <div id="mistakesGrid" class="mistakes-grid"></div>
+            </section>
+        </main>
+
+        <button id="floatingModeSelectionButton" class="floating-start-button" type="button">Zur Startauswahl</button>
     </div>
 
-    <script src="js/ki-lernzentrum.js"></script>
+    <script src="data/learning-content.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
+
+
 

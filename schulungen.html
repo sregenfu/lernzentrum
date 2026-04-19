@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schulungsplaner</title>
+    <meta name="description" content="Online-Schulungen erfassen, Fristen verfolgen und PDF-Zertifikate dokumentieren.">
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <nav class="global-switcher" aria-label="Bereiche">
+            <a class="switch-link" href="index.html#english">Englisch</a>
+            <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+            <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
+            <a class="switch-link" href="projektstatus.html">Projektstatus</a>
+            <a class="switch-link" href="terminplaner.html">Terminplaner</a>
+            <a class="switch-link active" href="schulungen.html">Schulungen</a>
+            <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
+            <a class="switch-link" href="index.html">Lernzentrum</a>
+        </nav>
+
+        <section class="context-box" aria-labelledby="trainingContextHeading">
+            <span class="context-label">Wo bin ich gerade?</span>
+            <p id="trainingContextHeading">Hier verwaltest du Online-Schulungen mit Fristen, Themen, Notizen und Zertifikaten.</p>
+        </section>
+
+        <header class="hero tool-page-header">
+            <div class="hero-copy">
+                <p class="eyebrow">Weiterbildung</p>
+                <h1>Schulungsplaner</h1>
+                <p class="hero-text">Erfasse jede Schulung, setze ein Abschlussdatum und behalte den Überblick, damit keine Weiterbildung liegen bleibt.</p>
+                <div class="hero-actions">
+                    <a class="primary-button tool-link" href="index.html">Zur Startauswahl</a>
+                    <a class="secondary-button tool-link" href="terminplaner.html">Zum Terminplaner</a>
+                </div>
+            </div>
+            <div class="hero-panel">
+                <div class="panel-card accent-card">
+                    <span class="panel-label">Hinweis</span>
+                    <strong>PDF-Zertifikate erfassen</strong>
+                    <div class="shortcut-features">
+                        <a class="shortcut-item" href="#trainingCertificates" aria-label="Zum PDF-Upload springen">
+                            <span class="shortcut-icon">📦</span>
+                            <span class="shortcut-label">PDF</span>
+                        </a>
+                        <a class="shortcut-item" href="#trainingListHeading" aria-label="Zur Schulungsliste springen">
+                            <span class="shortcut-icon">💾</span>
+                            <span class="shortcut-label">Lokal</span>
+                        </a>
+                        <a class="shortcut-item" href="#trainingCertificates" aria-label="Zum Zertifikatsbereich springen">
+                            <span class="shortcut-icon">🏆</span>
+                            <span class="shortcut-label">Zertifikat</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="section-block" aria-labelledby="trainingFormHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Eingabe</p>
+                    <h2 id="trainingFormHeading">Neue Schulung anlegen</h2>
+                </div>
+                <form id="trainingForm" class="tool-form-grid">
+                    <div>
+                        <label class="input-label" for="trainingDescription">Schulung Beschreibung</label>
+                        <input id="trainingDescription" class="text-field" type="text" maxlength="120" required>
+                    </div>
+                    <div>
+                        <label class="input-label" for="trainingProvider">Anbieter</label>
+                        <input id="trainingProvider" class="text-field" type="text" maxlength="100" required>
+                    </div>
+                    <div class="full-width">
+                        <label class="input-label" for="trainingLink">Link zur Seite</label>
+                        <input id="trainingLink" class="text-field" type="url" maxlength="300" placeholder="https://..." required>
+                    </div>
+                    <div class="full-width">
+                        <label class="input-label" for="trainingTopics">Themen</label>
+                        <input id="trainingTopics" class="text-field" type="text" maxlength="200" placeholder="z. B. Power BI, SAP Reporting, Datenvisualisierung" required>
+                    </div>
+                    <div>
+                        <label class="input-label" for="trainingStartDate">Startdatum</label>
+                        <input id="trainingStartDate" class="text-field" type="date" required>
+                    </div>
+                    <div>
+                        <label class="input-label" for="trainingTargetEndDate">Gesetztes Abschlussdatum</label>
+                        <input id="trainingTargetEndDate" class="text-field" type="date" required>
+                    </div>
+                    <div>
+                        <label class="input-label" for="trainingStatus">Status</label>
+                        <select id="trainingStatus" class="text-field" required>
+                            <option value="Nicht gestartet">Nicht gestartet</option>
+                            <option value="In Arbeit">In Arbeit</option>
+                            <option value="Abgeschlossen">Abgeschlossen</option>
+                        </select>
+                    </div>
+                    <div class="full-width">
+                        <label class="input-label" for="trainingNotes">Sonstige Notizen (max. 500 Zeichen)</label>
+                        <textarea id="trainingNotes" class="text-answer-input compact" rows="5" maxlength="500" placeholder="Notizen, Lernfortschritt, offene Punkte ..."></textarea>
+                        <p id="trainingNotesCounter" class="inline-note">0 / 500 Zeichen</p>
+                    </div>
+                    <div class="full-width">
+                        <label class="input-label" for="trainingCertificates">PDF-Zertifikate</label>
+                        <input id="trainingCertificates" class="text-field" type="file" accept="application/pdf,.pdf" multiple>
+                        <p id="trainingCertificatesHint" class="inline-note">Du kannst mehrere PDF-Dateien auswählen.</p>
+                    </div>
+                    <div class="full-width hero-actions">
+                        <button id="saveTrainingButton" class="primary-button" type="submit">Speichern</button>
+                        <button id="clearTrainingForm" class="secondary-button" type="button">Eingabe leeren</button>
+                    </div>
+                </form>
+                <p id="trainingFeedback" class="inline-note" aria-live="polite"></p>
+            </section>
+
+            <section class="section-block" aria-labelledby="trainingListHeading">
+                <div class="section-header">
+                    <p class="section-kicker">Übersicht</p>
+                    <h2 id="trainingListHeading">Gespeicherte Schulungen</h2>
+                </div>
+                <div id="trainingReminderBox" class="feedback-box info" aria-live="polite">
+                    Keine offenen Frist-Erinnerungen.
+                </div>
+                <div class="tool-form-grid training-filter-row">
+                    <div>
+                        <label class="input-label" for="trainingFilterStatus">Filter nach Status</label>
+                        <select id="trainingFilterStatus" class="text-field">
+                            <option value="alle">Alle</option>
+                            <option value="Nicht gestartet">Nicht gestartet</option>
+                            <option value="In Arbeit">In Arbeit</option>
+                            <option value="Abgeschlossen">Abgeschlossen</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="input-label" for="trainingSortBy">Sortieren nach</label>
+                        <select id="trainingSortBy" class="text-field">
+                            <option value="deadline-asc">Fälligkeit (früh zuerst)</option>
+                            <option value="deadline-desc">Fälligkeit (spät zuerst)</option>
+                            <option value="status">Status</option>
+                            <option value="provider-asc">Anbieter (A-Z)</option>
+                            <option value="provider-desc">Anbieter (Z-A)</option>
+                        </select>
+                    </div>
+                    <div class="filter-toggle-wrap">
+                        <label class="placement-option" for="trainingFilterOverdueOnly">
+                            <input id="trainingFilterOverdueOnly" type="checkbox">
+                            <span>Nur überfällige Schulungen anzeigen</span>
+                        </label>
+                    </div>
+                </div>
+                <ul id="trainingEntries" class="tool-list"></ul>
+            </section>
+        </main>
+
+        <a class="floating-start-button" href="index.html">Zur Startauswahl</a>
+    </div>
+
+    <script src="js/schulungen.js"></script>
+</body>
+</html>
+

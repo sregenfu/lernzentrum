@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Learning - KI Lernzentrum</title>
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .shell { width: 100%; max-width: none; margin: 0; padding: 0 0 64px; }
+        .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 14px; }
+        .topic-hero-card { position: relative; padding-right: 450px; min-height: 220px; }
+        .topic-shortcut-card { position: absolute; top: 22px; right: 22px; width: 400px; max-width: calc(100% - 44px); }
+        .muted { color: var(--muted); line-height: 1.65; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 12px; }
+        .box { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: rgba(15,23,42,0.04); }
+        .btn { border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; text-decoration: none; color: inherit; font-weight: 700; display: inline-flex; }
+
+        @media (max-width: 980px) {
+            .topic-hero-card { padding-right: 22px; min-height: unset; }
+            .topic-shortcut-card { position: static; width: 100%; max-width: 400px; margin-top: 12px; margin-left: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+    <nav class="global-switcher" aria-label="Bereiche">
+        <a class="switch-link" href="index.html#english">Englisch</a>
+        <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+        <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
+        <a class="switch-link" href="projektstatus.html">Projektstatus</a>
+        <a class="switch-link" href="terminplaner.html">Terminplaner</a>
+        <a class="switch-link" href="schulungen.html">Schulungen</a>
+
+        <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
+        <a class="switch-link active" href="index.html">Lernzentrum</a>
+    </nav>
+
+    <main class="shell">
+        <section class="card topic-hero-card">
+            <h1 style="margin:0;">Deep Learning</h1>
+            <p class="muted">Fokus auf neurale Networks, Optimierung, Architekturen und Framework-Entscheidungen fuer reale Projekte.</p>
+            <a class="btn" href="ki-lernzentrum.html">Zur Themenauswahl</a>
+            <div class="panel-card accent-card topic-shortcut-card">
+                <span class="panel-label">Navigation</span>
+                <strong>Zum Thema</strong>
+                <div class="shortcut-features">
+                    <a class="shortcut-item" href="#content" aria-label="Zu Neurale Networks springen">
+                        <span class="shortcut-icon">🧠</span>
+                        <span class="shortcut-label">Networks</span>
+                    </a>
+                    <a class="shortcut-item" href="#architecture" aria-label="Zu Architekturen springen">
+                        <span class="shortcut-icon">🏗️</span>
+                        <span class="shortcut-label">Architektur</span>
+                    </a>
+                    <a class="shortcut-item" href="ki-lernzentrum.html" aria-label="Zur Themenauswahl">
+                        <span class="shortcut-icon">🔙</span>
+                        <span class="shortcut-label">Zurück</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="card" id="content">
+            <h2 style="margin-top:0;">Neurale Networks</h2>
+            <div class="grid">
+                <article class="box"><strong>Forward/Backward Pass</strong><p class="muted">Verstehe Signalfluss, Fehler und Gewichtsupdate.</p></article>
+                <article class="box"><strong>Aktivierungen</strong><p class="muted">ReLU, GELU, Sigmoid: wann sinnvoll, wann riskant?</p></article>
+                <article class="box"><strong>Regularisierung</strong><p class="muted">Dropout, Weight Decay, Early Stopping praktisch einsetzen.</p></article>
+            </div>
+        </section>
+
+        <section class="card" id="architecture">
+            <h2 style="margin-top:0;">Optimierung, Architekturen, Frameworks</h2>
+            <div class="grid">
+                <article class="box"><strong>Optimierung</strong><p class="muted">SGD, AdamW, Scheduler und Gradient Clipping abstimmen.</p></article>
+                <article class="box"><strong>Architekturen</strong><p class="muted">CNN, RNN, Transformer je nach Datenart und Ziel.</p></article>
+                <article class="box"><strong>Frameworks</strong><p class="muted">PyTorch, TensorFlow, JAX nach Team und Deployment waehlen.</p></article>
+            </div>
+            <p style="margin-top:12px;"><a class="btn" href="ki-thema-quiz.html#dlQuiz">DL Quiz starten</a></p>
+        </section>
+    </main>
+    </div>
+</body>
+</html>
+

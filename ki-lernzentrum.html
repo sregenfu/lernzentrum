@@ -1,0 +1,741 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lernzentrum / KI Lernzentrum - Themenhub</title>
+    <meta name="description" content="Themenhub für MCP, Machine Learning, Deep Learning, Modelle/Tools, Chatbot-Aufbau und themenspezifische Quizzes.">
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .ki-shell {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 0 0 64px;
+        }
+
+        .ki-hero,
+        .ki-card,
+        .ki-board {
+            background: var(--surface, #ffffff);
+            border: 1px solid var(--line, #d7dce3);
+            border-radius: 20px;
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+        }
+
+        .ki-hero {
+            position: relative;
+            padding: 30px;
+            padding-right: 460px;
+            margin-bottom: 22px;
+            background:
+                radial-gradient(circle at top right, rgba(7, 152, 167, 0.2), transparent 35%),
+                radial-gradient(circle at bottom left, rgba(201, 111, 59, 0.14), transparent 35%),
+                var(--surface, #ffffff);
+        }
+
+        .ki-shortcut-card {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 400px;
+            max-width: calc(100% - 60px);
+        }
+
+        .ki-kicker {
+            margin: 0 0 8px;
+            color: var(--accent, #0798a7);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+        }
+
+        .ki-title {
+            margin: 0;
+            font-size: clamp(2rem, 4vw, 3.3rem);
+            line-height: 1.06;
+        }
+
+        .ki-copy {
+            margin: 14px 0 0;
+            max-width: 830px;
+            color: var(--muted, #586174);
+            line-height: 1.7;
+        }
+
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+        }
+
+        .hero-progress-panel {
+            margin-top: 14px;
+            display: grid;
+            gap: 10px;
+            max-width: 760px;
+        }
+
+        .hero-progress-text,
+        .hero-filter-text {
+            margin: 0;
+            color: var(--muted, #586174);
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .hero-progress-track {
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.12);
+            overflow: hidden;
+        }
+
+        .hero-progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #0798a7, #6b9345);
+            transition: width 220ms ease;
+        }
+
+        .hero-filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .hero-filter-row label {
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+            color: var(--muted, #586174);
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .hero-filter-row select {
+            border-radius: 10px;
+            border: 1px solid var(--line, #d7dce3);
+            background: var(--surface, #ffffff);
+            color: inherit;
+            font: inherit;
+            padding: 8px 10px;
+        }
+
+        .ki-card {
+            padding: 22px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background:
+                linear-gradient(165deg, rgba(255, 255, 255, 0.98), rgba(246, 252, 255, 0.9));
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+            transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+        }
+
+        .ki-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 34px rgba(15, 23, 42, 0.12);
+            border-color: rgba(7, 152, 167, 0.42);
+        }
+
+        .ki-card h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            min-height: 56px;
+        }
+
+        .ki-card p {
+            margin: 10px 0 14px;
+            color: var(--muted, #586174);
+            line-height: 1.6;
+            min-height: 88px;
+        }
+
+        .topic-controls {
+            display: grid;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        .topic-controls label {
+            display: grid;
+            gap: 4px;
+            font-size: 0.83rem;
+            color: var(--muted, #586174);
+            font-weight: 600;
+        }
+
+        .topic-controls select {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--line, #d7dce3);
+            background: var(--surface, #ffffff);
+            color: inherit;
+            font: inherit;
+            padding: 8px 10px;
+        }
+
+        .topic-meta-row {
+            display: grid;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .topic-progress-text,
+        .topic-favorite-text {
+            margin: 0;
+            color: var(--muted, #586174);
+            font-size: 0.84rem;
+            line-height: 1.45;
+        }
+
+        .topic-progress-track {
+            width: 100%;
+            height: 9px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.1);
+            overflow: hidden;
+        }
+
+        .topic-progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #0798a7, #6b9345);
+            transition: width 220ms ease;
+        }
+
+        .chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+            min-height: 72px;
+            align-content: flex-start;
+        }
+
+        .chip {
+            border: 1px solid var(--line, #d7dce3);
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            color: var(--muted, #586174);
+            background: rgba(7, 152, 167, 0.08);
+        }
+
+        .link-button,
+        .ghost-button,
+        .primary-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 10px 14px;
+            text-decoration: none;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .link-button,
+        .primary-button {
+            border: 1px solid transparent;
+            background: linear-gradient(135deg, #c96f3b, #a44d20);
+            color: #fff;
+        }
+
+        .ghost-button {
+            border: 1px solid var(--line, #d7dce3);
+            background: transparent;
+            color: inherit;
+        }
+
+        .ki-board {
+            margin-top: 24px;
+            padding: 24px;
+            background:
+                radial-gradient(circle at top right, rgba(7, 152, 167, 0.18), transparent 42%),
+                radial-gradient(circle at bottom left, rgba(201, 111, 59, 0.14), transparent 38%),
+                var(--surface, #ffffff);
+        }
+
+        .board-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .board-head p {
+            margin: 8px 0 0;
+            color: var(--muted, #586174);
+        }
+
+        .board-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .task-grid {
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+        }
+
+        .task-card {
+            border: 1px solid var(--line, #d7dce3);
+            border-radius: 16px;
+            padding: 14px;
+            background: linear-gradient(165deg, rgba(255, 255, 255, 0.96), rgba(245, 250, 255, 0.88));
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            display: grid;
+            align-content: start;
+            gap: 8px;
+        }
+
+        .task-card h3 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .task-card p {
+            margin: 8px 0 12px;
+            color: var(--muted, #586174);
+            min-height: 44px;
+        }
+
+        .task-form {
+            display: grid;
+            gap: 8px;
+        }
+
+        .task-form input,
+        .task-form textarea {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--line, #d7dce3);
+            padding: 9px 10px;
+            font: inherit;
+            color: inherit;
+            background: rgba(255, 255, 255, 0.88);
+        }
+
+        .task-form .primary-button {
+            width: 100%;
+            margin-top: 2px;
+        }
+
+        .task-form textarea {
+            min-height: 74px;
+            resize: vertical;
+        }
+
+        .task-list {
+            margin-top: 10px;
+            display: grid;
+            gap: 8px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            border: 1px solid var(--line, #d7dce3);
+            border-radius: 12px;
+            padding: 10px;
+            background: rgba(15, 23, 42, 0.04);
+        }
+
+        .task-item strong {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .task-item span {
+            color: var(--muted, #586174);
+            font-size: 0.86rem;
+        }
+
+        .status-text {
+            margin-top: 14px;
+            min-height: 1.3em;
+            color: var(--muted, #586174);
+            font-size: 0.9rem;
+        }
+
+        :root[data-theme='dark'] .ki-board {
+            background:
+                radial-gradient(circle at top right, rgba(20, 184, 196, 0.2), transparent 42%),
+                radial-gradient(circle at bottom left, rgba(201, 111, 59, 0.2), transparent 38%),
+                var(--surface, rgba(16, 25, 36, 0.92));
+        }
+
+        :root[data-theme='dark'] .task-card {
+            background: linear-gradient(165deg, rgba(18, 33, 49, 0.95), rgba(13, 24, 37, 0.95));
+            border-color: rgba(159, 176, 202, 0.28);
+            box-shadow: 0 16px 30px rgba(0, 0, 0, 0.28);
+        }
+
+        :root[data-theme='dark'] .task-card h3 {
+            color: #eef5ff;
+        }
+
+        :root[data-theme='dark'] .task-card p {
+            color: #b6c6db;
+        }
+
+        :root[data-theme='dark'] .task-form input,
+        :root[data-theme='dark'] .task-form textarea {
+            background: rgba(8, 17, 28, 0.9);
+            border-color: rgba(159, 176, 202, 0.26);
+            color: #eaf2ff;
+        }
+
+        :root[data-theme='dark'] .task-form input::placeholder,
+        :root[data-theme='dark'] .task-form textarea::placeholder {
+            color: #90a6c2;
+        }
+
+        :root[data-theme='dark'] .task-item {
+            background: rgba(158, 176, 202, 0.12);
+            border-color: rgba(159, 176, 202, 0.26);
+        }
+
+        :root[data-theme='dark'] .task-item strong {
+            color: #f3f7ff;
+        }
+
+        :root[data-theme='dark'] .task-item span {
+            color: #b8c8dc;
+        }
+
+        :root[data-theme='dark'] .task-card .ghost-button {
+            background: rgba(8, 17, 28, 0.72);
+            border-color: rgba(159, 176, 202, 0.28);
+        }
+
+        :root[data-theme='dark'] .task-card .ghost-button:hover {
+            background: rgba(20, 34, 50, 0.94);
+        }
+
+        :root[data-theme='dark'] .ki-card {
+            background: linear-gradient(165deg, rgba(19, 33, 48, 0.96), rgba(13, 24, 37, 0.96));
+            border-color: rgba(159, 176, 202, 0.3);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+        }
+
+        :root[data-theme='dark'] .ki-card:hover {
+            border-color: rgba(76, 210, 160, 0.44);
+            box-shadow: 0 22px 36px rgba(0, 0, 0, 0.34);
+        }
+
+        :root[data-theme='dark'] .topic-controls {
+            border-top-color: rgba(159, 176, 202, 0.22);
+        }
+
+        :root[data-theme='dark'] .chip {
+            background: rgba(158, 176, 202, 0.16);
+            border-color: rgba(159, 176, 202, 0.34);
+            color: #d8e4f4;
+        }
+
+        .page-breadcrumb {
+            margin: 16px 0 0;
+            font-size: 0.95rem;
+            color: var(--muted, #586174);
+        }
+
+        .page-breadcrumb a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        .page-breadcrumb strong {
+            font-weight: 700;
+        }
+
+        @media (max-width: 800px) {
+            .ki-hero {
+                padding: 24px;
+            }
+
+            .ki-shortcut-card {
+                position: static;
+                width: 100%;
+                max-width: 400px;
+                margin-top: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+    <nav class="global-switcher" aria-label="Bereiche">
+        <a class="switch-link" href="index.html#english">Englisch</a>
+        <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+        <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
+        <a class="switch-link" href="projektstatus.html">Projektstatus</a>
+        <a class="switch-link" href="terminplaner.html">Terminplaner</a>
+        <a class="switch-link" href="schulungen.html">Schulungen</a>
+        <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
+        <a class="switch-link" href="index.html">Lernzentrum</a>
+    </nav>
+    <div class="page-breadcrumb">
+        <a href="index.html">Lernzentrum</a> › <strong>KI Lernzentrum</strong>
+    </div>
+
+    <main class="ki-shell">
+        <section class="ki-hero">
+            <p class="ki-kicker">Neues Lernkonzept</p>
+            <h1 class="ki-title">KI Lernzentrum als Themenhub</h1>
+            <p class="ki-copy">
+                Alle Themen sind sofort freigeschaltet. Du lernst nicht mehr tageweise mit Sperren,
+                sondern springst direkt in die Unterseiten: MCP, ML, Deep Learning, Modelle & Tools,
+                Chatbot-Aufbau und mehrere Quizzes für ML, DL, Data Science und Python.
+            </p>
+            <div class="panel-card accent-card ki-shortcut-card">
+                <span class="panel-label">Navigation</span>
+                <strong>Lernpfad wählen</strong>
+                <div class="shortcut-features">
+                    <a class="shortcut-item" href="#topicGrid" aria-label="Zu Themengrid springen">
+                        <span class="shortcut-icon">🗂️</span>
+                        <span class="shortcut-label">Themen</span>
+                    </a>
+                    <a class="shortcut-item" href="#aufgabenboard" aria-label="Zum Aufgabenboard springen">
+                        <span class="shortcut-icon">📋</span>
+                        <span class="shortcut-label">Board</span>
+                    </a>
+                    <a class="shortcut-item" href="#topicCompletionFilter" aria-label="Zu Filteroptionen springen">
+                        <span class="shortcut-icon">🔍</span>
+                        <span class="shortcut-label">Filter</span>
+                    </a>
+                </div>
+            </div>
+            <div class="board-actions" style="margin-top:16px;">
+                <a class="ghost-button" href="index.html">Zur Startseite</a>
+                <a class="ghost-button" href="#aufgabenboard">Zum Aufgabenboard</a>
+            </div>
+            <div class="hero-progress-panel">
+                <p id="overallProgressText" class="hero-progress-text">Gesamtfortschritt wird geladen.</p>
+                <p id="weeklyTopText" class="hero-filter-text">Top-Thema dieser Woche wird geladen.</p>
+                <div class="hero-progress-track" aria-hidden="true">
+                    <div id="overallProgressFill" class="hero-progress-fill"></div>
+                </div>
+                <div class="hero-filter-row">
+                    <label for="topicCompletionFilter">Themenfilter:
+                        <select id="topicCompletionFilter">
+                            <option value="all">Alle Themen</option>
+                            <option value="open">Nur offen</option>
+                            <option value="done">Nur erledigt</option>
+                            <option value="progress">Nur mit Fortschritt</option>
+                        </select>
+                    </label>
+                    <button id="resetTopicProgressButton" class="ghost-button" type="button">Fortschritt zurücksetzen</button>
+                </div>
+                <p id="filterStatusText" class="hero-filter-text"></p>
+            </div>
+        </section>
+
+        <section class="topic-grid" aria-label="Themenauswahl" id="topicGrid">
+            <article class="ki-card" data-topic-key="mcp">
+                <h2>Model Context Protocol (MCP)</h2>
+                <p>Model Context Protocol, Agent-Prompts, Tool-Limits und robuste Kontextmodelle.</p>
+                <div class="chip-list">
+                    <span class="chip">Agenten</span>
+                    <span class="chip">Tool-Scopes</span>
+                    <span class="chip">Sicherheit</span>
+                </div>
+                <div class="topic-controls">
+                    <label>Schwierigkeit
+                        <select data-level-select>
+                            <option value="basis">Basis</option>
+                            <option value="praxis">Praxis</option>
+                            <option value="profi">Profi</option>
+                        </select>
+                    </label>
+                    <label>Inhalt
+                        <select data-module-select>
+                            <option value="grundlagen">Grundlagen</option>
+                            <option value="agent-prompts">Agent-Prompts</option>
+                            <option value="tool-scopes">Tool-Scopes</option>
+                            <option value="fallbacks">Fallbacks</option>
+                        </select>
+                    </label>
+                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
+                </div>
+            </article>
+
+            <article class="ki-card" data-topic-key="ml">
+                <h2>Machine Learning</h2>
+                <p>Konzepte, Daten, Features, Evaluationsmetriken und Prompting für ML-Aufgaben.</p>
+                <div class="chip-list">
+                    <span class="chip">Daten</span>
+                    <span class="chip">Metriken</span>
+                    <span class="chip">Pipelines</span>
+                </div>
+                <div class="topic-controls">
+                    <label>Schwierigkeit
+                        <select data-level-select>
+                            <option value="basis">Basis</option>
+                            <option value="praxis">Praxis</option>
+                            <option value="profi">Profi</option>
+                        </select>
+                    </label>
+                    <label>Inhalt
+                        <select data-module-select>
+                            <option value="daten">Datenbasis</option>
+                            <option value="features">Feature Engineering</option>
+                            <option value="metriken">Metriken</option>
+                            <option value="pipelines">Pipelines</option>
+                        </select>
+                    </label>
+                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
+                </div>
+            </article>
+
+            <article class="ki-card" data-topic-key="dl">
+                <h2>Deep Learning</h2>
+                <p>Neurale Networks, Optimierung, Architekturen und Framework-Auswahl.</p>
+                <div class="chip-list">
+                    <span class="chip">Neurale Networks</span>
+                    <span class="chip">Optimierung</span>
+                    <span class="chip">Frameworks</span>
+                </div>
+                <div class="topic-controls">
+                    <label>Schwierigkeit
+                        <select data-level-select>
+                            <option value="basis">Basis</option>
+                            <option value="praxis">Praxis</option>
+                            <option value="profi">Profi</option>
+                        </select>
+                    </label>
+                    <label>Inhalt
+                        <select data-module-select>
+                            <option value="neurale-netzwerke">Neurale Networks</option>
+                            <option value="optimierung">Optimierung</option>
+                            <option value="architekturen">Architekturen</option>
+                            <option value="frameworks">Frameworks</option>
+                        </select>
+                    </label>
+                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
+                </div>
+            </article>
+
+            <article class="ki-card" data-topic-key="modelle-tools">
+                <h2>Modelle und Tools</h2>
+                <p>Tool-Konzepte, Praxistipps und Auswahlhilfen für verschiedene Arbeitskontexte.</p>
+                <div class="chip-list">
+                    <span class="chip">Tools</span>
+                    <span class="chip">Konzept</span>
+                    <span class="chip">Praxistipps</span>
+                </div>
+                <div class="topic-controls">
+                    <label>Schwierigkeit
+                        <select data-level-select>
+                            <option value="basis">Basis</option>
+                            <option value="praxis">Praxis</option>
+                            <option value="profi">Profi</option>
+                        </select>
+                    </label>
+                    <label>Inhalt
+                        <select data-module-select>
+                            <option value="tools">Tools</option>
+                            <option value="konzept">Konzept</option>
+                            <option value="praxistipps">Praxistipps</option>
+                        </select>
+                    </label>
+                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
+                </div>
+            </article>
+
+            <article class="ki-card" data-topic-key="chatbot">
+                <h2>Chatbot-Aufbau</h2>
+                <p>Schritte für Planung, Datenbasis, Dialoglogik, Evaluation und Rollout.</p>
+                <div class="chip-list">
+                    <span class="chip">Planung</span>
+                    <span class="chip">Dialogfluss</span>
+                    <span class="chip">Qualitaet</span>
+                </div>
+                <div class="topic-controls">
+                    <label>Schwierigkeit
+                        <select data-level-select>
+                            <option value="basis">Basis</option>
+                            <option value="praxis">Praxis</option>
+                            <option value="profi">Profi</option>
+                        </select>
+                    </label>
+                    <label>Inhalt
+                        <select data-module-select>
+                            <option value="ziele">Ziele und Scope</option>
+                            <option value="datenbasis">Datenbasis</option>
+                            <option value="dialogdesign">Dialogdesign</option>
+                            <option value="evaluation">Evaluation und Rollout</option>
+                        </select>
+                    </label>
+                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
+                </div>
+            </article>
+
+            <article class="ki-card" data-topic-key="quiz">
+                <h2>Quizzes nach Thema</h2>
+                <p>Mehrere Quiz-Sets für ML, DL, Data Science und Python statt nur ein Wiederholungsquiz.</p>
+                <div class="chip-list">
+                    <span class="chip">ML Quiz</span>
+                    <span class="chip">DL Quiz</span>
+                    <span class="chip">Data Science Quiz</span>
+                    <span class="chip">Python Quiz</span>
+                </div>
+                <div class="topic-controls">
+                    <label>Schwierigkeit
+                        <select data-level-select>
+                            <option value="basis">Basis</option>
+                            <option value="praxis">Praxis</option>
+                            <option value="profi">Profi</option>
+                        </select>
+                    </label>
+                    <label>Inhalt
+                        <select data-module-select>
+                            <option value="ml-quiz">ML Quiz</option>
+                            <option value="dl-quiz">DL Quiz</option>
+                            <option value="ds-quiz">Data Science Quiz</option>
+                            <option value="python-quiz">Python Quiz</option>
+                        </select>
+                    </label>
+                    <button class="link-button" type="button" data-open-topic>Thema starten</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="ki-board" id="aufgabenboard" aria-labelledby="boardHeading">
+            <div class="board-head">
+                <div>
+                    <p class="ki-kicker">Aufgaben ohne Tagesbindung</p>
+                    <h2 id="boardHeading" style="margin:0;">Aufgabenboard mit Datumsnotiz</h2>
+                    <p>Jede Aufgabe wird frei einem Datum zugeordnet und in der passenden Kategorie gespeichert.</p>
+                </div>
+                <div class="board-actions">
+                    <button class="ghost-button" type="button" id="exportTaskBoardButton">Board exportieren</button>
+                    <button class="ghost-button" type="button" id="resetTaskBoardButton">Alle Notizen löschen</button>
+                </div>
+            </div>
+
+            <div id="taskBoardGrid" class="task-grid" aria-live="polite"></div>
+            <p id="taskBoardStatus" class="status-text"></p>
+        </section>
+    </main>
+
+    </div>
+
+    <script src="js/ki-lernzentrum.js"></script>
+</body>
+</html>
+

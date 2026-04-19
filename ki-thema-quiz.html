@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Themen-Quizzes - KI Lernzentrum</title>
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .shell { width: 100%; max-width: none; margin: 0; padding: 0 0 64px; }
+        .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 14px; }
+        .topic-hero-card { position: relative; padding-right: 450px; min-height: 220px; }
+        .topic-shortcut-card { position: absolute; top: 22px; right: 22px; width: 400px; max-width: calc(100% - 44px); }
+        .muted { color: var(--muted); line-height: 1.65; }
+        .quiz-grid { display: grid; gap: 14px; }
+        .quiz-card { border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: rgba(15,23,42,0.04); }
+        .quiz-card h2 { margin: 0 0 8px; font-size: 1.1rem; }
+        .quiz-card fieldset { border: 1px solid var(--line); border-radius: 10px; margin: 8px 0; padding: 10px; }
+        .quiz-card legend { font-weight: 700; }
+        .quiz-card label { display: block; margin-top: 6px; }
+        .result { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+        .btn, .primary { border-radius: 999px; padding: 9px 14px; text-decoration: none; font-weight: 700; font: inherit; cursor: pointer; }
+        .btn { border: 1px solid var(--line); color: inherit; display: inline-flex; }
+        .primary { border: 1px solid transparent; background: linear-gradient(135deg, #c96f3b, #a44d20); color: #fff; }
+
+        @media (max-width: 980px) {
+            .topic-hero-card { padding-right: 22px; min-height: unset; }
+            .topic-shortcut-card { position: static; width: 100%; max-width: 400px; margin-top: 12px; margin-left: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+    <nav class="global-switcher" aria-label="Bereiche">
+        <a class="switch-link" href="index.html#english">Englisch</a>
+        <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+        <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
+        <a class="switch-link" href="projektstatus.html">Projektstatus</a>
+        <a class="switch-link" href="terminplaner.html">Terminplaner</a>
+        <a class="switch-link" href="schulungen.html">Schulungen</a>
+
+        <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
+        <a class="switch-link active" href="index.html">Lernzentrum</a>
+    </nav>
+
+    <main class="shell">
+        <section class="card topic-hero-card">
+            <h1 style="margin:0;">Mehrere Quizzes nach Thema</h1>
+            <p class="muted">Je Thema ein eigenes Quiz: Machine Learning, Deep Learning, Data Science und Python.</p>
+            <a class="btn" href="ki-lernzentrum.html">Zur Themenauswahl</a>
+            <div class="panel-card accent-card topic-shortcut-card">
+                <span class="panel-label">Navigation</span>
+                <strong>Quiz-Bereich</strong>
+                <div class="shortcut-features">
+                    <a class="shortcut-item" href="#allQuizzes" aria-label="Zu Quizzes springen">
+                        <span class="shortcut-icon">📚</span>
+                        <span class="shortcut-label">Alle</span>
+                    </a>
+                    <a class="shortcut-item" href="ki-lernzentrum.html" aria-label="Zur Themenauswahl">
+                        <span class="shortcut-icon">🔙</span>
+                        <span class="shortcut-label">Hub</span>
+                    </a>
+                    <a class="shortcut-item" href="index.html" aria-label="Zur Startseite">
+                        <span class="shortcut-icon">🏠</span>
+                        <span class="shortcut-label">Start</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="quiz-grid" id="allQuizzes">
+            <article class="quiz-card" id="mlQuiz" data-quiz="ml">
+                <h2>ML Quiz</h2>
+                <form>
+                    <fieldset>
+                        <legend>Welche Metrik ist bei unausgewogenen Klassen oft wichtiger als Accuracy?</legend>
+                        <label><input type="radio" name="q1" value="a"> Precision/Recall</label>
+                        <label><input type="radio" name="q1" value="b"> Nur Accuracy</label>
+                        <label><input type="radio" name="q1" value="c"> Lernrate</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was bedeutet Overfitting?</legend>
+                        <label><input type="radio" name="q2" value="a"> Modell lernt Rauschen statt Muster</label>
+                        <label><input type="radio" name="q2" value="b"> Zu wenige Features</label>
+                        <label><input type="radio" name="q2" value="c"> Falsches Dateiformat</label>
+                    </fieldset>
+                    <button class="primary" type="submit">ML Quiz auswerten</button>
+                </form>
+                <p class="result" aria-live="polite"></p>
+            </article>
+
+            <article class="quiz-card" id="dlQuiz" data-quiz="dl">
+                <h2>DL Quiz</h2>
+                <form>
+                    <fieldset>
+                        <legend>Was macht Backpropagation?</legend>
+                        <label><input type="radio" name="q1" value="a"> Berechnet Gradienten für Gewichtsupdate</label>
+                        <label><input type="radio" name="q1" value="b"> Komprimiert Bilder</label>
+                        <label><input type="radio" name="q1" value="c"> Entfernt Labels</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Welche Architektur ist häufig für Bildklassifikation?</legend>
+                        <label><input type="radio" name="q2" value="a"> CNN</label>
+                        <label><input type="radio" name="q2" value="b"> Nur lineare Regression</label>
+                        <label><input type="radio" name="q2" value="c"> KNN</label>
+                    </fieldset>
+                    <button class="primary" type="submit">DL Quiz auswerten</button>
+                </form>
+                <p class="result" aria-live="polite"></p>
+            </article>
+
+            <article class="quiz-card" id="dsQuiz" data-quiz="ds">
+                <h2>Data Science Quiz</h2>
+                <form>
+                    <fieldset>
+                        <legend>Was ist ein erster Schritt in jeder Analyse?</legend>
+                        <label><input type="radio" name="q1" value="a"> Daten explorieren</label>
+                        <label><input type="radio" name="q1" value="b"> Modell sofort deployen</label>
+                        <label><input type="radio" name="q1" value="c"> Alle Features löschen</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wofür ist ein Holdout/Testset da?</legend>
+                        <label><input type="radio" name="q2" value="a"> Unabhängige Prüfung der Generalisierung</label>
+                        <label><input type="radio" name="q2" value="b"> Mehr Trainingsdaten simulieren</label>
+                        <label><input type="radio" name="q2" value="c"> Daten sortieren</label>
+                    </fieldset>
+                    <button class="primary" type="submit">Data Science Quiz auswerten</button>
+                </form>
+                <p class="result" aria-live="polite"></p>
+            </article>
+
+            <article class="quiz-card" id="pythonQuiz" data-quiz="python">
+                <h2>Python Quiz</h2>
+                <form>
+                    <fieldset>
+                        <legend>Welche Struktur ist in Python veränderbar?</legend>
+                        <label><input type="radio" name="q1" value="a"> list</label>
+                        <label><input type="radio" name="q1" value="b"> tuple</label>
+                        <label><input type="radio" name="q1" value="c"> str</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wofür nutzt man virtuelle Environments?</legend>
+                        <label><input type="radio" name="q2" value="a"> Abhängigkeiten je Projekt isolieren</label>
+                        <label><input type="radio" name="q2" value="b"> Schnellere CPU erzwingen</label>
+                        <label><input type="radio" name="q2" value="c"> JSON ersetzen</label>
+                    </fieldset>
+                    <button class="primary" type="submit">Python Quiz auswerten</button>
+                </form>
+                <p class="result" aria-live="polite"></p>
+            </article>
+
+            <article class="quiz-card" id="mcpTransfer" data-quiz="mcp">
+                <h2>MCP Transfer-Check</h2>
+                <form>
+                    <fieldset>
+                        <legend>Was gehört in einen stabilen Agentenkontext?</legend>
+                        <label><input type="radio" name="q1" value="a"> Ziel, erlaubte Tools, Grenzen</label>
+                        <label><input type="radio" name="q1" value="b"> Nur ein allgemeiner Satz</label>
+                        <label><input type="radio" name="q1" value="c"> Nur Dateiname</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wozu dienen Fallback-Regeln?</legend>
+                        <label><input type="radio" name="q2" value="a"> Robustes Verhalten bei Fehlern</label>
+                        <label><input type="radio" name="q2" value="b"> Tool-Aufrufe verstecken</label>
+                        <label><input type="radio" name="q2" value="c"> Antworten verlängern</label>
+                    </fieldset>
+                    <button class="primary" type="submit">MCP Check auswerten</button>
+                </form>
+                <p class="result" aria-live="polite"></p>
+            </article>
+        </section>
+    </main>
+
+    </div>
+
+    <script src="js/ki-quiz.js"></script>
+</body>
+</html>
+

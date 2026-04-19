@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamisches KI-Thema</title>
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .topic-shell { width: 100%; max-width: none; margin: 0; padding: 0 0 64px; }
+        .topic-hero, .topic-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08); }
+        .topic-hero { position: relative; padding: 28px; padding-right: 450px; min-height: 220px; margin-bottom: 16px; background: radial-gradient(circle at top right, rgba(7, 152, 167, 0.16), transparent 35%), var(--surface); }
+        .topic-shortcut-card { position: absolute; top: 28px; right: 28px; width: 400px; max-width: calc(100% - 56px); }
+        .topic-kicker { margin: 0 0 8px; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); font-weight: 700; }
+        .topic-title { margin: 0; font-size: clamp(1.9rem, 4vw, 3rem); }
+        .topic-copy { margin: 10px 0 0; color: var(--muted); line-height: 1.65; }
+        .toolbar { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .btn { border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; text-decoration: none; color: inherit; font-weight: 700; background: rgba(7, 152, 167, 0.1); cursor: pointer; transition: background 0.2s; }
+        .btn:hover { background: rgba(7, 152, 167, 0.2); }
+        button.btn { appearance: none; width: 100%; }
+
+        .layout { display: grid; grid-template-columns: 300px 1fr; gap: 14px; }
+        .topic-card { padding: 18px; }
+        .topic-card h2 { margin-top: 0; font-size: 1.08rem; }
+        .topic-card p { color: var(--muted); line-height: 1.6; }
+
+        .select-grid { display: grid; gap: 10px; }
+        .select-grid label { display: grid; gap: 4px; font-size: .84rem; color: var(--muted); font-weight: 600; }
+        .select-grid select { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: var(--surface); color: inherit; font: inherit; }
+
+        .module-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        .meta-chip { border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; font-size: .8rem; background: rgba(15, 23, 42, 0.04); color: var(--muted); }
+
+        .content-list { margin: 0; padding-left: 18px; display: grid; gap: 8px; }
+        .content-list li { line-height: 1.55; }
+
+        .prompt-box { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: rgba(15, 23, 42, 0.04); }
+        .prompt-box strong { display: block; margin-bottom: 6px; }
+        .topic-note { margin-top: 12px; color: var(--muted); font-size: .9rem; }
+        .completion-bar { margin-top: 14px; display: grid; gap: 8px; }
+        .completion-status { margin: 0; color: var(--muted); font-size: .9rem; min-height: 1.3em; }
+
+        @media (max-width: 900px) {
+            .layout { grid-template-columns: 1fr; }
+            .topic-hero { padding-right: 28px; min-height: unset; }
+            .topic-shortcut-card { position: static; width: 100%; max-width: 400px; margin-top: 12px; margin-left: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+    <nav class="global-switcher" aria-label="Bereiche">
+        <a class="switch-link" href="index.html#english">Englisch</a>
+        <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+        <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
+        <a class="switch-link" href="projektstatus.html">Projektstatus</a>
+        <a class="switch-link" href="terminplaner.html">Terminplaner</a>
+        <a class="switch-link" href="schulungen.html">Schulungen</a>
+
+        <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
+        <a class="switch-link active" href="index.html">Lernzentrum</a>
+    </nav>
+
+    <main class="topic-shell">
+        <section class="topic-hero">
+            <p class="topic-kicker">Dynamischer Lernmodus</p>
+            <h1 id="pageTitle" class="topic-title">Thema wird geladen</h1>
+            <p id="pageIntro" class="topic-copy"></p>
+            <div class="toolbar">
+                <a class="btn" href="ki-lernzentrum.html">Zur Themenauswahl</a>
+                <a class="btn" href="ki-thema-quiz.html">Zu den Quizzes</a>
+            </div>
+            <div class="panel-card accent-card topic-shortcut-card">
+                <span class="panel-label">Navigation</span>
+                <strong>Zum Inhalt</strong>
+                <div class="shortcut-features">
+                    <a class="shortcut-item" href="#layout" aria-label="Zu Inhalten springen">
+                        <span class="shortcut-icon">📚</span>
+                        <span class="shortcut-label">Inhalte</span>
+                    </a>
+                    <a class="shortcut-item" href="ki-lernzentrum.html" aria-label="Zur Themenauswahl">
+                        <span class="shortcut-icon">🔙</span>
+                        <span class="shortcut-label">Hub</span>
+                    </a>
+                    <a class="shortcut-item" href="ki-thema-quiz.html" aria-label="Zu den Quizzes">
+                        <span class="shortcut-icon">✅</span>
+                        <span class="shortcut-label">Quiz</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="layout" id="layout">
+            <article class="topic-card">
+                <h2>Auswahl anpassen</h2>
+                <p>Wechsle Thema, Schwierigkeitsstufe und Modul direkt hier, ohne zur Startseite zurueckzugehen.</p>
+                <div class="select-grid">
+                    <label>Thema
+                        <select id="topicSelect"></select>
+                    </label>
+                    <label>Schwierigkeitsstufe
+                        <select id="levelSelect">
+                            <option value="basis">Basis</option>
+                            <option value="praxis">Praxis</option>
+                            <option value="profi">Profi</option>
+                        </select>
+                    </label>
+                    <label>Inhaltsmodul
+                        <select id="moduleSelect"></select>
+                    </label>
+                </div>
+            </article>
+
+            <article class="topic-card">
+                <h2 id="moduleTitle">Modul</h2>
+                <div class="module-meta">
+                    <span class="meta-chip" id="metaTopic"></span>
+                    <span class="meta-chip" id="metaLevel"></span>
+                    <span class="meta-chip" id="metaModule"></span>
+                </div>
+                <ul id="contentList" class="content-list"></ul>
+                <div class="prompt-box">
+                    <strong>Übungsimpuls</strong>
+                    <p id="practicePrompt" style="margin:0;"></p>
+                </div>
+                <div class="completion-bar">
+                    <button id="completeModuleButton" type="button" class="btn">Modul als erledigt markieren</button>
+                    <p id="completionStatus" class="completion-status"></p>
+                </div>
+                <p id="topicNote" class="topic-note"></p>
+            </article>
+        </section>
+    </main>
+
+    </div>
+
+    <script src="js/ki-thema-dynamisch.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,2846 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Englische Zeiten – Kochrezept</title>
+    <script src="js/theme.js"></script>
+    <style>
+        :root {
+            --bg: #f6f1e8;
+            --bg-strong: #efe3d1;
+            --surface: rgba(255, 252, 247, 0.92);
+            --surface-strong: #fffaf2;
+            --text: #1f2430;
+            --muted: #586174;
+            --line: rgba(54, 64, 79, 0.14);
+            --primary: #078a9b;
+            --primary-dark: #078a9b;
+            --secondary: #c96f3b;
+            --danger: #a33c2f;
+            --success: #078a9b;
+            --error: #9b2c2c;
+            --shadow: 0 24px 60px rgba(34, 43, 56, 0.12);
+            --radius-xl: 28px;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --bg-radial-left: rgba(201, 111, 59, 0.18);
+            --bg-radial-right: rgba(37, 99, 235, 0.18);
+            --bg-gradient-top: #fcf7ef;
+            --bg-gradient-bottom: #f3e7d7;
+            --grid-line: rgba(31, 36, 48, 0.04);
+            --content-five-card-width: calc((5 * 300px) + (4 * 20px) + 2px);
+        }
+
+        :root[data-theme='dark'] {
+            --bg: #101820;
+            --bg-strong: #0c141b;
+            --surface: rgba(16, 25, 36, 0.92);
+            --surface-strong: #152230;
+            --text: #e7edf7;
+            --muted: #9eb0c8;
+            --line: rgba(159, 176, 202, 0.24);
+            --primary: #2cc6da;
+            --primary-dark: #66dbea;
+            --secondary: #f2aa6f;
+            --danger: #ff8f85;
+            --success: #4cd2a0;
+            --error: #ff8f85;
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+            --bg-radial-left: rgba(230, 139, 74, 0.16);
+            --bg-radial-right: rgba(61, 182, 224, 0.18);
+            --bg-gradient-top: #131d27;
+            --bg-gradient-bottom: #0c141c;
+            --grid-line: rgba(222, 232, 246, 0.06);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: "Aptos", "Segoe UI Variable", "Trebuchet MS", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, var(--bg-radial-left), transparent 28%),
+                radial-gradient(circle at top right, var(--bg-radial-right), transparent 24%),
+                linear-gradient(180deg, var(--bg-gradient-top) 0%, var(--bg) 48%, var(--bg-gradient-bottom) 100%);
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 88%);
+        }
+
+        h1, h2, h3, strong { font-family: "Georgia", "Cambria", serif; }
+
+        /* Theme toggle */
+        .theme-toggle-button {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 30;
+            border: 1px solid rgba(37, 99, 235, 0.25);
+            border-radius: 999px;
+            padding: 0.62rem 0.95rem;
+            font: inherit;
+            font-weight: 700;
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 160ms ease, background-color 160ms ease;
+        }
+
+        :root[data-theme='dark'] .theme-toggle-button {
+            background: rgba(16, 25, 36, 0.9);
+            border-color: rgba(102, 219, 234, 0.4);
+        }
+
+        .container {
+            width: min(80vw, 1700px);
+            margin: 0 auto;
+            padding: 28px 24px 72px;
+            position: relative;
+        }
+
+        /* Navigation */
+        .global-switcher {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .switch-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.55rem 1rem;
+            border-radius: 999px;
+            font: inherit;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--muted);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
+        }
+
+        .switch-link:hover { color: var(--primary); border-color: var(--primary); }
+        .switch-link.active { color: #fff; background: var(--primary); border-color: var(--primary); }
+
+        /* Page header */
+        .page-header { margin-bottom: 48px; }
+
+        .page-header-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .global-switcher:has(.switch-link-shortcut) + .page-header .page-header-layout {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .global-switcher:has(.switch-link-shortcut) + .page-header .hero-panel {
+            display: none;
+        }
+
+        .page-header-main {
+            background: var(--surface);
+            border: 1.5px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 22px;
+            width: min(100%, var(--content-five-card-width));
+        }
+
+        .eyebrow {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin: 8px 0 14px;
+            line-height: 1.15;
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 1.05rem;
+            max-width: 720px;
+            line-height: 1.65;
+        }
+
+        .hero-panel {
+            display: grid;
+            gap: 14px;
+        }
+
+        .panel-card {
+            border-radius: var(--radius-lg);
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            padding: 18px;
+        }
+
+        .accent-card {
+            background: linear-gradient(145deg, rgba(4, 74, 121, 0.92), rgba(29, 141, 216, 0.92));
+            color: #fff;
+        }
+
+        .panel-label {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: rgba(7, 138, 155, 0.12);
+            color: var(--primary-dark);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .accent-card .panel-label {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+        }
+
+        .accent-card strong {
+            display: block;
+            color: #fff;
+            font-size: 1.75rem;
+            line-height: 1.15;
+            margin-top: 2px;
+        }
+
+        /* Override for shortcut cards - beige instead of blue */
+        .accent-card:has(.shortcut-features) {
+            background: var(--bg-strong);
+            color: var(--text);
+        }
+
+        .accent-card:has(.shortcut-features) .panel-label {
+            background: rgba(7, 138, 155, 0.12);
+            color: var(--primary-dark);
+        }
+
+        .accent-card:has(.shortcut-features) strong {
+            color: var(--text);
+        }
+
+        .shortcut-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .shortcut-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 78px;
+            padding: 12px 9px;
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 12px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            transition: transform 140ms ease, background-color 140ms ease, border-color 140ms ease;
+        }
+
+        .shortcut-item:hover,
+        .shortcut-item:focus-visible {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.36);
+        }
+
+        .shortcut-item:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.65);
+            outline-offset: 2px;
+        }
+
+        .shortcut-icon {
+            font-size: 1.45rem;
+            display: block;
+        }
+
+        .shortcut-label {
+            font-size: 0.94rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.02em;
+        }
+
+        /* Section */
+        .section-block { margin-bottom: 64px; }
+
+        .section-header { margin-bottom: 28px; }
+
+        .section-block[aria-labelledby='tensesHeading'] .section-header {
+            width: min(100%, var(--content-five-card-width));
+        }
+
+        .section-block[aria-labelledby='quizHeading'] .section-header {
+            width: min(100%, var(--content-five-card-width));
+        }
+
+        .section-kicker {
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin-bottom: 6px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.4rem, 3vw, 2.1rem);
+            margin: 6px 0 10px;
+        }
+
+        .section-text { color: var(--muted); line-height: 1.6; }
+
+        /* Filter buttons */
+        .group-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .filter-btn {
+            padding: 0.48rem 1.1rem;
+            border-radius: 999px;
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            color: var(--muted);
+            font: inherit;
+            font-size: 0.86rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 160ms ease;
+        }
+
+        .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .filter-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+        .sort-toggle {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: -8px 0 20px;
+        }
+
+        .sort-label {
+            font-size: 0.82rem;
+            color: var(--muted);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .sort-help {
+            margin: 4px 0 18px;
+            font-size: 0.84rem;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        /* Tenses grid */
+        .tenses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            width: min(100%, var(--content-five-card-width));
+        }
+
+        /* Tense card */
+        .tense-card {
+            background: var(--surface);
+            border: 1.5px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 22px 24px;
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tense-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+        .tense-card.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(7, 138, 155, 0.15), var(--shadow);
+        }
+
+        .tense-card.level-weak {
+            border-color: rgba(155, 44, 44, 0.45);
+            box-shadow: 0 0 0 2px rgba(155, 44, 44, 0.13);
+        }
+
+        .tense-card.level-mid {
+            border-color: rgba(201, 111, 59, 0.5);
+            box-shadow: 0 0 0 2px rgba(201, 111, 59, 0.16);
+        }
+
+        .tense-card.level-strong {
+            border-color: rgba(7, 138, 155, 0.5);
+            box-shadow: 0 0 0 2px rgba(7, 138, 155, 0.14);
+        }
+
+        .tense-card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .tense-name-en {
+            font-family: "Georgia", serif;
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .tense-name-de { font-size: 0.82rem; color: var(--muted); }
+
+        .tense-audio-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: transparent;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 160ms ease;
+            flex-shrink: 0;
+        }
+
+        .tense-audio-btn:hover {
+            background: rgba(7, 138, 155, 0.08);
+            border-color: var(--primary);
+        }
+
+        .tense-audio-btn.playing {
+            background: rgba(7, 138, 155, 0.16);
+            border-color: var(--primary);
+        }
+
+        .tense-group-badge {
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-present { background: rgba(7, 138, 155, 0.12); color: var(--primary-dark); }
+        .badge-past { background: rgba(201, 111, 59, 0.12); color: var(--secondary); }
+        .badge-future { background: rgba(37, 99, 235, 0.12); color: #2563eb; }
+        :root[data-theme='dark'] .badge-future { color: #60a5fa; }
+
+        /* Recipe block */
+        .recipe-block {
+            background: var(--bg-strong);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            margin-bottom: 14px;
+        }
+        :root[data-theme='dark'] .recipe-block { background: rgba(255, 255, 255, 0.05); }
+
+        .recipe-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+
+        .recipe-label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .recipe-label-row .recipe-label {
+            margin-bottom: 0;
+        }
+
+        .audio-shortcut {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            color: var(--primary-dark);
+            font-size: 0.95rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 140ms ease, border-color 140ms ease, background-color 140ms ease;
+        }
+
+        .audio-shortcut:hover,
+        .audio-shortcut:focus-visible {
+            transform: translateY(-1px);
+            border-color: var(--primary);
+            background: rgba(7, 138, 155, 0.1);
+        }
+
+        .audio-shortcut:focus-visible {
+            outline: 2px solid rgba(7, 138, 155, 0.35);
+            outline-offset: 2px;
+        }
+
+        .recipe-formula {
+            font-family: "Courier New", monospace;
+            font-size: 0.86rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .recipe-question-note {
+            margin-top: 8px;
+            font-size: 0.78rem;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .recipe-question-example {
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: var(--primary-dark);
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .recipe-formula-example {
+            margin-top: 6px;
+            font-size: 0.8rem;
+            color: var(--primary-dark);
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        /* Signal words */
+        .signal-section { margin-bottom: 14px; }
+
+        .signal-words { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+
+        .signal-tag {
+            padding: 3px 9px;
+            border-radius: 6px;
+            background: rgba(7, 138, 155, 0.09);
+            color: var(--primary-dark);
+            font-size: 0.76rem;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        /* Explanation */
+        .tense-explanation { margin-bottom: 14px; }
+        .explanation-de { font-size: 0.9rem; color: var(--text); line-height: 1.55; margin-bottom: 5px; }
+        .explanation-en { font-size: 0.84rem; color: var(--muted); font-style: italic; line-height: 1.5; }
+
+        /* Examples */
+        .examples-list { list-style: none; margin-bottom: 18px; flex: 1; }
+
+        .examples-list li {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 9px;
+            padding-left: 18px;
+            position: relative;
+        }
+
+        .examples-list li::before { content: "→"; position: absolute; left: 0; color: var(--primary); }
+
+        .example-de { color: var(--muted); display: block; margin-bottom: 1px; }
+        .example-en { color: var(--text); font-weight: 600; display: block; }
+
+        /* CTA button on card */
+        .start-test-btn {
+            width: 100%;
+            margin-top: auto;
+            padding: 0.68rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font: inherit;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 160ms ease;
+        }
+
+        .start-test-btn:hover { background: var(--primary); color: #fff; }
+        .tense-card.selected .start-test-btn { background: var(--primary); color: #fff; }
+
+        .dialog-trigger {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font: inherit;
+        }
+
+        .dialog-trigger:hover .tense-dialog-example {
+            background: rgba(7, 138, 155, 0.07);
+            transform: translateY(-1px);
+        }
+
+        .tense-dialog-example {
+            margin: 16px 0;
+            padding: 14px;
+            background: rgba(7, 138, 155, 0.04);
+            border: 1px solid rgba(7, 138, 155, 0.12);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .dialog-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .dialog-svg {
+            width: 100%;
+            height: auto;
+            max-height: 120px;
+        }
+
+        /* Dialog Modal */
+        .dialog-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .dialog-modal-overlay.active {
+            display: flex;
+        }
+
+        .dialog-modal {
+            background: var(--surface-strong);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            max-width: 520px;
+            width: 90%;
+            box-shadow: var(--shadow);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dialog-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .dialog-modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .dialog-modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text);
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            padding: 0;
+        }
+
+        .dialog-modal-close:hover {
+            opacity: 1;
+        }
+
+        .dialog-modal-speakers {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .speaker {
+            text-align: center;
+        }
+
+        .speaker-icon {
+            font-size: 44px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .speaker-text {
+            background: rgba(7, 138, 155, 0.06);
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            line-height: 1.5;
+            font-weight: 500;
+            color: var(--text);
+            border: 1px solid rgba(7, 138, 155, 0.1);
+        }
+
+        :root[data-theme='dark'] .speaker-text {
+            background: rgba(44, 198, 218, 0.08);
+            border-color: rgba(44, 198, 218, 0.15);
+        }
+
+        .dialog-modal-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .dialog-voice-select {
+            min-width: 220px;
+            max-width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+            font: inherit;
+            font-size: 0.9rem;
+        }
+
+        .dialog-play-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: opacity 0.2s;
+        }
+
+        .dialog-play-btn:hover {
+            opacity: 0.85;
+        }
+
+        .dialog-play-btn.playing {
+            background: var(--secondary);
+        }
+
+        .tense-last-result {
+            margin-top: 10px;
+            font-size: 0.78rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .tense-last-result.level-weak { color: var(--error); }
+        .tense-last-result.level-mid { color: var(--secondary); }
+        .tense-last-result.level-strong { color: var(--success); }
+
+        .tense-last-result.muted {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        /* ============================
+           Quiz section
+        ============================ */
+        .quiz-wrapper {
+            background: var(--surface);
+            border: 1.5px solid var(--line);
+            border-radius: var(--radius-xl);
+            padding: clamp(24px, 5vw, 42px);
+        }
+
+        .quiz-empty {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--muted);
+        }
+
+        .quiz-empty .quiz-empty-icon { font-size: 3rem; margin-bottom: 14px; }
+        .quiz-empty p { line-height: 1.6; }
+
+        /* Progress */
+        .quiz-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .quiz-counter { font-size: 0.84rem; color: var(--muted); font-weight: 600; }
+        .quiz-score-display { font-size: 0.84rem; color: var(--primary-dark); font-weight: 700; }
+
+        .quiz-progress-bar {
+            height: 6px;
+            background: var(--line);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 999px;
+            transition: width 300ms ease;
+        }
+
+        /* Question card */
+        .question-card {
+            background: var(--surface-strong);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .question-type-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: rgba(201, 111, 59, 0.1);
+            color: var(--secondary);
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+        }
+
+        .question-sentence-de {
+            font-size: 1rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .question-prompt {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 20px;
+            font-family: "Georgia", serif;
+        }
+
+        /* Choices */
+        .choice-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .choice-btn {
+            padding: 0.72rem 1rem;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+            font: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: "Courier New", monospace;
+            cursor: pointer;
+            text-align: left;
+            transition: all 160ms ease;
+            line-height: 1.4;
+        }
+
+        .choice-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+        .choice-btn.correct { border-color: var(--success); background: rgba(7, 138, 155, 0.09); color: var(--success); }
+        .choice-btn.wrong { border-color: var(--error); background: rgba(155, 44, 44, 0.07); color: var(--error); }
+        .choice-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+
+        /* Feedback */
+        .question-feedback {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            line-height: 1.55;
+            display: none;
+        }
+
+        .question-feedback.correct {
+            background: rgba(7, 138, 155, 0.07);
+            border: 1px solid rgba(7, 138, 155, 0.22);
+            color: var(--success);
+            display: block;
+        }
+
+        .question-feedback.wrong {
+            background: rgba(155, 44, 44, 0.06);
+            border: 1px solid rgba(155, 44, 44, 0.18);
+            color: var(--error);
+            display: block;
+        }
+
+        .speech-quiz-panel {
+            background: var(--surface-strong);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .speech-quiz-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .speech-prompt-de {
+            color: var(--muted);
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .speech-hint {
+            font-size: 0.84rem;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .speech-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .speech-transcript {
+            font-size: 0.88rem;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            min-height: 1.3em;
+        }
+
+        .speech-pronunciation-feedback {
+            font-size: 0.86rem;
+            color: var(--secondary);
+            line-height: 1.5;
+            min-height: 1.3em;
+            margin-top: 8px;
+        }
+
+        /* Buttons */
+        .quiz-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .primary-button {
+            padding: 0.75rem 1.6rem;
+            border-radius: var(--radius-md);
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            font: inherit;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 160ms ease, box-shadow 160ms ease;
+        }
+
+        .primary-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(7, 138, 155, 0.28);
+        }
+
+        .primary-button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+        .secondary-button {
+            padding: 0.75rem 1.6rem;
+            border-radius: var(--radius-md);
+            border: 1.5px solid var(--line);
+            background: transparent;
+            color: var(--text);
+            font: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 160ms ease, color 160ms ease;
+        }
+
+        .secondary-button:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Result screen */
+        .quiz-result { text-align: center; padding: 32px 20px; display: none; }
+
+        .result-score-circle {
+            width: 108px;
+            height: 108px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .result-score-number { font-size: 2.2rem; font-weight: 900; font-family: "Georgia", serif; }
+        .result-score-label { font-size: 0.7rem; opacity: 0.8; }
+
+        .result-message {
+            font-size: 1.15rem;
+            font-weight: 700;
+            font-family: "Georgia", serif;
+            margin-bottom: 8px;
+        }
+
+        .result-sub { color: var(--muted); margin-bottom: 28px; }
+
+        .result-review-panel {
+            margin-top: 26px;
+            text-align: left;
+            background: var(--surface-strong);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 18px;
+            display: none;
+        }
+
+        .result-review-panel h3 {
+            margin-bottom: 12px;
+            font-size: 1.02rem;
+        }
+
+        .result-review-list {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .result-review-item {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            line-height: 1.55;
+            font-size: 0.86rem;
+        }
+
+        .result-review-item strong {
+            font-family: "Aptos", "Segoe UI Variable", "Trebuchet MS", sans-serif;
+        }
+
+        @media (max-width: 640px) {
+            .page-header-layout { grid-template-columns: 1fr; }
+            .shortcut-features { grid-template-columns: 1fr; }
+            .tenses-grid { grid-template-columns: 1fr; }
+            .choice-list { grid-template-columns: 1fr; }
+        }
+
+        :root[data-theme='dark'] .accent-card {
+            background: linear-gradient(145deg, rgba(10, 24, 42, 0.96), rgba(13, 34, 56, 0.96));
+            border-color: rgba(159, 176, 202, 0.24);
+        }
+
+        /* Override for shortcut cards in dark mode - beige instead of blue */
+        :root[data-theme='dark'] .accent-card:has(.shortcut-features) {
+            background: var(--bg-strong);
+            color: var(--text);
+        }
+
+        :root[data-theme='dark'] .accent-card:has(.shortcut-features) .panel-label {
+            background: rgba(7, 138, 155, 0.12);
+            color: var(--primary-dark);
+        }
+
+        :root[data-theme='dark'] .shortcut-item {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(159, 176, 202, 0.28);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        :root[data-theme='dark'] .shortcut-item:hover,
+        :root[data-theme='dark'] .shortcut-item:focus-visible {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(200, 214, 234, 0.4);
+        }
+
+        :root[data-theme='dark'] .audio-shortcut {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(159, 176, 202, 0.28);
+            color: #b5e6ef;
+        }
+
+        :root[data-theme='dark'] .tense-dialog-example {
+            background: rgba(44, 198, 218, 0.08);
+            border-color: rgba(102, 219, 234, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <button id="themeToggleButton" class="theme-toggle-button" type="button">Dark Mode</button>
+
+    <div class="container">
+        <nav class="global-switcher" aria-label="Bereiche">
+            <a class="switch-link" href="index.html#english">Englisch</a>
+            <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+            <a class="switch-link" href="abnehmtagebuch.html">Abnehmtagebuch</a>
+            <a class="switch-link" href="projektstatus.html">Projektstatus</a>
+            <a class="switch-link" href="terminplaner.html">Terminplaner</a>
+            <a class="switch-link" href="schulungen.html">Schulungen</a>
+            <a class="switch-link" href="systemvergleich.html">Systemvergleich</a>
+            <a class="switch-link" href="index.html">Lernzentrum</a>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="page-header-layout">
+                <div class="page-header-main">
+                    <p class="eyebrow">Grammatik-Kochrezept</p>
+                    <h1>Englische Zeiten auf einen Blick</h1>
+                    <p class="lead">Jede Zeit erklärt wie ein Kochrezept – Formel, Signalwörter und Beispiele auf Deutsch und Englisch. Wähle eine Zeit, um den interaktiven Test mit 10 Fragen zu starten.</p>
+                </div>
+
+                <div class="hero-panel">
+                    <div class="panel-card accent-card">
+                        <span class="panel-label">Navigation</span>
+                        <strong>Zum Lernen</strong>
+                        <div class="shortcut-features">
+                            <a class="shortcut-item" href="#tensesHeading" aria-label="Zu Zeiten springen">
+                                <span class="shortcut-icon">⏰</span>
+                                <span class="shortcut-label">Zeiten</span>
+                            </a>
+                            <a class="shortcut-item" href="#quizHeading" aria-label="Zum Test springen">
+                                <span class="shortcut-icon">✅</span>
+                                <span class="shortcut-label">Test</span>
+                            </a>
+                            <a class="shortcut-item" href="index.html" aria-label="Zur Startseite">
+                                <span class="shortcut-icon">🏠</span>
+                                <span class="shortcut-label">Start</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ============================================
+             Block 1: Tenses Overview
+        ============================================= -->
+        <section class="section-block" aria-labelledby="tensesHeading">
+            <div class="section-header">
+                <p class="section-kicker">Übersicht</p>
+                <h2 id="tensesHeading">Alle Zeiten im Kochrezept-Format</h2>
+                <p class="section-text">Klicke auf „Test starten" in einer Karte – Block 2 lädt dann automatisch 10 Fragen zu genau dieser Zeit.</p>
+            </div>
+
+            <div class="group-filter" role="group" aria-label="Zeitgruppe filtern">
+                <button class="filter-btn active" type="button" data-filter="all">Alle Zeiten</button>
+                <button class="filter-btn" type="button" data-filter="past">Vergangenheit</button>
+                <button class="filter-btn" type="button" data-filter="present">Gegenwart</button>
+                <button class="filter-btn" type="button" data-filter="future">Zukunft</button>
+            </div>
+
+            <div class="sort-toggle" role="group" aria-label="Sortierung wählen">
+                <span class="sort-label">Sortierung</span>
+                <button id="sortPriorityBtn" class="filter-btn" type="button" data-sort-mode="priority">Lernpriorität</button>
+                <button id="sortOriginalBtn" class="filter-btn" type="button" data-sort-mode="original">Original-Reihenfolge</button>
+            </div>
+            <p class="sort-help">Lernpriorität zeigt zuerst Zeiten mit den schwächsten letzten Ergebnissen. Original-Reihenfolge zeigt die feste Reihenfolge der Zeitkarten.</p>
+
+            <div id="tensesGrid" class="tenses-grid"></div>
+        </section>
+
+        <!-- ============================================
+             Block 2: Quiz
+        ============================================= -->
+        <section class="section-block" aria-labelledby="quizHeading">
+            <div class="section-header">
+                <p class="section-kicker">Praxistest</p>
+                <h2 id="quizHeading">Test: <span id="quizTenseName">Keine Zeit ausgewählt</span></h2>
+                <p class="section-text">Lückensatz als englische Vorlage – wähle Verb, Signalwort oder Zeitform. 10 Fragen, gemischte Reihenfolge.</p>
+            </div>
+
+            <div id="quizContainer" class="quiz-wrapper">
+                <!-- Empty state -->
+                <div id="quizEmpty" class="quiz-empty">
+                    <div class="quiz-empty-icon">📋</div>
+                    <p><strong>Noch keine Zeit ausgewählt.</strong></p>
+                    <p>Klicke oben in einer Karte auf „Test starten".</p>
+                </div>
+
+                <!-- Quiz active -->
+                <div id="quizActive" style="display:none">
+                    <div class="quiz-meta">
+                        <span id="quizCounter" class="quiz-counter">Frage 1 von 10</span>
+                        <span id="quizScoreDisplay" class="quiz-score-display">0 richtig</span>
+                    </div>
+                    <div class="quiz-progress-bar">
+                        <div id="quizProgressFill" class="quiz-progress-fill" style="width:0%"></div>
+                    </div>
+
+                    <div class="question-card">
+                        <span id="questionTypeBadge" class="question-type-badge">Verb wählen</span>
+                        <p id="questionSentenceDe" class="question-sentence-de"></p>
+                        <p id="questionPrompt" class="question-prompt"></p>
+                        <div id="choiceList" class="choice-list" role="group" aria-label="Antwortmöglichkeiten"></div>
+                        <div id="questionFeedback" class="question-feedback"></div>
+                        <div class="quiz-actions">
+                            <button id="nextQuestionBtn" class="primary-button" type="button" disabled>Nächste Frage</button>
+                            <button id="restartQuizBtn" class="secondary-button" type="button">Test neu starten</button>
+                        </div>
+                    </div>
+
+                    <div id="speechQuizPanel" class="speech-quiz-panel" style="display:none">
+                        <div class="speech-quiz-header">
+                            <span id="speechQuizCounter" class="quiz-counter">Sprechfrage 1 von 5</span>
+                            <span id="speechQuizScore" class="quiz-score-display">0 Punkte (Grammatik)</span>
+                        </div>
+                        <p id="speechPromptDe" class="speech-prompt-de"></p>
+                        <p class="speech-hint">Sprich den vollständigen englischen Satz ins Mikrofon. Grammatik gibt Punkte, Aussprache gibt nur Hinweis.</p>
+                        <div class="speech-actions">
+                            <button id="speechListenBtn" class="primary-button" type="button">🎤 Antwort sprechen</button>
+                            <button id="speechNextBtn" class="secondary-button" type="button" disabled>Nächste Sprechfrage</button>
+                        </div>
+                        <p id="speechTranscript" class="speech-transcript"></p>
+                        <div id="speechGrammarFeedback" class="question-feedback"></div>
+                        <div id="speechPronunciationFeedback" class="speech-pronunciation-feedback"></div>
+                    </div>
+
+                </div>
+
+                <!-- Result screen -->
+                <div id="quizResult" class="quiz-result">
+                    <div class="result-score-circle">
+                        <span id="resultScoreNumber" class="result-score-number">0/10</span>
+                        <span class="result-score-label">Punkte</span>
+                    </div>
+                    <p id="resultMessage" class="result-message"></p>
+                    <p id="resultSub" class="result-sub"></p>
+                    <div class="quiz-actions" style="justify-content:center">
+                        <button id="retryQuizBtn" class="primary-button" type="button">Nochmal versuchen</button>
+                        <button id="changeTenseBtn" class="secondary-button" type="button">Andere Zeit wählen</button>
+                    </div>
+                    <div id="resultReviewPanel" class="result-review-panel">
+                        <h3>Fehlerübersicht</h3>
+                        <ul id="resultReviewList" class="result-review-list"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ====================================================
+        // Tense data
+        // ====================================================
+        const TENSES = [
+            {
+                id: 'present-simple',
+                nameDE: 'Einfache Gegenwart',
+                nameEN: 'Present Simple',
+                group: 'present',
+                formula: 'I/you/we/they + Verb (Grundform)\nhe/she/it + Verb + s/es',
+                signals: ['always', 'usually', 'often', 'sometimes', 'rarely', 'never', 'every day', 'every week', 'on Mondays', 'in general'],
+                explanationDE: 'Beschreibt Gewohnheiten, Routinen, allgemeine Wahrheiten und feste Zeitpläne.',
+                explanationEN: 'Used for habits, routines, general truths and timetables. Add -s/-es for he/she/it.',
+                examples: [
+                    { de: 'Ich gehe jeden Morgen ins Büro.', en: 'I go to the office every morning.' },
+                    { de: 'Sie schickt die E-Mail immer am Freitag.', en: 'She always sends the email on Fridays.' },
+                    { de: 'Das Meeting fängt um 9 Uhr an.', en: 'The meeting starts at 9 o\'clock.' }
+                ],
+                questions: [
+                    { de: 'He _____ a report every Monday.', prompt: 'Welche Verbform passt?', options: ['write', 'writes', 'wrote', 'is writing'], answer: 1, type: 'verb', feedback: '"He" verlangt +s → writes. "Every Monday" ist ein Signalwort für Present Simple.' },
+                    { de: 'She _____ at 8 o\'clock.', prompt: 'Welche Verbform passt?', options: ['arrive', 'arrives', 'is arriving', 'arrived'], answer: 1, type: 'verb', feedback: '"She" + Present Simple → arrives. "Usually" ist Signalwort.' },
+                    { de: 'The team _____ a status update every day.', prompt: 'Welche Verbform passt?', options: ['send', 'sends', 'is sending', 'sent'], answer: 1, type: 'verb', feedback: '"The team" (3. Person Singular) → sends.' },
+                    { de: 'We _____ overtime.', prompt: 'Welche Verbform passt?', options: ['do not make', 'does not make', 'are not making', 'did not make'], answer: 0, type: 'verb', feedback: '"We" → do not make. "Selten" ist Signalwort für Present Simple.' },
+                    { de: 'Choose the signal word for an office routine.', prompt: 'Welches Wort signalisiert das Present Simple?', options: ['yesterday', 'always', 'at the moment', 'by tomorrow'], answer: 1, type: 'signal', feedback: '"Always" ist ein klassisches Signalwort für Present Simple.' },
+                    { de: 'He _____ to a meeting without an agenda.', prompt: 'Welche Verbform passt?', options: ['goes', 'go', 'is going', 'went'], answer: 0, type: 'verb', feedback: '"He" + never → Present Simple → goes.' },
+                    { de: 'Choose the signal word for repetition.', prompt: 'Welches Signalwort passt zum Present Simple?', options: ['last week', 'every Friday', 'right now', 'next month'], answer: 1, type: 'signal', feedback: '"Every Friday" ist ein Signalwort für wiederkehrende Handlungen.' },
+                    { de: '_____ you practice English every day?', prompt: 'Frage bilden – welche Verbform?', options: ['Do you practice', 'Are you practicing', 'Did you practice', 'Have you practiced'], answer: 0, type: 'verb', feedback: 'Present Simple Frage: "Do you practice?" – "every day" signalisiert Routine.' },
+                    { de: 'Meetings _____ place every Tuesday at 10.', prompt: 'Welche Verbform passt?', options: ['find', 'take', 'takes', 'are taken'], answer: 1, type: 'verb', feedback: '"Meetings take place" – Plural-Subjekt → take. Routinezeit = Present Simple.' },
+                    { de: 'Choose the signal word for a general truth.', prompt: 'Welches Signalwort passt zum Present Simple?', options: ['last month', 'in general', 'currently', 'just now'], answer: 1, type: 'signal', feedback: '"In general" zeigt eine allgemeine Regel → Present Simple.' }
+                ]
+            },
+            {
+                id: 'present-continuous',
+                nameDE: 'Verlaufsform Gegenwart',
+                nameEN: 'Present Continuous',
+                group: 'present',
+                formula: 'Subjekt + am/is/are + Verb-ing',
+                signals: ['now', 'right now', 'at the moment', 'currently', 'at present', 'look!', 'listen!', 'today', 'this week'],
+                explanationDE: 'Beschreibt Handlungen, die gerade jetzt ablaufen oder vorübergehende Situationen.',
+                explanationEN: 'Describes actions happening right now or temporary situations in the present.',
+                examples: [
+                    { de: 'Ich führe gerade ein Gespräch.', en: 'I am currently having a conversation.' },
+                    { de: 'Das Team arbeitet im Moment an dem Report.', en: 'The team is working on the report at the moment.' },
+                    { de: 'Hör! Sie spricht gerade mit dem Kunden.', en: 'Listen! She is talking to the client right now.' }
+                ],
+                questions: [
+                    { de: 'He _____ to the client right now.', prompt: 'Welche Verbform passt?', options: ['speak', 'is speaking', 'speaks', 'has spoken'], answer: 1, type: 'verb', feedback: '"Right now / gerade" → Present Continuous → is speaking.' },
+                    { de: 'We _____ on the presentation at the moment.', prompt: 'Welche Verbform passt?', options: ['work', 'are working', 'worked', 'have worked'], answer: 1, type: 'verb', feedback: '"At the moment" signalisiert Present Continuous → are working.' },
+                    { de: 'Look! The system _____ right now.', prompt: 'Welche Verbform passt?', options: ['restarts', 'is restarting', 'restarted', 'has restarted'], answer: 1, type: 'verb', feedback: '"Look/Schau!" + "gerade" → Present Continuous → is restarting.' },
+                    { de: 'She _____ from home this week.', prompt: 'Welche Verbform passt?', options: ['works', 'is working', 'worked', 'work'], answer: 1, type: 'verb', feedback: '"This week" + vorübergehend → Present Continuous → is working.' },
+                    { de: 'Choose the signal word for an action happening now.', prompt: 'Welches Wort signalisiert Present Continuous?', options: ['usually', 'always', 'at the moment', 'yesterday'], answer: 2, type: 'signal', feedback: '"At the moment" zeigt eine gerade laufende Handlung → Present Continuous.' },
+                    { de: '_____ you waiting for my email right now?', prompt: 'Frage bilden – welche Verbform?', options: ['Do you wait', 'Are you waiting', 'Did you wait', 'Have you waited'], answer: 1, type: 'verb', feedback: 'Frage im Present Continuous: Are + you + Verb-ing.' },
+                    { de: 'The meeting _____ right now.', prompt: 'Welche Verbform passt?', options: ['run', 'is running', 'runs', 'ran'], answer: 1, type: 'verb', feedback: '"Gerade" = right now → Present Continuous.' },
+                    { de: 'Choose the signal word for an ongoing action.', prompt: 'Welches Signalwort passt zum Present Continuous?', options: ['every day', 'right now', 'last week', 'tomorrow'], answer: 1, type: 'signal', feedback: '"Right now" zeigt, dass die Handlung gerade passiert.' },
+                    { de: 'Everyone _____ on emergency plans currently.', prompt: 'Welche Verbform passt?', options: ['work', 'are working', 'works', 'worked'], answer: 1, type: 'verb', feedback: '"Currently/derzeit" → Present Continuous → are working.' },
+                    { de: 'He _____ home earlier tonight. (planned near future)', prompt: 'Welche Verbform passt?', options: ['goes', 'is going', 'went', 'go'], answer: 1, type: 'verb', feedback: 'Present Continuous kann auch für geplante Zukunft genutzt werden → is going.' }
+                ]
+            },
+            {
+                id: 'present-perfect',
+                nameDE: 'Vollendete Gegenwart',
+                nameEN: 'Present Perfect',
+                group: 'present',
+                formula: 'Subjekt + have/has + Partizip II (Past Participle)',
+                signals: ['just', 'already', 'yet', 'ever', 'never', 'recently', 'lately', 'so far', 'since', 'for'],
+                explanationDE: 'Verbindet Vergangenheit mit Gegenwart: eine abgeschlossene Handlung mit Auswirkung auf jetzt.',
+                explanationEN: 'Connects past actions to the present. The exact time does not matter.',
+                examples: [
+                    { de: 'Ich habe den Report schon fertig.', en: 'I have already finished the report.' },
+                    { de: 'Sie hat noch keine Antwort erhalten.', en: 'She has not received an answer yet.' },
+                    { de: 'Wir haben gerade das Meeting beendet.', en: 'We have just finished the meeting.' }
+                ],
+                questions: [
+                    { de: 'I _____ all emails already.', prompt: 'Welche Verbform passt?', options: ['answer', 'have answered', 'answered', 'am answering'], answer: 1, type: 'verb', feedback: '"Already" → Present Perfect → have answered.' },
+                    { de: 'He _____ the form yet.', prompt: 'Welche Verbform passt?', options: ['fills', 'has not filled in', 'did not fill in', 'is not filling in'], answer: 1, type: 'verb', feedback: '"Yet/noch nicht" → Present Perfect Verneinung → has not filled in.' },
+                    { de: 'We _____ the update just now.', prompt: 'Welche Verbform passt?', options: ['complete', 'have just completed', 'are completing', 'completed'], answer: 1, type: 'verb', feedback: '"Just" = gerade eben → Present Perfect → have just completed.' },
+                    { de: 'Choose the signal word for completion with present relevance.', prompt: 'Welches Wort signalisiert das Present Perfect?', options: ['yesterday', 'last year', 'already', 'at the moment'], answer: 2, type: 'signal', feedback: '"Already" ist ein Signalwort des Present Perfect.' },
+                    { de: 'Have you ever _____ this document?', prompt: 'Welche Verbform passt? (Partizip II)', options: ['saw', 'see', 'seen', 'were seeing'], answer: 2, type: 'verb', feedback: '"Ever" (je) + Present Perfect → have you ever seen? (Partizip II!)' },
+                    { de: 'She _____ with us for three years.', prompt: 'Welche Verbform passt?', options: ['works', 'worked', 'has worked', 'is working'], answer: 2, type: 'verb', feedback: '"Since" + andauernde Situation → Present Perfect → has worked.' },
+                    { de: 'The system _____ well so far.', prompt: 'Welche Verbform passt?', options: ['works', 'has worked', 'worked', 'is working'], answer: 1, type: 'verb', feedback: '"So far/bisher" → Present Perfect → has worked.' },
+                    { de: 'Choose the signal word for a period until now.', prompt: 'Welches Wort passt zum Present Perfect?', options: ['tomorrow', 'never', 'yesterday', 'last week'], answer: 1, type: 'signal', feedback: '"Never" ist ein klassisches Signalwort des Present Perfect.' },
+                    { de: 'We _____ the budget yet.', prompt: 'Welche Verbform passt?', options: ['do not approve', 'have not approved', 'did not approve', 'are not approving'], answer: 1, type: 'verb', feedback: '"Yet/noch nicht" → Present Perfect Verneinung → have not approved.' },
+                    { de: 'He _____ a lot of progress lately.', prompt: 'Welche Verbform passt?', options: ['makes', 'has made', 'made', 'is making'], answer: 1, type: 'verb', feedback: '"Lately/in letzter Zeit" → Present Perfect → has made.' }
+                ]
+            },
+            {
+                id: 'present-perfect-continuous',
+                nameDE: 'Andauernde vollendete Gegenwart',
+                nameEN: 'Present Perfect Continuous',
+                group: 'present',
+                formula: 'Subjekt + have/has + been + Verb-ing',
+                signals: ['for', 'since', 'how long', 'all day', 'lately', 'recently', 'all morning', 'the whole time'],
+                explanationDE: 'Handlung begann in der Vergangenheit und dauert bis jetzt an – oft mit sichtbarem Ergebnis.',
+                explanationEN: 'Action started in the past, continues until now. Often shows visible results or emphasises duration.',
+                examples: [
+                    { de: 'Ich arbeite seit heute Morgen an diesem Report.', en: 'I have been working on this report since this morning.' },
+                    { de: 'Er wartet schon seit einer Stunde.', en: 'He has been waiting for an hour.' },
+                    { de: 'Müde Augen – sie hat den ganzen Tag gearbeitet.', en: 'Tired eyes – she has been working all day.' }
+                ],
+                questions: [
+                    { de: 'I _____ on this bug since 8 o\'clock.', prompt: 'Welche Verbform passt?', options: ['work', 'have been working', 'am working', 'was working'], answer: 1, type: 'verb', feedback: '"Since" + Betonung auf Dauer → Present Perfect Continuous → have been working.' },
+                    { de: 'He _____ for approval for an hour.', prompt: 'Welche Verbform passt?', options: ['waits', 'has been waiting', 'waited', 'is waiting'], answer: 1, type: 'verb', feedback: '"For an hour" → Present Perfect Continuous → has been waiting.' },
+                    { de: 'How long _____ on this process?', prompt: 'Frage bilden – welche Verbform?', options: ['does she work', 'has she been working', 'is she working', 'did she work'], answer: 1, type: 'verb', feedback: '"How long" → Present Perfect Continuous → has she been working?' },
+                    { de: 'The system _____ errors all morning.', prompt: 'Welche Verbform passt?', options: ['shows', 'has been showing', 'was showing', 'showed'], answer: 1, type: 'verb', feedback: '"All morning" + anhaltende Situation → has been showing.' },
+                    { de: 'Choose the signal word for duration until now.', prompt: 'Welches Signalwort steht für Present Perfect Continuous?', options: ['yesterday', 'for three hours', 'just', 'next week'], answer: 1, type: 'signal', feedback: '"For three hours" + Dauer → Present Perfect Continuous.' },
+                    { de: 'She _____ well last night (ongoing effect).', prompt: 'Welche Verbform passt?', options: ['has not been sleeping', 'did not sleep', 'does not sleep', 'was not sleeping'], answer: 0, type: 'verb', feedback: 'Anhaltende Auswirkung → Present Perfect Continuous: has not been sleeping.' },
+                    { de: 'We _____ intensively this month.', prompt: 'Welche Verbform passt?', options: ['train', 'have been training', 'were training', 'trained'], answer: 1, type: 'verb', feedback: '"This month" + Dauer → Present Perfect Continuous → have been training.' },
+                    { de: 'Choose the signal word for ongoing duration near now.', prompt: 'Welches Wort passt zum Present Perfect Continuous?', options: ['yesterday', 'at 5 pm last week', 'recently', 'next year'], answer: 2, type: 'signal', feedback: '"Recently" zeigt Nähe zur Gegenwart + Dauer → Present Perfect Continuous.' },
+                    { de: 'He has tired eyes - he _____ at the screen for hours.', prompt: 'Welche Verbform passt?', options: ['stared', 'has been staring', 'stares', 'had stared'], answer: 1, type: 'verb', feedback: 'Sichtbares Ergebnis einer anhaltenden Handlung → has been staring.' },
+                    { de: 'How long _____ at this company?', prompt: 'Frage bilden – welche Verbform?', options: ['do you work', 'have you been working', 'are you working', 'did you work'], answer: 1, type: 'verb', feedback: '"How long" + Dauer bis jetzt → have you been working?' }
+                ]
+            },
+            {
+                id: 'past-simple',
+                nameDE: 'Einfache Vergangenheit',
+                nameEN: 'Past Simple',
+                group: 'past',
+                formula: 'Subjekt + Verb (2. Form / regelmäßig: -ed)\nVerneinung: Subjekt + did not + Verb (Grundform)',
+                signals: ['yesterday', 'last week', 'last year', 'ago', 'in 2022', 'then', 'when', 'once', 'at that time'],
+                explanationDE: 'Beschreibt abgeschlossene Handlungen in der Vergangenheit zu einem bestimmten Zeitpunkt.',
+                explanationEN: 'Describes completed past actions at a specific point in time.',
+                examples: [
+                    { de: 'Wir haben gestern das Meeting abgehalten.', en: 'We held the meeting yesterday.' },
+                    { de: 'Er schickte den Report letzte Woche.', en: 'He sent the report last week.' },
+                    { de: 'Das System ist vor zwei Stunden ausgefallen.', en: 'The system failed two hours ago.' }
+                ],
+                questions: [
+                    { de: 'I _____ the report yesterday.', prompt: 'Welche Verbform passt?', options: ['finish', 'finished', 'have finished', 'am finishing'], answer: 1, type: 'verb', feedback: '"Yesterday" → Past Simple → finished.' },
+                    { de: 'He _____ the project last month.', prompt: 'Welche Verbform passt?', options: ['presents', 'presented', 'is presenting', 'has presented'], answer: 1, type: 'verb', feedback: '"Last month" → Past Simple → presented.' },
+                    { de: 'Choose the signal word for a finished past action.', prompt: 'Welches Signalwort steht für Past Simple?', options: ['just', 'at the moment', 'two days ago', 'since'], answer: 2, type: 'signal', feedback: '"Two days ago" zeigt einen Zeitpunkt in der Vergangenheit → Past Simple.' },
+                    { de: 'She _____ in the training.', prompt: 'Welche Verneinung passt?', options: ['did not participate', 'does not participate', 'has not participated', 'is not participating'], answer: 0, type: 'verb', feedback: 'Verneinung im Past Simple: did not + Grundform → did not participate.' },
+                    { de: '_____ you at the meeting yesterday?', prompt: 'Frage bilden – welche Verbform? (to be)', options: ['Were you', 'Are you', 'Have you been', 'Do you be'], answer: 0, type: 'verb', feedback: '"Were you" = Past Simple von "to be" in der Frage.' },
+                    { de: 'The system _____ one hour ago.', prompt: 'Welche Verbform passt?', options: ['fails', 'failed', 'has failed', 'was failing'], answer: 1, type: 'verb', feedback: '"One hour ago" → Past Simple → failed.' },
+                    { de: 'We _____ a new process last year.', prompt: 'Welche Verbform passt?', options: ['introduce', 'introduced', 'have introduced', 'are introducing'], answer: 1, type: 'verb', feedback: '"Last year" → Past Simple → introduced.' },
+                    { de: 'Choose the signal word for a fixed past time.', prompt: 'Welches Wort signalisiert Past Simple?', options: ['now', 'yesterday', 'just', 'next week'], answer: 1, type: 'signal', feedback: '"Yesterday" ist das klassische Signalwort für Past Simple.' },
+                    { de: 'He _____ the deadline.', prompt: 'Welche Verneinung passt?', options: ['does not meet', 'did not meet', 'has not met', 'is not meeting'], answer: 1, type: 'verb', feedback: 'Past Simple Verneinung: did not + Grundform → did not meet.' },
+                    { de: 'When _____ the decision?', prompt: 'Frage bilden – welche Verbform?', options: ['do you make', 'did you make', 'have you made', 'were you making'], answer: 1, type: 'verb', feedback: '"When" mit spezifischem Zeitbezug → Past Simple: did you make?' }
+                ]
+            },
+            {
+                id: 'past-continuous',
+                nameDE: 'Vergangenheit Verlaufsform',
+                nameEN: 'Past Continuous',
+                group: 'past',
+                formula: 'Subjekt + was/were + Verb-ing',
+                signals: ['while', 'when', 'as', 'at that time', 'at 5 o\'clock yesterday', 'all day long', 'the whole time'],
+                explanationDE: 'Beschreibt Handlungen, die zu einem bestimmten Zeitpunkt in der Vergangenheit andauerten.',
+                explanationEN: 'Describes actions that were in progress at a specific moment in the past.',
+                examples: [
+                    { de: 'Ich telefonierte gerade, als er eintrat.', en: 'I was making a call when he entered.' },
+                    { de: 'Während sie präsentierte, machten wir Notizen.', en: 'While she was presenting, we were taking notes.' },
+                    { de: 'Um 14 Uhr gestern arbeiteten wir am Report.', en: 'At 2 p.m. yesterday, we were working on the report.' }
+                ],
+                questions: [
+                    { de: 'He _____ when the system crashed.', prompt: 'Welche Verbform passt?', options: ['works', 'was working', 'has worked', 'worked'], answer: 1, type: 'verb', feedback: '"Gerade ... als" = was doing when → Past Continuous → was working.' },
+                    { de: 'While we _____, an alert came in.', prompt: 'Welche Verbform passt?', options: ['test', 'were testing', 'tested', 'have tested'], answer: 1, type: 'verb', feedback: '"While" bedeutet gleichzeitig laufende Handlung → were testing.' },
+                    { de: 'She _____ on her laptop at 6 p.m.', prompt: 'Welche Verbform passt?', options: ['worked', 'was working', 'is working', 'works'], answer: 1, type: 'verb', feedback: 'Punkt in der Vergangenheit + andauernde Aktion → Past Continuous.' },
+                    { de: 'Choose the signal word for simultaneous past actions.', prompt: 'Welches Wort signalisiert Past Continuous?', options: ['just', 'while', 'already', 'yet'], answer: 1, type: 'signal', feedback: '"While" leitet oft einen Past Continuous ein.' },
+                    { de: 'Everyone _____ on the issue all day.', prompt: 'Welche Verbform passt?', options: ['work', 'were working', 'had worked', 'worked'], answer: 1, type: 'verb', feedback: '"All day long/den ganzen Tag" → Past Continuous → were working.' },
+                    { de: '_____ you sitting in the office at 9?', prompt: 'Frage bilden – welche Verbform?', options: ['Did you sit', 'Were you sitting', 'Have you been sitting', 'Do you sit'], answer: 1, type: 'verb', feedback: 'Frage im Past Continuous: Were + you + Verb-ing?' },
+                    { de: 'The team _____ when the message arrived.', prompt: 'Welche Verneinung passt?', options: ['was not listening', 'did not listen', 'has not listened', 'is not listening'], answer: 0, type: 'verb', feedback: '"Als" = when + andauernde Handlung → was not listening.' },
+                    { de: 'Choose the signal word for interruption of an ongoing action.', prompt: 'Welches Signalwort passt zum Past Continuous?', options: ['yesterday', 'while', 'two days ago', 'already'], answer: 1, type: 'signal', feedback: '"While" ist das typischste Signalwort des Past Continuous.' },
+                    { de: 'I _____ when you called.', prompt: 'Welche Verbform passt? (to sleep)', options: ['sleep', 'was sleeping', 'slept', 'had slept'], answer: 1, type: 'verb', feedback: '"Als du angerufen hast" = When you called – die laufende Handlung → was sleeping.' },
+                    { de: 'While she was on the phone, I _____ data.', prompt: 'Welche Verbform passt? (to enter)', options: ['enter', 'was entering', 'entered', 'have entered'], answer: 1, type: 'verb', feedback: '"While" = gleichzeitig laufend → Past Continuous → was entering.' }
+                ]
+            },
+            {
+                id: 'past-perfect',
+                nameDE: 'Vollendete Vergangenheit',
+                nameEN: 'Past Perfect',
+                group: 'past',
+                formula: 'Subjekt + had + Partizip II (Past Participle)',
+                signals: ['before', 'after', 'already', 'never', 'when', 'as soon as', 'by the time', 'until then'],
+                explanationDE: 'Die Vorvergangenheit: eine Handlung, die vor einer anderen Vergangenheitshandlung abgeschlossen war.',
+                explanationEN: 'The past before the past. One completed action before another past action.',
+                examples: [
+                    { de: 'Bevor er ankam, hatte ich die Präsentation schon fertig.', en: 'Before he arrived, I had already finished the presentation.' },
+                    { de: 'Als das Meeting begann, hatte sie noch nicht gegessen.', en: 'When the meeting started, she had not eaten yet.' },
+                    { de: 'Wir hatten nie SAP verwendet, bevor wir die Schulung machten.', en: 'We had never used SAP before we attended the training.' }
+                ],
+                questions: [
+                    { de: 'Before he arrived, I _____ everything.', prompt: 'Welche Verbform passt?', options: ['prepare', 'had prepared', 'prepared', 'was preparing'], answer: 1, type: 'verb', feedback: '"Before" + Vergangenheitsreferenz → Past Perfect → had prepared.' },
+                    { de: 'When the update started, the team _____ yet.', prompt: 'Welche Verbform passt?', options: ['has not logged out', 'did not log out', 'had not logged out', 'was not logging out'], answer: 2, type: 'verb', feedback: 'Vor einem Vergangenheitspunkt → Past Perfect Verneinung: had not logged out.' },
+                    { de: 'She _____ the form before she corrected it.', prompt: 'Welche Verbform passt?', options: ['sends', 'had sent', 'sent', 'has sent'], answer: 1, type: 'verb', feedback: '"Already + before" → Past Perfect → had sent.' },
+                    { de: 'Choose the signal word for an action before another past action.', prompt: 'Welches Signalwort steht für Past Perfect?', options: ['at the moment', 'before', 'usually', 'right now'], answer: 1, type: 'signal', feedback: '"Before" zeigt Reihenfolge in der Vergangenheit → Past Perfect.' },
+                    { de: 'By the time the meeting started, everyone _____ their data.', prompt: 'Welche Verbform passt?', options: ['checked', 'had checked', 'were checking', 'have checked'], answer: 1, type: 'verb', feedback: '"By the time" → Past Perfect → had checked.' },
+                    { de: 'He did not know what _____.', prompt: 'Welche Verbform passt? (to happen)', options: ['happened', 'had happened', 'was happening', 'has happened'], answer: 1, type: 'verb', feedback: 'Vorvergangenheit zur Erklärung → had happened.' },
+                    { de: 'We _____ such a situation before.', prompt: 'Welche Verbform passt?', options: ['never experienced', 'had never experienced', 'have never experienced', 'never experience'], answer: 1, type: 'verb', feedback: '"Before" + "never" + Vergangenheitsrahmen → Past Perfect.' },
+                    { de: 'Choose the signal word for the order of two past actions.', prompt: 'Welches Wort signalisiert Past Perfect?', options: ['just now', 'as soon as', 'right now', 'currently'], answer: 1, type: 'signal', feedback: '"As soon as" + Sequenz → Past Perfect.' },
+                    { de: 'After he _____, he left the office.', prompt: 'Welche Verbform passt? (to sign)', options: ['signed', 'had signed', 'was signing', 'has signed'], answer: 1, type: 'verb', feedback: '"After" + Abschluss vor weiterer Vergangenheitshandlung → had signed.' },
+                    { de: '_____ you ever led a project before you were promoted?', prompt: 'Frage bilden – Past Perfect:', options: ['Did you ever lead', 'Had you ever led', 'Have you ever led', 'Were you ever leading'], answer: 1, type: 'verb', feedback: '"Before" + Vergangenheitsrahmen → Past Perfect Frage: Had you ever led?' }
+                ]
+            },
+            {
+                id: 'future-will',
+                nameDE: 'Zukunft mit will',
+                nameEN: 'Future Simple (will)',
+                group: 'future',
+                formula: 'Subjekt + will + Verb (Grundform)\nVerneinung: Subjekt + will not (won\'t) + Verb',
+                signals: ['tomorrow', 'soon', 'in the future', 'next year', 'I think', 'I believe', 'probably', 'perhaps', 'definitely'],
+                explanationDE: 'Für spontane Entscheidungen, Vorhersagen ohne Grundlage und Versprechen.',
+                explanationEN: 'Used for spontaneous decisions, predictions and promises made in the moment.',
+                examples: [
+                    { de: 'Ich rufe dich nachher zurück.', en: 'I will call you back later.' },
+                    { de: 'Ich glaube, das Meeting wird lange dauern.', en: 'I think the meeting will last a long time.' },
+                    { de: 'Mach dir keine Sorgen – ich helfe dir.', en: 'Don\'t worry – I will help you.' }
+                ],
+                questions: [
+                    { de: 'I _____ you immediately. (spontaneous decision)', prompt: 'Welche Verbform passt?', options: ['am helping', 'help', 'will help', 'would help'], answer: 2, type: 'verb', feedback: 'Spontane Entscheidung → will help.' },
+                    { de: 'It _____ tomorrow, probably.', prompt: 'Welche Verbform passt?', options: ['rains', 'is raining', 'will rain', 'going to rain'], answer: 2, type: 'verb', feedback: '"Probably + tomorrow" → Vorhersage → will rain.' },
+                    { de: 'I promise, I _____ on time.', prompt: 'Welche Verbform passt?', options: ['am', 'will be', 'would be', 'am going to be'], answer: 1, type: 'verb', feedback: 'Versprechen → will be.' },
+                    { de: 'Choose the signal word for a spontaneous prediction.', prompt: 'Welches Wort signalisiert Future Simple (will)?', options: ['right now', 'yesterday', 'probably', 'since'], answer: 2, type: 'signal', feedback: '"Probably" zeigt eine Vorhersage → Future Simple (will).' },
+                    { de: 'He _____ the exam for sure.', prompt: 'Welche Verbform passt?', options: ['passes', 'is passing', 'will pass', 'has passed'], answer: 2, type: 'verb', feedback: '"Bestimmt/definitely" = Vorhersage → will pass.' },
+                    { de: '_____ you send the document, please?', prompt: 'Bitte/Frage – welche Verbform?', options: ['Do you send', 'Are you going to send', 'Will you send', 'Have you sent'], answer: 2, type: 'verb', feedback: 'Direkte Bitte → Will you send?' },
+                    { de: 'I _____ you what I heard.', prompt: 'Verneinung – welche Verbform?', options: ['do not tell', 'will not tell', 'am not telling', 'did not tell'], answer: 1, type: 'verb', feedback: 'Spontane Entscheidung + Versprechen → will not tell.' },
+                    { de: 'Choose the signal word for an opinion-based prediction.', prompt: 'Welches Signalwort passt zu Future Simple (will)?', options: ['at the moment', 'just', 'I believe', 'last week'], answer: 2, type: 'signal', feedback: '"I believe" leitet eine Vorhersage ein → Future Simple (will).' },
+                    { de: 'He _____ the offer, perhaps.', prompt: 'Welche Verbform passt?', options: ['accepts', 'will accept', 'has accepted', 'accepted'], answer: 1, type: 'verb', feedback: '"Vielleicht/Perhaps" = unsichere Vorhersage → will accept.' },
+                    { de: '_____ you call tomorrow morning, please?', prompt: 'Bitte bilden – welche Verbform?', options: ['Would you call', 'Will you call', 'Do you call', 'Are you calling'], answer: 1, type: 'verb', feedback: 'Direkte Bitte um eine zukünftige Aktion → Will you call.' }
+                ]
+            },
+            {
+                id: 'future-going-to',
+                nameDE: 'Geplante Zukunft',
+                nameEN: 'Future (going to)',
+                group: 'future',
+                formula: 'Subjekt + am/is/are + going to + Verb (Grundform)',
+                signals: ['tomorrow', 'next week', 'soon', 'tonight', 'in January', 'look!', 'I can see that', 'I plan to'],
+                explanationDE: 'Für geplante Absichten und Vorhersagen auf Grundlage von sichtbaren Beweisen.',
+                explanationEN: 'For planned intentions and predictions based on present evidence.',
+                examples: [
+                    { de: 'Ich habe vor, morgen früher zu gehen.', en: 'I am going to leave earlier tomorrow.' },
+                    { de: 'Das System läuft heiß – es wird gleich abstürzen.', en: 'The system is overheating – it is going to crash.' },
+                    { de: 'Wir planen, nächste Woche das Update einzuspielen.', en: 'We are going to roll out the update next week.' }
+                ],
+                questions: [
+                    { de: 'I _____ the training next week. (plan)', prompt: 'Welche Verbform passt?', options: ['will take', 'am going to take', 'take', 'took'], answer: 1, type: 'verb', feedback: 'Konkreter Plan → am going to take.' },
+                    { de: 'Look! The project _____ . (visible evidence)', prompt: 'Welche Verbform passt?', options: ['will fail', 'is going to fail', 'fails', 'has failed'], answer: 1, type: 'verb', feedback: '"Look!/Sieh!" = sichtbarer Beweis → is going to fail.' },
+                    { de: 'She _____ her job. (known intention)', prompt: 'Welche Verbform passt?', options: ['will quit', 'is going to quit', 'quits', 'quit'], answer: 1, type: 'verb', feedback: 'Bekannte Absicht → is going to quit.' },
+                    { de: 'Choose the signal word for an evidence-based prediction.', prompt: 'Welches Signalwort weist auf "going to" hin?', options: ['I think', 'Look!', 'probably', 'never'], answer: 1, type: 'signal', feedback: '"Look!" deutet auf sichtbare Beweise hin → going to.' },
+                    { de: 'We _____ the budget. (plan)', prompt: 'Verneinung – welche Verbform?', options: ['will not exceed', 'are not going to exceed', 'do not exceed', 'did not exceed'], answer: 1, type: 'verb', feedback: 'Geplante Absicht Verneinung → are not going to exceed.' },
+                    { de: '_____ you postpone the meeting?', prompt: 'Frage nach einem Plan – welche Verbform?', options: ['Will you postpone', 'Are you going to postpone', 'Do you postpone', 'Did you postpone'], answer: 1, type: 'verb', feedback: 'Frage nach einem Plan → Are you going to postpone?' },
+                    { de: 'The new tool _____ us a lot of time.', prompt: 'Welche Verbform passt?', options: ['will save', 'is going to save', 'saves', 'has saved'], answer: 1, type: 'verb', feedback: 'Bekannter Plan → is going to save.' },
+                    { de: 'Choose the signal word for planning with prior evidence.', prompt: 'Welches Signalwort passt zu "going to"?', options: ['yesterday', 'I can see that', 'just', 'already'], answer: 1, type: 'signal', feedback: '"I can see that" = sichtbarer Beweis → going to.' },
+                    { de: 'He _____ next month. (specific plan)', prompt: 'Welche Verbform passt?', options: ['retires', 'is going to retire', 'will retire', 'retired'], answer: 1, type: 'verb', feedback: 'Konkreter Plan mit Datum → is going to retire.' },
+                    { de: 'What _____ with the results?', prompt: 'Frage nach einem Plan:', options: ['will you do', 'are you going to do', 'do you do', 'did you do'], answer: 1, type: 'verb', feedback: 'Frage nach einem konkreten Plan → are you going to do?' }
+                ]
+            },
+            {
+                id: 'conditional-1',
+                nameDE: 'Erste Bedingungsform',
+                nameEN: 'Conditional I (Real Condition)',
+                group: 'future',
+                formula: 'If + Subjekt + Present Simple, Subjekt + will + Verb\n(Nebensatz: kein "will"!)',
+                signals: ['if', 'when', 'unless', 'as long as', 'provided that', 'in case'],
+                explanationDE: 'Reale Bedingung in der Zukunft: Wenn X passiert, dann wird Y passieren.',
+                explanationEN: 'Real future condition: If something is possible, the result will happen. No "will" in the if-clause!',
+                examples: [
+                    { de: 'Wenn du pünktlich bist, fangen wir rechtzeitig an.', en: 'If you are on time, we will start on schedule.' },
+                    { de: 'Sofern das Budget genehmigt wird, starten wir nächste Woche.', en: 'If the budget is approved, we will start next week.' },
+                    { de: 'Außer er sagt ab, findet das Meeting statt.', en: 'Unless he cancels, the meeting will take place.' }
+                ],
+                questions: [
+                    { de: 'If you leave earlier, you _____ the train.', prompt: 'Hauptsatz – welche Verbform?', options: ['catch', 'will catch', 'catches', 'caught'], answer: 1, type: 'verb', feedback: 'If + Present Simple → will + Verb → will catch.' },
+                    { de: 'If it rains, we _____ the meeting.', prompt: 'Hauptsatz – welche Verbform?', options: ['postpone', 'will postpone', 'postponed', 'are postponing'], answer: 1, type: 'verb', feedback: 'Conditional I Hauptsatz → will postpone.' },
+                    { de: 'Choose the signal word for a real future condition.', prompt: 'Welches Signalwort signalisiert Conditional I?', options: ['yesterday', 'if', 'while', 'already'], answer: 1, type: 'signal', feedback: '"If" leitet in Conditional I den Bedingungssatz ein.' },
+                    { de: 'If he _____ the training, he will get a certificate.', prompt: 'Nebensatz – Present Simple wählen (kein "will"!)', options: ['completes', 'will complete', 'completed', 'is completing'], answer: 0, type: 'verb', feedback: 'Im If-Satz steht Present Simple, nicht will → completes.' },
+                    { de: 'She _____ the project if she gets more resources.', prompt: 'Hauptsatz – welche Verbform?', options: ['finishes', 'will finish', 'finished', 'is finishing'], answer: 1, type: 'verb', feedback: 'Hauptsatz Conditional I → will finish.' },
+                    { de: 'Unless you _____ the form, we cannot proceed.', prompt: 'Nebensatz – welche Verbform?', options: ['submit', 'will submit', 'submitted', 'are submitting'], answer: 0, type: 'verb', feedback: '"Unless" + Present Simple → submit (kein will im Nebensatz!).' },
+                    { de: 'Choose the condition phrase for Conditional I.', prompt: 'Welches Signalwort steht für Conditional I?', options: ['probably', 'as long as', 'just', 'while'], answer: 1, type: 'signal', feedback: '"As long as" = sofern → Conditional I.' },
+                    { de: 'If the system does not respond, we _____ it.', prompt: 'Hauptsatz – welche Verbform?', options: ['restart', 'will restart', 'are restarting', 'restarted'], answer: 1, type: 'verb', feedback: 'Conditional I Hauptsatz → will restart.' },
+                    { de: '_____ you increase the budget if needed?', prompt: 'Frage bilden – Conditional I:', options: ['Do you increase', 'Will you increase', 'Did you increase', 'Are you increasing'], answer: 1, type: 'verb', feedback: 'Frage im Conditional I → Will you increase?' },
+                    { de: 'If we _____ now, we will miss the deadline.', prompt: 'Nebensatz – Present Simple wählen:', options: ['do not act', 'will not act', 'did not act', 'are not acting'], answer: 0, type: 'verb', feedback: 'Im If-Satz kein will → do not act.' }
+                ]
+            }
+        ];
+
+        // ====================================================
+        // State
+        // ====================================================
+        const QUIZ_RESULT_STORAGE_KEY = 'zeiten-quiz-results-v1';
+        const SORT_MODE_STORAGE_KEY = 'zeiten-sort-mode-v1';
+        const GROUP_ORDER = { past: 0, present: 1, future: 2 };
+        let selectedTenseId = null;
+        let currentQuizQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let activeFilter = 'all';
+        let sortMode = loadSortMode();
+        let wrongAnswers = [];
+        let quizResultsByTense = loadQuizResults();
+        let speechQuestions = [];
+        let speechQuestionIndex = 0;
+        let speechScore = 0;
+        let speechRecognition = null;
+        let speechIsListening = false;
+
+        function loadSortMode() {
+            try {
+                const stored = localStorage.getItem(SORT_MODE_STORAGE_KEY);
+                if (stored === 'original' || stored === 'priority') {
+                    return stored;
+                }
+            } catch (error) {
+                return 'priority';
+            }
+            return 'priority';
+        }
+
+        function saveSortMode(mode) {
+            try {
+                localStorage.setItem(SORT_MODE_STORAGE_KEY, mode);
+            } catch (error) {
+                // Ignore storage errors.
+            }
+        }
+
+        function updateSortButtons() {
+            const priorityBtn = document.getElementById('sortPriorityBtn');
+            const originalBtn = document.getElementById('sortOriginalBtn');
+            if (!priorityBtn || !originalBtn) {
+                return;
+            }
+            priorityBtn.classList.toggle('active', sortMode === 'priority');
+            originalBtn.classList.toggle('active', sortMode === 'original');
+        }
+
+        function loadQuizResults() {
+            try {
+                const raw = localStorage.getItem(QUIZ_RESULT_STORAGE_KEY);
+                if (!raw) {
+                    return {};
+                }
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object') {
+                    return parsed;
+                }
+            } catch (error) {
+                return {};
+            }
+            return {};
+        }
+
+        function saveQuizResult(tenseId, result) {
+            if (!tenseId) {
+                return;
+            }
+            quizResultsByTense[tenseId] = result;
+            try {
+                localStorage.setItem(QUIZ_RESULT_STORAGE_KEY, JSON.stringify(quizResultsByTense));
+            } catch (error) {
+                // Ignore storage errors.
+            }
+        }
+
+        function getStoredResult(tenseId) {
+            return quizResultsByTense[tenseId] || null;
+        }
+
+        function getPerformanceLevel(lastResult) {
+            if (!lastResult || typeof lastResult.percent !== 'number') {
+                return null;
+            }
+            if (lastResult.percent < 60) {
+                return 'weak';
+            }
+            if (lastResult.percent < 80) {
+                return 'mid';
+            }
+            return 'strong';
+        }
+
+        function sortByPriorityAndName(tenseList) {
+            return [...tenseList].sort((a, b) => {
+                const aResult = getStoredResult(a.id);
+                const bResult = getStoredResult(b.id);
+                const aHas = !!aResult;
+                const bHas = !!bResult;
+
+                // Erst Zeiten mit Ergebnis zeigen, dabei schwache Ergebnisse zuerst.
+                if (aHas && bHas) {
+                    if (aResult.percent !== bResult.percent) {
+                        return aResult.percent - bResult.percent;
+                    }
+                    return a.nameEN.localeCompare(b.nameEN, 'de');
+                }
+                if (aHas !== bHas) {
+                    return aHas ? -1 : 1;
+                }
+                return a.nameEN.localeCompare(b.nameEN, 'de');
+            });
+        }
+
+        function sortByTimeline(tenseList) {
+            return [...tenseList].sort((a, b) => {
+                const groupDiff = (GROUP_ORDER[a.group] ?? 99) - (GROUP_ORDER[b.group] ?? 99);
+                if (groupDiff !== 0) {
+                    return groupDiff;
+                }
+                return a.nameEN.localeCompare(b.nameEN, 'de');
+            });
+        }
+
+        const QUESTION_RECIPES = {
+            'present-simple': {
+                formula: 'Do/Does + Subjekt + Verb (Grundform)?\nBe: Am/Is/Are + Subjekt + ...?',
+                note: 'Frage-Helfer im Present Simple: do/does. Bei he/she/it: does + Grundform.',
+                example: 'Beispiel: Do you work on Fridays? / Does she work on Fridays?'
+            },
+            'present-continuous': {
+                formula: 'Am/Is/Are + Subjekt + Verb-ing?',
+                note: 'Verb to be steht am Anfang, danach Subjekt und Verb-ing.',
+                example: 'Beispiel: Are you working right now?'
+            },
+            'present-perfect': {
+                formula: 'Have/Has + Subjekt + Past Participle?',
+                note: 'Nutze have/has als Frage-Helfer, dann Partizip II.',
+                example: 'Beispiel: Have you finished the report?'
+            },
+            'present-perfect-continuous': {
+                formula: 'Have/Has + Subjekt + been + Verb-ing?',
+                note: 'Bei Dauerfragen oft mit "How long ...?" kombinieren.',
+                example: 'Beispiel: How long have you been waiting?'
+            },
+            'past-simple': {
+                formula: 'Did + Subjekt + Verb (Grundform)?\nBe: Was/Were + Subjekt + ...?',
+                note: 'Im Past Simple mit did bleibt das Verb in der Grundform.',
+                example: 'Beispiel: Did you send the email yesterday?'
+            },
+            'past-continuous': {
+                formula: 'Was/Were + Subjekt + Verb-ing?',
+                note: 'Typisch bei Fragen zu laufenden Handlungen in der Vergangenheit.',
+                example: 'Beispiel: Were you working at 8 p.m.?'
+            },
+            'past-perfect': {
+                formula: 'Had + Subjekt + Past Participle?',
+                note: 'Fragt nach einer Handlung vor einem anderen Vergangenheitspunkt.',
+                example: 'Beispiel: Had you finished before the meeting started?'
+            },
+            'future-will': {
+                formula: 'Will + Subjekt + Verb (Grundform)?',
+                note: 'Für spontane Entscheidungen, Vorhersagen oder höfliche Bitten.',
+                example: 'Beispiel: Will you join the meeting?'
+            },
+            'future-going-to': {
+                formula: 'Am/Is/Are + Subjekt + going to + Verb (Grundform)?',
+                note: 'Für geplante Absichten oder Vorhersagen mit sichtbarem Hinweis.',
+                example: 'Beispiel: Are you going to call the client?'
+            },
+            'conditional-1': {
+                formula: 'Will + Subjekt + Verb ..., if + Subjekt + Present Simple?\nOder: If + Subjekt + Present Simple, will + Subjekt + Verb?',
+                note: 'Kein "will" im if-Satz. Der if-Satz bleibt im Present Simple.',
+                example: 'Beispiel: Will you call me if you need help?'
+            }
+        };
+
+        function getQuestionRecipe(tenseId) {
+            return QUESTION_RECIPES[tenseId] || {
+                formula: 'Hilfsverb + Subjekt + Verb ...?',
+                note: 'Nutze das passende Hilfsverb der Zeitform am Satzanfang.',
+                example: 'Beispiel: Do you work ...? / Did you work ...? / Will you work ...?'
+            };
+        }
+
+        let activeAudioButton = null;
+
+        // ====================================================
+        // Render tense cards
+        // ====================================================
+        function renderTenses(filter) {
+            const grid = document.getElementById('tensesGrid');
+            const filtered = filter === 'all' ? TENSES : TENSES.filter(t => t.group === filter);
+            const list = sortMode === 'priority' ? sortByPriorityAndName(filtered) : sortByTimeline(filtered);
+
+            grid.innerHTML = list.map(tense => {
+                const groupLabel = { present: 'Gegenwart', past: 'Vergangenheit', future: 'Zukunft' }[tense.group];
+                const isSelected = tense.id === selectedTenseId;
+                const lastResult = getStoredResult(tense.id);
+                const performanceLevel = getPerformanceLevel(lastResult);
+                const questionRecipe = getQuestionRecipe(tense.id);
+                const formulaExampleEN = tense.examples && tense.examples[0] ? `Example: ${tense.examples[0].en}` : '';
+                const formulaAudioSegments = [
+                    {
+                        lang: 'en-US',
+                        text: [
+                            `${tense.nameEN}`,
+                            'Formula',
+                            tense.formula.replace(/\n/g, ' '),
+                            formulaExampleEN
+                        ].filter(Boolean).join('. ')
+                    }
+                ];
+                const questionAudioSegments = [
+                    {
+                        lang: 'en-US',
+                        text: [
+                            `${tense.nameEN}`,
+                            'Question recipe',
+                            questionRecipe.formula.replace(/\n/g, ' '),
+                            questionRecipe.note,
+                            questionRecipe.example
+                        ].filter(Boolean).join('. ')
+                    }
+                ];
+                const signalAudioSegments = [
+                    {
+                        lang: 'en-US',
+                        text: `${tense.nameEN}. Signal words: ${tense.signals.join(', ')}.`
+                    }
+                ];
+                const explanationAudioSegments = [
+                    {
+                        lang: 'de-DE',
+                        text: `${tense.nameDE}. ${tense.explanationDE}`
+                    },
+                    {
+                        lang: 'en-US',
+                        text: `${tense.nameEN}. ${tense.explanationEN}`
+                    }
+                ];
+                const resultInfo = lastResult
+                    ? `<p class="tense-last-result level-${performanceLevel}">Zuletzt: ${lastResult.score}/${lastResult.total} (${lastResult.percent}%) am ${lastResult.dateLabel}</p>`
+                    : '<p class="tense-last-result muted">Noch kein Testergebnis gespeichert.</p>';
+
+                return `
+                <article class="tense-card${performanceLevel ? ` level-${performanceLevel}` : ''}${isSelected ? ' selected' : ''}" id="card-${tense.id}">
+                    <div class="tense-card-header">
+                        <div>
+                            <div class="tense-name-en">${tense.nameEN}</div>
+                            <div class="tense-name-de">${tense.nameDE}</div>
+                        </div>
+                        <button class="tense-audio-btn" type="button" data-tense-id="${tense.id}" aria-label="Zeit ${tense.nameEN} vorlesen" title="Zeit erklären">🔊</button>
+                        <span class="tense-group-badge badge-${tense.group}">${groupLabel}</span>
+                    </div>
+
+                    <div class="recipe-block">
+                        <div class="recipe-label-row">
+                            <div class="recipe-label">Formel – Kochrezept</div>
+                            ${buildAudioButton(formulaAudioSegments, 'Formel vorlesen', 'en-US')}
+                        </div>
+                        <div class="recipe-formula">${escapeHtml(tense.formula).replace(/\n/g, '<br>')}</div>
+                        ${formulaExampleEN ? `<p class="recipe-formula-example">${escapeHtml(formulaExampleEN)}</p>` : ''}
+                    </div>
+
+                    <div class="recipe-block">
+                        <div class="recipe-label-row">
+                            <div class="recipe-label">Fragen bilden – Kochrezept</div>
+                            ${buildAudioButton(questionAudioSegments, 'Fragen-Kochrezept vorlesen', 'en-US')}
+                        </div>
+                        <div class="recipe-formula">${escapeHtml(questionRecipe.formula).replace(/\n/g, '<br>')}</div>
+                        <p class="recipe-question-note">${escapeHtml(questionRecipe.note)}</p>
+                        <p class="recipe-question-example">${escapeHtml(questionRecipe.example)}</p>
+                    </div>
+
+                    <div class="signal-section">
+                        <div class="recipe-label-row">
+                            <div class="recipe-label">Signalwörter</div>
+                            ${buildAudioButton(signalAudioSegments, 'Signalwörter vorlesen', 'en-US')}
+                        </div>
+                        <div class="signal-words">
+                            ${tense.signals.map(s => `<span class="signal-tag">${escapeHtml(s)}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="tense-explanation">
+                        <div class="recipe-label-row">
+                            <div class="recipe-label">Beschreibungen der Handlungen</div>
+                            ${buildAudioButton(explanationAudioSegments, 'Beschreibung vorlesen', 'de-DE')}
+                        </div>
+                        <p class="explanation-de">${escapeHtml(tense.explanationDE)}</p>
+                        <p class="explanation-en">${escapeHtml(tense.explanationEN)}</p>
+                    </div>
+
+                    <ul class="examples-list">
+                        ${tense.examples.map(ex => `
+                            <li>
+                                <span class="example-de">${escapeHtml(ex.de)}</span>
+                                <span class="example-en">${escapeHtml(ex.en)}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+
+                    ${(() => {
+                        const speaker1 = tense.examples && tense.examples[0] ? tense.examples[0].en : 'What have you done?';
+                        const speaker2 = tense.examples && tense.examples[1] ? tense.examples[1].en : 'I\'ve finished my work.';
+                        const sp1Escaped = speaker1.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                        const sp2Escaped = speaker2.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                        return `
+                    <button class="dialog-trigger" data-tense-id="${tense.id}" data-speaker1="${sp1Escaped}" data-speaker2="${sp2Escaped}" type="button" aria-label="Dialog-Beispiel anzeigen">
+                        <div class="tense-dialog-example">
+                            <div class="dialog-label">Im Gespräch 👥</div>
+                            <svg viewBox="0 0 400 180" class="dialog-svg" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Person 1 emoji (left) -->
+                                <text x="60" y="50" font-size="32" text-anchor="middle" dominant-baseline="middle">👤</text>
+                                <!-- Speech bubble left -->
+                                <path d="M 20 85 Q 20 100 30 100 L 110 100 Q 120 100 120 90 L 120 55 Q 120 45 110 45 L 30 45 Q 20 45 20 55 Z" 
+                                      fill="rgba(37, 99, 235, 0.12)" stroke="rgba(37, 99, 235, 0.4)" stroke-width="1.5"/>
+                                <text x="35" y="65" font-size="13" fill="#222" font-weight="600" text-anchor="middle" dominant-baseline="middle">${escapeHtml(speaker1.substring(0, 15))}</text>
+                                ${speaker1.length > 15 ? `<text x="35" y="78" font-size="13" fill="#222" font-weight="600" text-anchor="middle" dominant-baseline="middle">${escapeHtml(speaker1.substring(15, 30))}</text>` : ''}
+                                
+                                <!-- Person 2 emoji (right) -->
+                                <text x="340" y="50" font-size="32" text-anchor="middle" dominant-baseline="middle">👤</text>
+                                <!-- Speech bubble right -->
+                                <path d="M 380 85 Q 380 100 370 100 L 290 100 Q 280 100 280 90 L 280 55 Q 280 45 290 45 L 370 45 Q 380 45 380 55 Z" 
+                                      fill="rgba(201, 111, 59, 0.12)" stroke="rgba(201, 111, 59, 0.4)" stroke-width="1.5"/>
+                                <text x="295" y="65" font-size="13" fill="#222" font-weight="600" text-anchor="middle" dominant-baseline="middle">${escapeHtml(speaker2.substring(0, 15))}</text>
+                                ${speaker2.length > 15 ? `<text x="295" y="78" font-size="13" fill="#222" font-weight="600" text-anchor="middle" dominant-baseline="middle">${escapeHtml(speaker2.substring(15, 30))}</text>` : ''}
+                            </svg>
+                        </div>
+                    </button>`;
+                    })()}
+
+                    <button class="start-test-btn" type="button" onclick="selectTense('${tense.id}')">
+                        ${isSelected ? '✓ Ausgewählt – Test aktiv' : 'Test starten →'}
+                    </button>
+                    ${resultInfo}
+                </article>`;
+            }).join('');
+
+            // Attach dialog trigger listeners after rendering
+            attachDialogTriggerListeners();
+        }
+
+        function escapeHtml(str) {
+            if (str == null) {
+                return '';
+            }
+            return str
+                .toString()
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function encodeAudioPayload(segments) {
+            return encodeURIComponent(JSON.stringify(segments || []));
+        }
+
+        function normalizeAudioSegments(content, defaultLang) {
+            if (Array.isArray(content)) {
+                return content
+                    .map(segment => ({
+                        text: (segment && segment.text ? String(segment.text) : '').trim(),
+                        lang: (segment && segment.lang) || defaultLang || 'en-US'
+                    }))
+                    .filter(segment => segment.text.length > 0);
+            }
+
+            const text = content == null ? '' : String(content).trim();
+            if (!text) {
+                return [];
+            }
+
+            return [{ text, lang: defaultLang || 'en-US' }];
+        }
+
+        function decodeAudioPayload(payload) {
+            if (!payload) {
+                return [];
+            }
+
+            try {
+                const parsed = JSON.parse(decodeURIComponent(payload));
+                return normalizeAudioSegments(parsed, 'en-US');
+            } catch (_) {
+                return [];
+            }
+        }
+
+        function buildAudioButton(content, label, lang) {
+            const segments = normalizeAudioSegments(content, lang || 'en-US');
+            if (!segments.length) {
+                return '';
+            }
+            return `<button class="audio-shortcut" type="button" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}" data-audio="${encodeAudioPayload(segments)}">🔊</button>`;
+        }
+
+        const preferredVoicesByLang = {};
+
+        function getPreferredVoice(lang, preferredName) {
+            if (!window.speechSynthesis) {
+                return null;
+            }
+
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices.length) {
+                return null;
+            }
+
+            if (preferredName) {
+                const namedVoice = voices.find(v => v.name === preferredName);
+                if (namedVoice) {
+                    return namedVoice;
+                }
+            }
+
+            const targetLang = (lang || 'en-US').toLowerCase();
+            if (preferredVoicesByLang[targetLang]) {
+                return preferredVoicesByLang[targetLang];
+            }
+
+            const languageVoices = voices.filter(v => {
+                const voiceLang = (v.lang || '').toLowerCase();
+                return voiceLang === targetLang || voiceLang.startsWith(targetLang.split('-')[0]);
+            });
+            const naturalPreferred = languageVoices.find(v => /natural|neural|online/i.test(v.name || ''));
+            const exactMatch = languageVoices.find(v => (v.lang || '').toLowerCase() === targetLang);
+            const broadMatch = languageVoices[0];
+            const fallback = voices.find(v => (v.lang || '').toLowerCase().startsWith('en')) || voices[0];
+            const selected = naturalPreferred || exactMatch || broadMatch || fallback;
+
+            preferredVoicesByLang[targetLang] = selected || null;
+            return selected || null;
+        }
+
+        function getDialogSelectedVoiceName() {
+            const select = document.getElementById('dialogVoiceSelect');
+            if (select && select.value) {
+                return select.value;
+            }
+            return localStorage.getItem('dialogVoiceName') || '';
+        }
+
+        function populateDialogVoiceSelect() {
+            const select = document.getElementById('dialogVoiceSelect');
+            if (!select || !window.speechSynthesis) {
+                return;
+            }
+
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices.length) {
+                return;
+            }
+
+            const englishVoices = voices.filter(v => (v.lang || '').toLowerCase().startsWith('en'));
+            const source = englishVoices.length ? englishVoices : voices;
+            const savedVoice = localStorage.getItem('dialogVoiceName') || '';
+            const currentValue = select.value || savedVoice;
+
+            select.innerHTML = '';
+            const autoOption = document.createElement('option');
+            autoOption.value = '';
+            autoOption.textContent = 'Auto (beste Stimme)';
+            select.appendChild(autoOption);
+
+            source.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                select.appendChild(option);
+            });
+
+            if (currentValue && source.some(v => v.name === currentValue)) {
+                select.value = currentValue;
+            } else {
+                select.value = '';
+            }
+        }
+
+        function speakSegments(segments) {
+            if (!segments.length || !window.speechSynthesis || typeof window.SpeechSynthesisUtterance === 'undefined') {
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+            segments.forEach(segment => {
+                const utterance = new SpeechSynthesisUtterance(segment.text);
+                utterance.lang = segment.lang || 'en-US';
+                utterance.rate = 0.95;
+                utterance.pitch = 1;
+                const preferredVoice = getPreferredVoice(utterance.lang);
+                if (preferredVoice) {
+                    utterance.voice = preferredVoice;
+                }
+                window.speechSynthesis.speak(utterance);
+            });
+        }
+
+        function clearActiveAudioButton() {
+            if (!activeAudioButton) {
+                return;
+            }
+            activeAudioButton.classList.remove('playing');
+            activeAudioButton.removeAttribute('aria-pressed');
+            activeAudioButton = null;
+        }
+
+        // ====================================================
+        // Select tense
+        // ====================================================
+        function selectTense(tenseId) {
+            selectedTenseId = tenseId;
+            renderTenses(activeFilter);
+
+            const tense = TENSES.find(t => t.id === tenseId);
+            document.getElementById('quizTenseName').textContent = `${tense.nameEN} – ${tense.nameDE}`;
+            startQuiz(tense);
+
+            document.getElementById('quizContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ====================================================
+        // Quiz
+        // ====================================================
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function startQuiz(tense) {
+            currentQuizQuestions = shuffle(tense.questions).slice(0, Math.min(10, tense.questions.length));
+            currentQuestionIndex = 0;
+            score = 0;
+            wrongAnswers = [];
+
+            document.getElementById('quizEmpty').style.display = 'none';
+            document.getElementById('quizResult').style.display = 'none';
+            document.getElementById('quizActive').style.display = 'block';
+
+            renderQuestion();
+            startSpeechQuiz(tense);
+        }
+
+        function normalizeSpeechText(text) {
+            return (text || '')
+                .toLowerCase()
+                .replace(/[^a-z0-9\s']/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function getSpeechQuestionPool(tense) {
+            const blankQuestions = (tense.questions || [])
+                .filter(q => q && q.type === 'verb' && typeof q.de === 'string' && q.de.includes('_____'))
+                .map(q => ({
+                    promptDE: q.de,
+                    expectedSentence: q.de.replace('_____', q.options[q.answer]),
+                    requiredPhrase: q.options[q.answer],
+                    feedback: q.feedback || ''
+                }));
+
+            if (blankQuestions.length >= 3) {
+                return blankQuestions;
+            }
+
+            const exampleQuestions = (tense.examples || []).map(ex => ({
+                promptDE: ex.de,
+                expectedSentence: ex.en,
+                requiredPhrase: ex.en,
+                feedback: 'Achte auf die Zielstruktur dieser Zeitform.'
+            }));
+
+            return blankQuestions.concat(exampleQuestions);
+        }
+
+        function levenshteinDistance(a, b) {
+            const s = a || '';
+            const t = b || '';
+            const dp = Array.from({ length: s.length + 1 }, (_, i) => [i]);
+            for (let j = 1; j <= t.length; j++) {
+                dp[0][j] = j;
+            }
+            for (let i = 1; i <= s.length; i++) {
+                for (let j = 1; j <= t.length; j++) {
+                    const cost = s[i - 1] === t[j - 1] ? 0 : 1;
+                    dp[i][j] = Math.min(
+                        dp[i - 1][j] + 1,
+                        dp[i][j - 1] + 1,
+                        dp[i - 1][j - 1] + cost
+                    );
+                }
+            }
+            return dp[s.length][t.length];
+        }
+
+        function getPronunciationHint(similarityPercent) {
+            if (similarityPercent >= 85) {
+                return 'Aussprache-Hinweis: Sehr klar und gut verständlich.';
+            }
+            if (similarityPercent >= 70) {
+                return 'Aussprache-Hinweis: Gut, aber achte auf Rhythmus und Endungen.';
+            }
+            if (similarityPercent >= 50) {
+                return 'Aussprache-Hinweis: Verständlich, bitte langsamer und deutlicher sprechen.';
+            }
+            return 'Aussprache-Hinweis: Viele Abweichungen erkannt. Satz langsam und deutlich wiederholen.';
+        }
+
+        function renderSpeechQuestion() {
+            const panel = document.getElementById('speechQuizPanel');
+            if (!panel) {
+                return;
+            }
+
+            if (!speechQuestions.length || speechQuestionIndex >= speechQuestions.length) {
+                panel.style.display = 'none';
+                return;
+            }
+
+            panel.style.display = 'block';
+            const item = speechQuestions[speechQuestionIndex];
+            document.getElementById('speechQuizCounter').textContent = `Sprechfrage ${speechQuestionIndex + 1} von ${speechQuestions.length}`;
+            document.getElementById('speechQuizScore').textContent = `${speechScore} Punkte (Grammatik)`;
+            document.getElementById('speechPromptDe').textContent = `Deutsch: ${item.promptDE}`;
+            document.getElementById('speechTranscript').textContent = '';
+            const grammarFeedback = document.getElementById('speechGrammarFeedback');
+            grammarFeedback.className = 'question-feedback';
+            grammarFeedback.textContent = '';
+            document.getElementById('speechPronunciationFeedback').textContent = '';
+            document.getElementById('speechNextBtn').disabled = true;
+        }
+
+        function startSpeechQuiz(tense) {
+            const pool = getSpeechQuestionPool(tense);
+            speechQuestions = shuffle(pool).slice(0, Math.min(5, pool.length));
+            speechQuestionIndex = 0;
+            speechScore = 0;
+            renderSpeechQuestion();
+        }
+
+        function evaluateSpeechAnswer(transcript) {
+            const item = speechQuestions[speechQuestionIndex];
+            if (!item) {
+                return;
+            }
+
+            const actual = normalizeSpeechText(transcript);
+            const expected = normalizeSpeechText(item.expectedSentence);
+            const required = normalizeSpeechText(item.requiredPhrase);
+
+            // 1. Required verb form must appear verbatim
+            const containsRequired = required.length > 0 && actual.includes(required);
+
+            // 2. Bigram positional overlap – checks word-pair sequences
+            const toNgrams = (str, n) => {
+                const tokens = str.split(' ').filter(Boolean);
+                const grams = [];
+                for (let i = 0; i <= tokens.length - n; i++) {
+                    grams.push(tokens.slice(i, i + n).join(' '));
+                }
+                return grams;
+            };
+            const expectedBigrams = toNgrams(expected, 2);
+            const actualBigramSet = new Set(toNgrams(actual, 2));
+            const bigramHits = expectedBigrams.filter(g => actualBigramSet.has(g)).length;
+            const bigramScore = expectedBigrams.length > 0 ? bigramHits / expectedBigrams.length : 0;
+
+            // 3. Order-aware token overlap (tolerates minor position drift)
+            const expectedTokens = expected.split(' ').filter(Boolean);
+            const actualTokens = actual.split(' ').filter(Boolean);
+            const inOrderHits = expectedTokens.filter((tok, idx) => {
+                const slop = Math.max(3, Math.round(idx * 0.4) + 1);
+                const start = Math.max(0, idx - slop);
+                const end = Math.min(actualTokens.length - 1, idx + slop);
+                for (let i = start; i <= end; i++) {
+                    if (actualTokens[i] === tok) {
+                        return true;
+                    }
+                }
+                return false;
+            }).length;
+            const orderScore = expectedTokens.length > 0 ? inOrderHits / expectedTokens.length : 0;
+
+            // Grammar correct only when all three criteria met
+            const grammarCorrect = containsRequired && bigramScore >= 0.4 && orderScore >= 0.55;
+
+            // Specific feedback for each failure mode
+            let wrongReason = '';
+            if (!containsRequired) {
+                wrongReason = `Die Verbform „${item.requiredPhrase}" fehlt in deiner Antwort. `;
+            } else if (bigramScore < 0.4) {
+                wrongReason = 'Die Satzstruktur weicht deutlich vom Ziel ab. ';
+            } else if (orderScore < 0.55) {
+                wrongReason = 'Die Wort-Reihenfolge stimmt nicht ausreichend überein. ';
+            }
+
+            const grammarFeedback = document.getElementById('speechGrammarFeedback');
+            if (grammarCorrect) {
+                speechScore++;
+                grammarFeedback.className = 'question-feedback correct';
+                grammarFeedback.innerHTML = `✓ Grammatik korrekt (+1 Punkt). ${escapeHtml(item.feedback)}`;
+            } else {
+                grammarFeedback.className = 'question-feedback wrong';
+                grammarFeedback.innerHTML = `✗ Grammatik inkorrekt (0 Punkte). ${escapeHtml(wrongReason)}<br>Erwartet: <strong>${escapeHtml(item.expectedSentence)}</strong>`;
+            }
+
+            const dist = levenshteinDistance(actual, expected);
+            const maxLen = Math.max(1, expected.length);
+            const similarity = Math.max(0, Math.round((1 - dist / maxLen) * 100));
+            document.getElementById('speechPronunciationFeedback').textContent = `${getPronunciationHint(similarity)} (${similarity}% Ähnlichkeit)`;
+
+            document.getElementById('speechQuizScore').textContent = `${speechScore} Punkte (Grammatik)`;
+            document.getElementById('speechNextBtn').disabled = false;
+        }
+
+        function initSpeechRecognition() {
+            const SpeechRecognitionCtor = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognitionCtor) {
+                return null;
+            }
+
+            const recognition = new SpeechRecognitionCtor();
+            recognition.lang = 'en-US';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = (event) => {
+                const transcript = (event.results && event.results[0] && event.results[0][0] && event.results[0][0].transcript) || '';
+                document.getElementById('speechTranscript').textContent = `Erkannt: ${transcript}`;
+                evaluateSpeechAnswer(transcript);
+            };
+
+            recognition.onerror = () => {
+                const grammarFeedback = document.getElementById('speechGrammarFeedback');
+                grammarFeedback.className = 'question-feedback wrong';
+                grammarFeedback.textContent = 'Spracherkennung fehlgeschlagen. Bitte erneut versuchen.';
+            };
+
+            recognition.onend = () => {
+                speechIsListening = false;
+                const listenBtn = document.getElementById('speechListenBtn');
+                if (listenBtn) {
+                    listenBtn.textContent = '🎤 Antwort sprechen';
+                }
+            };
+
+            return recognition;
+        }
+
+        function startSpeechRecognitionForAnswer() {
+            if (!speechQuestions.length || speechQuestionIndex >= speechQuestions.length) {
+                return;
+            }
+
+            if (!speechRecognition) {
+                speechRecognition = initSpeechRecognition();
+            }
+
+            if (!speechRecognition) {
+                const grammarFeedback = document.getElementById('speechGrammarFeedback');
+                grammarFeedback.className = 'question-feedback wrong';
+                grammarFeedback.textContent = 'Dein Browser unterstützt keine Sprachaufnahme (SpeechRecognition).';
+                return;
+            }
+
+            if (speechIsListening) {
+                return;
+            }
+
+            speechIsListening = true;
+            document.getElementById('speechListenBtn').textContent = '🎙️ Höre zu...';
+            document.getElementById('speechNextBtn').disabled = true;
+            speechRecognition.start();
+        }
+
+        function nextSpeechQuestion() {
+            speechQuestionIndex++;
+            if (speechQuestionIndex >= speechQuestions.length) {
+                const panel = document.getElementById('speechQuizPanel');
+                const finalGrammar = document.getElementById('speechGrammarFeedback');
+                const finalPron = document.getElementById('speechPronunciationFeedback');
+                document.getElementById('speechQuizCounter').textContent = 'Sprechtest abgeschlossen';
+                finalGrammar.className = 'question-feedback correct';
+                finalGrammar.textContent = `Sprechtest fertig: ${speechScore}/${speechQuestions.length} Grammatikpunkte.`;
+                finalPron.textContent = 'Aussprache-Hinweise wurden nur informativ angezeigt (ohne Punktabzug).';
+                document.getElementById('speechNextBtn').disabled = true;
+                return;
+            }
+            renderSpeechQuestion();
+        }
+
+        function renderQuestion() {
+            const q = currentQuizQuestions[currentQuestionIndex];
+            const total = currentQuizQuestions.length;
+
+            document.getElementById('quizCounter').textContent = `Frage ${currentQuestionIndex + 1} von ${total}`;
+            document.getElementById('quizScoreDisplay').textContent = `${score} richtig`;
+            document.getElementById('quizProgressFill').style.width = `${(currentQuestionIndex / total) * 100}%`;
+
+            const badge = document.getElementById('questionTypeBadge');
+            badge.textContent = q.type === 'signal' ? 'Signalwort wählen' : 'Verb wählen';
+
+            document.getElementById('questionSentenceDe').textContent = q.de;
+            document.getElementById('questionPrompt').textContent = q.prompt;
+
+            const feedback = document.getElementById('questionFeedback');
+            feedback.className = 'question-feedback';
+            feedback.textContent = '';
+
+            const choiceList = document.getElementById('choiceList');
+            choiceList.innerHTML = q.options.map((opt, i) =>
+                `<button class="choice-btn" type="button" onclick="selectAnswer(${i})">${escapeHtml(opt)}</button>`
+            ).join('');
+
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            nextBtn.disabled = true;
+            nextBtn.textContent = 'Nächste Frage';
+            answered = false;
+        }
+
+        function selectAnswer(choiceIndex) {
+            if (answered) return;
+            answered = true;
+
+            const q = currentQuizQuestions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.choice-btn');
+
+            buttons.forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === q.answer) btn.classList.add('correct');
+                if (i === choiceIndex && i !== q.answer) btn.classList.add('wrong');
+            });
+
+            const feedback = document.getElementById('questionFeedback');
+            if (choiceIndex === q.answer) {
+                score++;
+                feedback.className = 'question-feedback correct';
+                feedback.innerHTML = `✓ Richtig! ${escapeHtml(q.feedback || '')}`;
+            } else {
+                wrongAnswers.push({
+                    de: q.de,
+                    prompt: q.prompt,
+                    selected: q.options[choiceIndex],
+                    correct: q.options[q.answer],
+                    feedback: q.feedback || ''
+                });
+                feedback.className = 'question-feedback wrong';
+                feedback.innerHTML = `✗ Leider falsch. Richtig: <strong>${escapeHtml(q.options[q.answer])}</strong>. ${escapeHtml(q.feedback || '')}`;
+            }
+
+            document.getElementById('quizScoreDisplay').textContent = `${score} richtig`;
+
+            const isLast = currentQuestionIndex === currentQuizQuestions.length - 1;
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            nextBtn.textContent = isLast ? 'Auswerten →' : 'Nächste Frage →';
+            nextBtn.disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex === currentQuizQuestions.length - 1) {
+                showResult();
+            } else {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizActive').style.display = 'none';
+            document.getElementById('quizProgressFill').style.width = '100%';
+
+            const result = document.getElementById('quizResult');
+            result.style.display = 'block';
+
+            const total = currentQuizQuestions.length;
+            document.getElementById('resultScoreNumber').textContent = `${score}/${total}`;
+
+            const percent = Math.round((score / total) * 100);
+            saveQuizResult(selectedTenseId, {
+                score,
+                total,
+                percent,
+                dateLabel: new Date().toLocaleDateString('de-DE')
+            });
+            renderTenses(activeFilter);
+
+            const pct = score / total;
+            let msg, sub;
+            if (pct === 1) {
+                msg = 'Perfekt – alles richtig! 🎉';
+                sub = 'Du beherrschst diese Zeitform sehr sicher.';
+            } else if (pct >= 0.8) {
+                msg = 'Sehr gut! Fast alles richtig.';
+                sub = 'Noch eine Runde und du kennst sie sicher.';
+            } else if (pct >= 0.6) {
+                msg = 'Gut gemacht!';
+                sub = 'Du kennst die Grundlagen – wiederhole die Fehler nochmal.';
+            } else if (pct >= 0.4) {
+                msg = 'Solide Basis.';
+                sub = 'Schau das Kochrezept nochmal an und starte den Test neu.';
+            } else {
+                msg = 'Noch Übungsbedarf.';
+                sub = 'Lies Formel und Signalwörter oben nochmal durch, dann ein neuer Versuch.';
+            }
+
+            document.getElementById('resultMessage').textContent = msg;
+            document.getElementById('resultSub').textContent = sub;
+            renderResultReview();
+        }
+
+        function renderResultReview() {
+            const panel = document.getElementById('resultReviewPanel');
+            const list = document.getElementById('resultReviewList');
+
+            if (!wrongAnswers.length) {
+                panel.style.display = 'none';
+                list.innerHTML = '';
+                return;
+            }
+
+            list.innerHTML = wrongAnswers.map((item, index) => `
+                <li class="result-review-item">
+                    <strong>${index + 1}. Vorlage (DE):</strong> ${escapeHtml(item.de)}<br>
+                    <strong>Aufgabe:</strong> ${escapeHtml(item.prompt)}<br>
+                    <strong>Deine Antwort:</strong> ${escapeHtml(item.selected)}<br>
+                    <strong>Richtige Antwort:</strong> ${escapeHtml(item.correct)}<br>
+                    <strong>Hinweis:</strong> ${escapeHtml(item.feedback)}
+                </li>
+            `).join('');
+
+            panel.style.display = 'block';
+        }
+
+        // ====================================================
+        // Events
+        // ====================================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            if (btn.dataset.sortMode) {
+                return;
+            }
+            btn.addEventListener('click', () => {
+                activeFilter = btn.dataset.filter;
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                updateSortButtons();
+                renderTenses(activeFilter);
+            });
+        });
+
+        document.querySelectorAll('[data-sort-mode]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                sortMode = btn.dataset.sortMode;
+                saveSortMode(sortMode);
+                updateSortButtons();
+                renderTenses(activeFilter);
+            });
+        });
+
+        document.getElementById('nextQuestionBtn').addEventListener('click', nextQuestion);
+
+        document.getElementById('restartQuizBtn').addEventListener('click', () => {
+            if (selectedTenseId) {
+                if (speechRecognition && speechIsListening) {
+                    speechRecognition.stop();
+                }
+                startQuiz(TENSES.find(t => t.id === selectedTenseId));
+            }
+        });
+
+        document.getElementById('retryQuizBtn').addEventListener('click', () => {
+            if (selectedTenseId) {
+                if (speechRecognition && speechIsListening) {
+                    speechRecognition.stop();
+                }
+                startQuiz(TENSES.find(t => t.id === selectedTenseId));
+            }
+        });
+
+        document.getElementById('speechListenBtn').addEventListener('click', () => {
+            startSpeechRecognitionForAnswer();
+        });
+
+        document.getElementById('speechNextBtn').addEventListener('click', () => {
+            nextSpeechQuestion();
+        });
+
+        document.getElementById('changeTenseBtn').addEventListener('click', () => {
+            document.getElementById('tensesGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        document.getElementById('tensesGrid').addEventListener('click', (event) => {
+            const audioBtn = event.target.closest('.audio-shortcut');
+            if (!audioBtn) {
+                return;
+            }
+
+            if (window.speechSynthesis && window.speechSynthesis.speaking && activeAudioButton === audioBtn) {
+                window.speechSynthesis.cancel();
+                clearActiveAudioButton();
+                return;
+            }
+
+            clearActiveAudioButton();
+            const segments = decodeAudioPayload(audioBtn.dataset.audio || '');
+            if (!segments.length) {
+                return;
+            }
+            activeAudioButton = audioBtn;
+            activeAudioButton.classList.add('playing');
+            activeAudioButton.setAttribute('aria-pressed', 'true');
+            speakSegments(segments);
+        });
+
+        document.getElementById('tensesGrid').addEventListener('click', (event) => {
+            const tenseAudioBtn = event.target.closest('.tense-audio-btn');
+            if (!tenseAudioBtn) {
+                return;
+            }
+
+            if (window.speechSynthesis && window.speechSynthesis.speaking && activeAudioButton === tenseAudioBtn) {
+                window.speechSynthesis.cancel();
+                clearActiveAudioButton();
+                return;
+            }
+
+            const tenseId = tenseAudioBtn.dataset.tenseId;
+            const tense = TENSES.find(t => t.id === tenseId);
+            if (!tense) {
+                return;
+            }
+
+            clearActiveAudioButton();
+            
+            const segments = [
+                { lang: 'en-US', text: `${tense.nameEN}.` },
+                { lang: 'en-US', text: `Formula: ${tense.formula.replace(/\n/g, ' ')}` },
+                { lang: 'en-US', text: `Signal words: ${tense.signals.join(', ')}.` }
+            ];
+
+            activeAudioButton = tenseAudioBtn;
+            activeAudioButton.classList.add('playing');
+            activeAudioButton.setAttribute('aria-pressed', 'true');
+            speakSegments(segments);
+        });
+
+        if (window.speechSynthesis) {
+            window.speechSynthesis.addEventListener('voiceschanged', () => {
+                getPreferredVoice('en-US');
+                getPreferredVoice('de-DE');
+            });
+
+            window.speechSynthesis.addEventListener('end', () => {
+                if (!window.speechSynthesis.speaking && !window.speechSynthesis.pending) {
+                    clearActiveAudioButton();
+                }
+            });
+        }
+
+        // Init
+        updateSortButtons();
+        renderTenses('all');
+
+        // Dialog Modal System
+        const dialogModal = {
+            openDialog: function(tenseName, speaker1Text, speaker2Text) {
+                const overlay = document.getElementById('dialogModalOverlay');
+                const modal = document.getElementById('dialogModal');
+                const titleEl = document.getElementById('dialogModalTitle');
+                const speaker1El = document.getElementById('speaker1Text');
+                const speaker2El = document.getElementById('speaker2Text');
+
+                if (!overlay || !modal || !titleEl || !speaker1El || !speaker2El) {
+                    console.error('Dialog elements not fully loaded');
+                    return;
+                }
+
+                titleEl.textContent = tenseName;
+                speaker1El.textContent = speaker1Text;
+                speaker2El.textContent = speaker2Text;
+                
+                overlay.classList.add('active');
+                modal.dataset.speaker1 = speaker1Text;
+                modal.dataset.speaker2 = speaker2Text;
+            },
+
+            closeDialog: function() {
+                const overlay = document.getElementById('dialogModalOverlay');
+                const playBtn = document.getElementById('dialogPlayBtn');
+
+                if (!overlay) {
+                    console.warn('Overlay not found');
+                    return;
+                }
+
+                overlay.classList.remove('active');
+                
+                if (playBtn && playBtn.classList.contains('playing')) {
+                    window.speechSynthesis.cancel();
+                    playBtn.classList.remove('playing');
+                    playBtn.textContent = '▶ Vorlesen';
+                }
+            },
+
+            playDialog: function() {
+                const playBtn = document.getElementById('dialogPlayBtn');
+                const modal = document.getElementById('dialogModal');
+                
+                if (!playBtn || !modal) {
+                    console.error('Dialog modal elements missing');
+                    return;
+                }
+                
+                if (playBtn.classList.contains('playing')) {
+                    // Stop playing
+                    window.speechSynthesis.cancel();
+                    playBtn.classList.remove('playing');
+                    playBtn.textContent = '▶ Vorlesen';
+                } else {
+                    // Start playing
+                    playBtn.classList.add('playing');
+                    playBtn.textContent = '⏸ Stoppen';
+                    
+                    const speaker1Text = modal.dataset.speaker1 || 'What have you done?';
+                    const speaker2Text = modal.dataset.speaker2 || 'I\'ve finished my work.';
+                    
+                    if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance === 'undefined') {
+                        playBtn.classList.remove('playing');
+                        playBtn.textContent = '▶ Vorlesen';
+                        return;
+                    }
+
+                    const dialogText = `Speaker 1: ${speaker1Text} ... Speaker 2: ${speaker2Text}`;
+                    const utterance = new SpeechSynthesisUtterance(dialogText);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1;
+
+                    const preferredVoice = getPreferredVoice('en-US', getDialogSelectedVoiceName());
+                    if (preferredVoice) {
+                        utterance.voice = preferredVoice;
+                    }
+
+                    utterance.onend = () => {
+                        playBtn.classList.remove('playing');
+                        playBtn.textContent = '▶ Vorlesen';
+                    };
+
+                    utterance.onerror = () => {
+                        playBtn.classList.remove('playing');
+                        playBtn.textContent = '▶ Vorlesen';
+                    };
+
+                    window.speechSynthesis.cancel();
+                    window.speechSynthesis.speak(utterance);
+                }
+            }
+        };
+
+        function attachDialogTriggerListeners() {
+            // Dialog trigger events
+            document.querySelectorAll('.dialog-trigger').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.tense-card');
+                    const tenseName = card.querySelector('.tense-name-en').textContent || 'Dialog';
+                    const speaker1 = this.dataset.speaker1 || 'What have you done?';
+                    const speaker2 = this.dataset.speaker2 || 'I\'ve finished my work.';
+                    dialogModal.openDialog(tenseName, speaker1, speaker2);
+                });
+            });
+        }
+
+        // Modal close events (setup once)
+        function initializeDialogModal() {
+            const closeBtn = document.getElementById('dialogModalClose');
+            const overlay = document.getElementById('dialogModalOverlay');
+            const playBtn = document.getElementById('dialogPlayBtn');
+            const voiceSelect = document.getElementById('dialogVoiceSelect');
+
+            if (!closeBtn || !overlay || !playBtn || !voiceSelect) {
+                console.warn('Dialog modal elements not found yet, will retry');
+                setTimeout(initializeDialogModal, 100);
+                return;
+            }
+
+            console.log('Dialog modal initialized');
+            populateDialogVoiceSelect();
+
+            // Close button
+            closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                dialogModal.closeDialog();
+            });
+
+            // Overlay click
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    dialogModal.closeDialog();
+                }
+            });
+
+            // Play button
+            playBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                dialogModal.playDialog();
+            });
+
+            voiceSelect.addEventListener('change', () => {
+                localStorage.setItem('dialogVoiceName', voiceSelect.value || '');
+            });
+
+            // Keyboard Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                    dialogModal.closeDialog();
+                }
+            });
+        }
+
+        // Initialize after a small delay to ensure DOM is ready
+        setTimeout(() => {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeDialogModal);
+            } else {
+                initializeDialogModal();
+            }
+        }, 100);
+
+        if (window.speechSynthesis) {
+            window.speechSynthesis.addEventListener('voiceschanged', () => {
+                populateDialogVoiceSelect();
+            });
+        }
+    </script>
+
+    <!-- Dialog Modal -->
+    <div id="dialogModalOverlay" class="dialog-modal-overlay">
+        <div id="dialogModal" class="dialog-modal">
+            <div class="dialog-modal-header">
+                <h3 id="dialogModalTitle" class="dialog-modal-title">Dialog-Beispiel</h3>
+                <button id="dialogModalClose" class="dialog-modal-close" aria-label="Schließen">✕</button>
+            </div>
+            
+            <div class="dialog-modal-speakers">
+                <div class="speaker">
+                    <span class="speaker-icon">👤</span>
+                    <div id="speaker1Text" class="speaker-text">What have you done?</div>
+                </div>
+                <div class="speaker">
+                    <span class="speaker-icon">👤</span>
+                    <div id="speaker2Text" class="speaker-text">I've finished my work.</div>
+                </div>
+            </div>
+
+            <div class="dialog-modal-controls">
+                <select id="dialogVoiceSelect" class="dialog-voice-select" aria-label="Stimme auswählen"></select>
+                <button id="dialogPlayBtn" class="dialog-play-btn">▶ Vorlesen</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
