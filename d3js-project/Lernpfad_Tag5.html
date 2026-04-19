@@ -1,0 +1,335 @@
+﻿<!doctype html>
+
+<html lang="de">
+
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>D3.js Tag 5</title>
+
+      <script src="../js/theme.js"></script>
+
+        <link rel="stylesheet" href="src/styles.css" />
+
+    </head>
+
+    <body>
+
+        <main class="page">
+
+            <nav class="global-switcher" aria-label="Bereiche">
+
+                <a class="switch-link" href="../index.html#english">Englisch</a>
+
+                <a class="switch-link active" href="index.html">D3.js</a>
+
+
+            </nav>
+
+
+
+            <section class="context-box" aria-labelledby="contextHeading">
+
+                <span class="context-label">Wo bin ich gerade?</span>
+
+                <p id="contextHeading">Du bist auf der Übungsseite für Tag 5. Hier baust du Hover-Effekte und einen Tooltip, der Detailwerte auf Abruf zeigt.</p>
+
+            </section>
+
+
+
+            <section class="hero-banner" aria-labelledby="tag5HeroHeading">
+
+                <div>
+
+                    <span class="hero-kicker">Tag 5</span>
+
+                    <h1 id="tag5HeroHeading">D3.js Übungsseite: Interaktion</h1>
+
+                    <p>Mach dein Diagramm explorierbar: Hover-Effekte, Tooltip und Klick-Interaktionen.</p>
+
+                    <div class="hero-actions">
+
+                        <a class="hero-button" href="lernpfad.html">Zum Lernpfad</a>
+
+                        <a class="hero-button secondary" href="../index.html">Zur Startauswahl</a>
+
+                    </div>
+
+                    <div class="quick-links" aria-label="Schnellaktionen">
+
+                        <a class="quick-link" href="Lernpfad_Tag4.html">Tag 4</a>
+
+                        <a class="quick-link" href="lernpfad.html">Lernpfad</a>
+
+                        <a class="quick-link" href="Lernpfad_Tag6.html">Tag 6</a>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-panel">
+
+                    <div class="hero-card">
+
+                        <strong>Fokus heute</strong>
+
+                        <p>Mouse-Events, schwebender Tooltip und Klick-Markierung von Elementen.</p>
+
+                    </div>
+
+                    <div class="hero-card">
+
+                        <strong>Nächster Schritt</strong>
+
+                        <p>Danach: Echte Daten aus CSV/JSON einlesen statt hardcodierter Arrays.</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag5heading">
+
+                <h2 id="tag5heading">Tag 5: Interaktion und Tooltips</h2>
+
+                <p>
+
+                    Heute ergänzt du dein Diagramm um Hover-Effekte und einen Tooltip.
+
+                    Schwerpunkt: <code>mouseover</code>, <code>mousemove</code>,
+
+                    <code>mouseout</code>, Event-Handling.
+
+                </p>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag5DetailHeading">
+
+              <h2 id="tag5DetailHeading">Tag 5 im Detail: Interaktion und Tooltips</h2>
+
+              <p>
+
+                Ein gutes Diagramm lädt zum Erkunden ein. Mit Mouse-Events und einem Tooltip
+
+                kannst du Detailwerte auf Abruf zeigen, ohne das Bild zu überladen.
+
+              </p>
+
+
+
+              <div class="detail-box">
+
+                <h3>Aufgabe 1 - Tooltip mit Hover-Effekt</h3>
+
+                <p>
+
+                  Füge zu deinem Balkendiagramm einen schwebenden Tooltip hinzu,
+
+                  der bei <code>mouseover</code> den genauen Wert anzeigt.
+
+                </p>
+
+
+
+                <p><strong>Startcode (in main_Tage5.js einfügen):</strong></p>
+
+                <pre><code>// Tag 5 - Interaktion und Tooltips
+
+const width = 760, height = 420;
+
+const margin = { top: 24, right: 20, bottom: 52, left: 56 };
+
+const innerWidth = width - margin.left - margin.right;
+
+const innerHeight = height - margin.top - margin.bottom;
+
+
+
+const data = [
+
+  { name: "Mo", value: 12 }, { name: "Di", value: 28 },
+
+  { name: "Mi", value: 9 },  { name: "Do", value: 34 },
+
+  { name: "Fr", value: 20 }
+
+];
+
+
+
+// Tooltip-Div anlegen
+
+const tooltip = d3.select("body").append("div")
+
+  .style("position", "absolute")
+
+  .style("background", "#1e293b")
+
+  .style("color", "#fff")
+
+  .style("padding", "6px 12px")
+
+  .style("border-radius", "6px")
+
+  .style("font-size", "13px")
+
+  .style("pointer-events", "none")
+
+  .style("opacity", 0);
+
+
+
+const svg = d3.select("#chart").attr("viewBox", `0 0 ${width} ${height}`);
+
+const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+
+const x = d3.scaleBand().domain(data.map(d => d.name)).range([0, innerWidth]).padding(0.2);
+
+const y = d3.scaleLinear().domain([0, d3.max(data, d => d.value)]).nice().range([innerHeight, 0]);
+
+
+
+g.append("g").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(x));
+
+g.append("g").call(d3.axisLeft(y).ticks(6));
+
+
+
+g.selectAll("rect")
+
+  .data(data)
+
+  .join("rect")
+
+  .attr("x", d => x(d.name))
+
+  .attr("y", d => y(d.value))
+
+  .attr("width", x.bandwidth())
+
+  .attr("height", d => innerHeight - y(d.value))
+
+  .attr("fill", "#2563eb")
+
+  .on("mouseover", (event, d) => {
+
+    tooltip.style("opacity", 1).html(`&lt;strong&gt;${d.name}&lt;/strong&gt;: ${d.value}`);
+
+    d3.select(event.currentTarget).attr("fill", "#1d4ed8");
+
+  })
+
+  .on("mousemove", event => {
+
+    tooltip
+
+      .style("left", (event.pageX + 12) + "px")
+
+      .style("top",  (event.pageY - 28) + "px");
+
+  })
+
+  .on("mouseout", (event) => {
+
+    tooltip.style("opacity", 0);
+
+    d3.select(event.currentTarget).attr("fill", "#2563eb");
+
+  });</code></pre>
+
+
+
+                <h3>Was du dabei lernst</h3>
+
+                <ul>
+
+                  <li><code>d3.select("body").append("div")</code> - Tooltip außerhalb des SVG anlegen</li>
+
+                  <li><code>mouseover / mousemove / mouseout</code> - Drei-Phasen-Event-Pattern</li>
+
+                  <li><code>event.pageX / pageY</code> - Mausposition relativ zur Seite</li>
+
+                  <li><code>pointer-events: none</code> - Tooltip blockiert keine Mouse-Events</li>
+
+                  <li>Hover-Feedback direkt am Element: Farbe wechseln bei Hover</li>
+
+                </ul>
+
+
+
+                <h3>Aufgabe 2 - Selbst ausprobieren</h3>
+
+                <ol>
+
+                  <li>Füge beim Klick auf einen Balken eine dauerhafte Markierung hinzu (z. B. Rahmen).</li>
+
+                  <li>Zeige im Tooltip zusätzlich den Prozentanteil am Gesamtwert.</li>
+
+                  <li>Baue ein Klick-Event, das den angeklickten Balken hervorhebt und alle anderen abblendet.</li>
+
+                </ol>
+
+
+
+                <div class="tip">
+
+                  <strong>Profi-Tipp:</strong> Nutze <code>event.currentTarget</code> statt <code>event.target</code>,
+
+                  wenn du auf das gebundene D3-Element zugreifen willst 
+
+                  <code>target</code> kann ein Kindelement sein.
+
+                </div>
+
+              </div>
+
+
+
+              <h3>Weiterführende Links für Tag 5</h3>
+
+              <ul>
+
+                <li><a href="https://www.d3indepth.com/interaction/" target="_blank" rel="noopener">D3 in Depth: Interaction</a></li>
+
+                <li><a href="https://observablehq.com/@d3/tooltip" target="_blank" rel="noopener">Observable: D3 Tooltip Beispiel</a></li>
+
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent" target="_blank" rel="noopener">MDN: MouseEvent API</a></li>
+
+              </ul>
+
+            </section>
+
+
+
+            <svg id="chart" width="80%" height="80%" role="img" aria-label="Interaktives Balkendiagramm mit Tooltip"></svg>
+
+        </main>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+        <script src="main_Tage5.js"></script>
+
+        <script src="progress.js"></script>
+
+        <a class="floating-start-button" href="../index.html">Zur Startauswahl</a>
+
+    </body>
+
+</html>
+
+
+

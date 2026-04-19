@@ -1,0 +1,321 @@
+﻿<!doctype html>
+
+<html lang="de">
+
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>D3.js Tag 1</title>
+
+      <script src="../js/theme.js"></script>
+
+        <link rel="stylesheet" href="src/styles.css" />
+
+    </head>
+
+    <body>
+
+        <main class="page">
+
+            <nav class="global-switcher" aria-label="Bereiche">
+
+                <a class="switch-link" href="../index.html#english">Englisch</a>
+
+                <a class="switch-link active" href="index.html">D3.js</a>
+
+
+            </nav>
+
+
+
+            <section class="context-box" aria-labelledby="contextHeading">
+
+                <span class="context-label">Wo bin ich gerade?</span>
+
+                <p id="contextHeading">Du bist auf der Übungsseite für Tag 1. Hier trainierst du Datenbindung, Kreise und das Grundprinzip von D3.</p>
+
+            </section>
+
+
+
+            <section class="hero-banner" aria-labelledby="tag1HeroHeading">
+
+                <div>
+
+                    <span class="hero-kicker">Tag 1</span>
+
+                    <h1 id="tag1HeroHeading">D3.js Übungsseite: Datenbindung</h1>
+
+                    <p>Arbeite an deinem Kreisdiagramm, springe in den Lernpfad oder gehe direkt zur Startseite zurück.</p>
+
+                    <div class="hero-actions">
+
+                        <a class="hero-button" href="lernpfad.html">Zum Lernpfad</a>
+
+                        <a class="hero-button secondary" href="../index.html">Zur Startauswahl</a>
+
+                    </div>
+
+                    <div class="quick-links" aria-label="Schnellaktionen">
+
+                        <a class="quick-link" href="index.html">Basisdiagramm</a>
+
+                        <a class="quick-link" href="lernpfad.html">Lernpfad</a>
+
+                        <a class="quick-link" href="Lernpfad_Tag2.html">Tag 2</a>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-panel">
+
+                    <div class="hero-card">
+
+                        <strong>Fokus heute</strong>
+
+                        <p>Data Join, Kreise aus Daten und erste D3-Denkweise verstehen.</p>
+
+                    </div>
+
+                    <div class="hero-card">
+
+                        <strong>Nächster Schritt</strong>
+
+                        <p>Danach weiter zu Scales, Achsen und sauberer Struktur.</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag2">
+
+                <h2 id="tag2">Tag 1: Datenbindung und Kreise</h2>
+
+                <p>
+
+                    Heute bindest du Rohdaten an SVG-Elemente und baust daraus ein erstes Kreisdiagramm.
+
+                    Schwerpunkt: <code>selectAll</code>, <code>data</code>,
+
+                    <code>enter</code>, <code>append</code>.
+
+                </p>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag1DetailHeading">
+
+              <h2 id="tag1DetailHeading">Tag 1 im Detail: D3-Basics und Datenbindung</h2>
+
+              <p>
+
+                Das Herzstück von D3.js ist der <strong>Data Join</strong>:
+
+                Du verbindest Daten mit DOM-Elementen. D3 kümmert sich darum,
+
+                welche Elemente neu erstellt, aktualisiert oder entfernt werden müssen.
+
+              </p>
+
+
+
+              <div class="detail-box">
+
+                <h3>Aufgabe 1 - Kreise aus einem Array rendern</h3>
+
+                <p>
+
+                  Ersetze in <code>main.js</code> das Balkendiagramm durch einen
+
+                  Bubble-Chart. Jeder Datenpunkt soll ein Kreis werden -
+
+                  der Wert bestimmt Radius und Farbe.
+
+                </p>
+
+
+
+                <p><strong>Startcode (in main.js einfügen):</strong></p>
+
+                <pre><code>// Tag 1 - Datenbindung mit Kreisen
+
+const data = [12, 25, 8, 32, 19, 27, 14, 40, 5, 22];
+
+
+
+const svg = d3.select("#chart")
+
+  .attr("viewBox", "0 0 760 200");
+
+
+
+// Farbskala: kleiner Wert = hellblau, großer Wert = dunkelblau
+
+const color = d3.scaleSequential()
+
+  .domain([0, d3.max(data)])
+
+  .interpolator(d3.interpolateBlues);
+
+
+
+// Radiusskala
+
+const r = d3.scaleLinear()
+
+  .domain([0, d3.max(data)])
+
+  .range([8, 50]);
+
+
+
+// Kreise aus Daten erstellen
+
+svg.selectAll("circle")
+
+  .data(data)
+
+  .enter()
+
+  .append("circle")
+
+  .attr("cx", (d, i) => 50 + i * 70)   // x-Position je Index
+
+  .attr("cy", 100)                       // y-Position (Mitte)
+
+  .attr("r",  d => r(d))                // Radius aus Datenwert
+
+  .attr("fill", d => color(d));         // Farbe aus Datenwert
+
+
+
+// Wert als Text in den Kreis
+
+svg.selectAll("text")
+
+  .data(data)
+
+  .enter()
+
+  .append("text")
+
+  .attr("x", (d, i) => 50 + i * 70)
+
+  .attr("y", 104)
+
+  .attr("text-anchor", "middle")
+
+  .attr("fill", d => d > 20 ? "#fff" : "#1e40af")
+
+  .attr("font-size", "12px")
+
+  .text(d => d);</code></pre>
+
+
+
+                <h3>Was du dabei lernst</h3>
+
+                <ul>
+
+                  <li><code>d3.select("#chart")</code> - ein DOM-Element auswählen</li>
+
+                  <li><code>selectAll("circle")</code> - eine (noch leere) Auswahl anlegen</li>
+
+                  <li><code>.data(data)</code> - Array mit der Auswahl verbinden</li>
+
+                  <li><code>.enter().append("circle")</code> - für jeden Datenpunkt ein neues Element erzeugen</li>
+
+                  <li><code>.attr("r", d => r(d))</code> - Attribut aus dem Datenwert berechnen (<em>accessor function</em>)</li>
+
+                  <li><code>scaleSequential + interpolateBlues</code> - Farbe aus Wert interpolieren</li>
+
+                </ul>
+
+
+
+                <h3>Aufgabe 2 - Selbst ausprobieren</h3>
+
+                <ol>
+
+                  <li>Ändere den Array auf eigene Zahlen (z. B. Vokabeln pro Tag).</li>
+
+                  <li>Ersetze <code>d3.interpolateBlues</code> durch <code>d3.interpolateOranges</code>.</li>
+
+                  <li>Ändere die y-Position der Kreise, sodass der Wert die Höhe bestimmt (Andeutung: <code>.attr("cy", d => 200 - r(d))</code>).</li>
+
+                </ol>
+
+
+
+                <h3>Kontrollfrage</h3>
+
+                <p>Was passiert, wenn im Array mehr Werte sind als Kreise bereits im SVG vorhanden?
+
+                ? Genau das regelt <code>.enter()</code> - es liefert nur die <em>neuen</em> Datenpunkte, für die noch kein Element existiert.</p>
+
+
+
+                <div class="tip">
+
+                  <strong>Profi-Tipp:</strong> Öffne die Browser-DevTools (F12) ? Reiter <em>Elements</em>
+
+                  und schau dir an, welche <code>&lt;circle&gt;</code>-Tags D3 erzeugt hat.
+
+                  Das ist die beste Methode, um den Data Join wirklich zu verstehen.
+
+                </div>
+
+              </div>
+
+
+
+              <h3>Weiterführende Links für Tag 1</h3>
+
+              <ul>
+
+                <li><a href="https://www.d3indepth.com/datajoins/" target="_blank" rel="noopener">D3 in Depth: Data Joins</a></li>
+
+                <li><a href="https://observablehq.com/@d3/selection-join" target="_blank" rel="noopener">Observable: selection.join erklärt</a></li>
+
+                <li><a href="https://d3js.org/d3-scale-chromatic" target="_blank" rel="noopener">D3 Farbskalen Übersicht (d3-scale-chromatic)</a></li>
+
+              </ul>
+
+            </section>
+
+
+
+            <svg id="chart" width="80%" height="80%" role="img" aria-label=""></svg>
+
+        </main>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+        <script src="main_Tage1.js"></script>
+
+        <script src="progress.js"></script>
+
+        <a class="floating-start-button" href="../index.html">Zur Startauswahl</a>
+
+    </body>
+
+</html>
+
+
+
+
+
+
+

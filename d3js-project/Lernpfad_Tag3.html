@@ -1,0 +1,319 @@
+﻿<!doctype html>
+
+<html lang="de">
+
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>D3.js Tag 3</title>
+
+      <script src="../js/theme.js"></script>
+
+        <link rel="stylesheet" href="src/styles.css" />
+
+    </head>
+
+    <body>
+
+        <main class="page">
+
+            <nav class="global-switcher" aria-label="Bereiche">
+
+                <a class="switch-link" href="../index.html#english">Englisch</a>
+
+                <a class="switch-link active" href="index.html">D3.js</a>
+
+
+            </nav>
+
+
+
+            <section class="context-box" aria-labelledby="contextHeading">
+
+                <span class="context-label">Wo bin ich gerade?</span>
+
+                <p id="contextHeading">Du bist auf der Übungsseite für Tag 3. Hier übst du den Data Join: Enter, Update und Exit sauber mit <code>selection.join()</code> beherrschen.</p>
+
+            </section>
+
+
+
+            <section class="hero-banner" aria-labelledby="tag3HeroHeading">
+
+                <div>
+
+                    <span class="hero-kicker">Tag 3</span>
+
+                    <h1 id="tag3HeroHeading">D3.js Übungsseite: Data Join</h1>
+
+                    <p>Baue ein Diagramm, das auf Knopfdruck neue Daten lädt und sich sauber aktualisiert.</p>
+
+                    <div class="hero-actions">
+
+                        <a class="hero-button" href="lernpfad.html">Zum Lernpfad</a>
+
+                        <a class="hero-button secondary" href="../index.html">Zur Startauswahl</a>
+
+                    </div>
+
+                    <div class="quick-links" aria-label="Schnellaktionen">
+
+                        <a class="quick-link" href="Lernpfad_Tag2.html">Tag 2</a>
+
+                        <a class="quick-link" href="lernpfad.html">Lernpfad</a>
+
+                        <a class="quick-link" href="Lernpfad_Tag4.html">Tag 4</a>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-panel">
+
+                    <div class="hero-card">
+
+                        <strong>Fokus heute</strong>
+
+                        <p>Data Join mit <code>.join()</code>, key-Funktionen und dynamische Datenupdates.</p>
+
+                    </div>
+
+                    <div class="hero-card">
+
+                        <strong>Nächster Schritt</strong>
+
+                        <p>Danach: Transitionen und Animationen für flüssige Übergänge.</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag3heading">
+
+                <h2 id="tag3heading">Tag 3: Data Join richtig verstehen</h2>
+
+                <p>
+
+                    Heute baust du ein Diagramm, das auf Knopfdruck neue Daten lädt und
+
+                    sich sauber aktualisiert. Schwerpunkt: <code>.join()</code>, key-Funktionen,
+
+                    Enter / Update / Exit.
+
+                </p>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag3DetailHeading">
+
+              <h2 id="tag3DetailHeading">Tag 3 im Detail: Data Join richtig verstehen</h2>
+
+              <p>
+
+                D3 unterscheidet drei Fälle beim Aktualisieren von Daten: <strong>Enter</strong> (neue Elemente),
+
+                <strong>Update</strong> (bestehende Elemente) und <strong>Exit</strong> (zu löschende Elemente).
+
+                <code>selection.join()</code> fasst alle drei Fälle zusammen und ist heute der empfohlene Weg.
+
+              </p>
+
+
+
+              <div class="detail-box">
+
+                <h3>Aufgabe 1 - Diagramm dynamisch aktualisieren</h3>
+
+                <p>
+
+                  Füge in <code>main_Tage3.js</code> einen Button ein, der bei jedem Klick
+
+                  einen neuen zufälligen Datensatz lädt und das Diagramm aktualisiert.
+
+                </p>
+
+
+
+                <p><strong>Startcode (in main_Tage3.js einfügen):</strong></p>
+
+                <pre><code>// Tag 3 - Data Join mit .join()
+
+const width = 760, height = 420;
+
+const margin = { top: 24, right: 20, bottom: 52, left: 56 };
+
+const innerWidth = width - margin.left - margin.right;
+
+const innerHeight = height - margin.top - margin.bottom;
+
+
+
+const svg = d3.select("#chart")
+
+  .attr("viewBox", `0 0 ${width} ${height}`);
+
+
+
+const g = svg.append("g")
+
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+
+const categories = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+
+
+
+function randomData() {
+
+  return categories.map(name => ({ name, value: Math.round(Math.random() * 40 + 5) }));
+
+}
+
+
+
+const x = d3.scaleBand().domain(categories).range([0, innerWidth]).padding(0.2);
+
+const y = d3.scaleLinear().range([innerHeight, 0]);
+
+
+
+const xAxis = g.append("g").attr("transform", `translate(0,${innerHeight})`);
+
+const yAxis = g.append("g");
+
+
+
+function update(data) {
+
+  y.domain([0, d3.max(data, d => d.value)]).nice();
+
+  xAxis.call(d3.axisBottom(x));
+
+  yAxis.call(d3.axisLeft(y).ticks(6));
+
+
+
+  g.selectAll("rect")
+
+    .data(data, d => d.name)        // key-Funktion: Identität per Name
+
+    .join("rect")                   // enter + update + exit in einem
+
+    .attr("x", d => x(d.name))
+
+    .attr("y", d => y(d.value))
+
+    .attr("width", x.bandwidth())
+
+    .attr("height", d => innerHeight - y(d.value))
+
+    .attr("fill", "#2563eb");
+
+}
+
+
+
+update(randomData());
+
+
+
+// Button zum Auslösen
+
+d3.select("body").insert("button", "svg")
+
+  .text("Neue Daten laden")
+
+  .style("margin", "12px 0")
+
+  .on("click", () => update(randomData()));</code></pre>
+
+
+
+                <h3>Was du dabei lernst</h3>
+
+                <ul>
+
+                  <li><code>.data(data, d => d.name)</code> - key-Funktion verhindert unnötiges Neuzeichnen</li>
+
+                  <li><code>.join("rect")</code> - kombiniert Enter, Update und Exit</li>
+
+                  <li>Warum key-Funktionen bei animierten Updates entscheidend sind</li>
+
+                  <li>Skalierungen per <code>.domain()</code> neu setzen ohne die Achsen neu zu erstellen</li>
+
+                </ul>
+
+
+
+                <h3>Aufgabe 2 - Selbst ausprobieren</h3>
+
+                <ol>
+
+                  <li>Baue einen zweiten Button, der nur 3 Kategorien anzeigt  beobachte den Exit.</li>
+
+                  <li>Füge eine Farbe hinzu, die sich je nach Wert ändert (hoch = grün, niedrig = rot).</li>
+
+                  <li>Entferne die key-Funktion und schau, was sich beim Update ändert.</li>
+
+                </ol>
+
+
+
+                <div class="tip">
+
+                  <strong>Profi-Tipp:</strong> Debugge den Data Join mit <code>console.log(selection.data())</code>
+
+                  nach jeder Bindung, um zu sehen, welche Daten welchen DOM-Elementen zugeordnet sind.
+
+                </div>
+
+              </div>
+
+
+
+              <h3>Weiterführende Links für Tag 3</h3>
+
+              <ul>
+
+                <li><a href="https://www.d3indepth.com/datajoins/" target="_blank" rel="noopener">D3 in Depth: Data Joins</a></li>
+
+                <li><a href="https://observablehq.com/@d3/selection-join" target="_blank" rel="noopener">Observable: selection.join erklärt</a></li>
+
+                <li><a href="https://bost.ocks.org/mike/join/" target="_blank" rel="noopener">Mike Bostock: Thinking with Joins</a></li>
+
+              </ul>
+
+            </section>
+
+
+
+            <svg id="chart" width="80%" height="80%" role="img" aria-label="Balkendiagramm mit dynamischen Daten"></svg>
+
+        </main>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+        <script src="main_Tage3.js"></script>
+
+        <script src="progress.js"></script>
+
+        <a class="floating-start-button" href="../index.html">Zur Startauswahl</a>
+
+    </body>
+
+</html>
+
+
+

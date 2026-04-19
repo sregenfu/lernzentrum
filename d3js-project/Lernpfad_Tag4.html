@@ -1,0 +1,323 @@
+﻿<!doctype html>
+
+<html lang="de">
+
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>D3.js Tag 4</title>
+
+      <script src="../js/theme.js"></script>
+
+        <link rel="stylesheet" href="src/styles.css" />
+
+    </head>
+
+    <body>
+
+        <main class="page">
+
+            <nav class="global-switcher" aria-label="Bereiche">
+
+                <a class="switch-link" href="../index.html#english">Englisch</a>
+
+                <a class="switch-link active" href="index.html">D3.js</a>
+
+
+            </nav>
+
+
+
+            <section class="context-box" aria-labelledby="contextHeading">
+
+                <span class="context-label">Wo bin ich gerade?</span>
+
+                <p id="contextHeading">Du bist auf der Übungsseite für Tag 4. Hier machst du Animationen mit <code>transition()</code>, <code>duration()</code> und Easing-Funktionen.</p>
+
+            </section>
+
+
+
+            <section class="hero-banner" aria-labelledby="tag4HeroHeading">
+
+                <div>
+
+                    <span class="hero-kicker">Tag 4</span>
+
+                    <h1 id="tag4HeroHeading">D3.js Übungsseite: Transitionen</h1>
+
+                    <p>Animiere Balken beim Laden und bei Datenwechseln für flüssige, lesbare Übergänge.</p>
+
+                    <div class="hero-actions">
+
+                        <a class="hero-button" href="lernpfad.html">Zum Lernpfad</a>
+
+                        <a class="hero-button secondary" href="../index.html">Zur Startauswahl</a>
+
+                    </div>
+
+                    <div class="quick-links" aria-label="Schnellaktionen">
+
+                        <a class="quick-link" href="Lernpfad_Tag3.html">Tag 3</a>
+
+                        <a class="quick-link" href="lernpfad.html">Lernpfad</a>
+
+                        <a class="quick-link" href="Lernpfad_Tag5.html">Tag 5</a>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-panel">
+
+                    <div class="hero-card">
+
+                        <strong>Fokus heute</strong>
+
+                        <p>Animationen mit <code>.transition()</code>, <code>.duration()</code> und Easing.</p>
+
+                    </div>
+
+                    <div class="hero-card">
+
+                        <strong>Nächster Schritt</strong>
+
+                        <p>Danach: Interaktion mit Hover-Effekten und Tooltips.</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag4heading">
+
+                <h2 id="tag4heading">Tag 4: Transitionen und Animation</h2>
+
+                <p>
+
+                    Heute animierst du Balken beim Laden und beim Datenwechsel.
+
+                    Schwerpunkt: <code>transition()</code>, <code>duration()</code>,
+
+                    <code>delay()</code>, <code>ease()</code>.
+
+                </p>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag4DetailHeading">
+
+              <h2 id="tag4DetailHeading">Tag 4 im Detail: Transitionen und Animation</h2>
+
+              <p>
+
+                Animationen machen Veränderungen im Diagramm sichtbar und helfen dem Auge, Übergänge
+
+                zu verfolgen. D3-Transitionen laufen auf CSS-Übergängen auf und sind leichtgewichtig.
+
+              </p>
+
+
+
+              <div class="detail-box">
+
+                <h3>Aufgabe 1 - Balken mit Transition einblenden</h3>
+
+                <p>
+
+                  Lass die Balken beim ersten Laden von Höhe 0 auf ihren Zielwert wachsen
+
+                  und beim Datenwechsel sanft von alt nach neu übergehen.
+
+                </p>
+
+
+
+                <p><strong>Startcode (in main_Tage4.js einfügen):</strong></p>
+
+                <pre><code>// Tag 4 - Transitionen
+
+const width = 760, height = 420;
+
+const margin = { top: 24, right: 20, bottom: 52, left: 56 };
+
+const innerWidth = width - margin.left - margin.right;
+
+const innerHeight = height - margin.top - margin.bottom;
+
+
+
+const svg = d3.select("#chart")
+
+  .attr("viewBox", `0 0 ${width} ${height}`);
+
+
+
+const g = svg.append("g")
+
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+
+const categories = ["Mo", "Di", "Mi", "Do", "Fr"];
+
+
+
+const x = d3.scaleBand().domain(categories).range([0, innerWidth]).padding(0.2);
+
+const y = d3.scaleLinear().domain([0, 50]).range([innerHeight, 0]);
+
+
+
+g.append("g").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(x));
+
+g.append("g").call(d3.axisLeft(y).ticks(6));
+
+
+
+function update(data) {
+
+  g.selectAll("rect")
+
+    .data(data, d => d.name)
+
+    .join(
+
+      enter => enter.append("rect")
+
+        .attr("x", d => x(d.name))
+
+        .attr("y", innerHeight)           // Startposition unten
+
+        .attr("width", x.bandwidth())
+
+        .attr("height", 0)               // Starthoehe 0
+
+        .attr("fill", "#2563eb"),
+
+      update => update,
+
+      exit => exit.remove()
+
+    )
+
+    .transition().duration(600).ease(d3.easeCubicOut)
+
+    .attr("y", d => y(d.value))
+
+    .attr("height", d => innerHeight - y(d.value));
+
+}
+
+
+
+const data = categories.map(name => ({ name, value: Math.round(Math.random() * 40 + 5) }));
+
+update(data);
+
+
+
+d3.select("body").insert("button", "svg")
+
+  .text("Neue Werte animieren")
+
+  .style("margin", "12px 0")
+
+  .on("click", () => {
+
+    const newData = categories.map(name => ({ name, value: Math.round(Math.random() * 40 + 5) }));
+
+    update(newData);
+
+  });</code></pre>
+
+
+
+                <h3>Was du dabei lernst</h3>
+
+                <ul>
+
+                  <li><code>.transition().duration(600)</code> - Übergang mit 600ms Dauer</li>
+
+                  <li><code>.ease(d3.easeCubicOut)</code> - Easing-Funktion für natürliche Bewegung</li>
+
+                  <li>Enter-Phase getrennt mit Startposition <code>y = innerHeight, height = 0</code></li>
+
+                  <li><code>.delay((d, i) => i * 60)</code> - gestaffelter Einblendeffekt je Index</li>
+
+                </ul>
+
+
+
+                <h3>Aufgabe 2 - Selbst ausprobieren</h3>
+
+                <ol>
+
+                  <li>Füge <code>.delay((d, i) => i * 80)</code> hinzu  Balken erscheinen versetzt.</li>
+
+                  <li>Ändere <code>easeCubicOut</code> auf <code>easeBounce</code> und beobachte den Unterschied.</li>
+
+                  <li>Animiere auch die Farbe über <code>.attr("fill", ...)</code> in der Transition.</li>
+
+                </ol>
+
+
+
+                <div class="tip">
+
+                  <strong>Profi-Tipp:</strong> Übergänge laufen immer auf interpolierbaren Werten.
+
+                  Versuche nie, <code>font-family</code> oder <code>display</code> zu animieren 
+
+                  das funktioniert nicht. Sichere Kandidaten: numerische Attribute und Farben.
+
+                </div>
+
+              </div>
+
+
+
+              <h3>Weiterführende Links für Tag 4</h3>
+
+              <ul>
+
+                <li><a href="https://www.d3indepth.com/transitions/" target="_blank" rel="noopener">D3 in Depth: Transitions</a></li>
+
+                <li><a href="https://observablehq.com/@d3/easing-animations" target="_blank" rel="noopener">Observable: Easing Animations</a></li>
+
+                <li><a href="https://d3js.org/d3-ease" target="_blank" rel="noopener">D3 Ease API-Referenz</a></li>
+
+              </ul>
+
+            </section>
+
+
+
+            <svg id="chart" width="80%" height="80%" role="img" aria-label="Balkendiagramm mit Animationen"></svg>
+
+        </main>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+        <script src="main_Tage4.js"></script>
+
+        <script src="progress.js"></script>
+
+        <a class="floating-start-button" href="../index.html">Zur Startauswahl</a>
+
+    </body>
+
+</html>
+
+
+

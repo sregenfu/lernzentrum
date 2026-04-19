@@ -1,0 +1,333 @@
+﻿<!doctype html>
+
+<html lang="de">
+
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>D3.js Tag 6</title>
+
+      <script src="../js/theme.js"></script>
+
+        <link rel="stylesheet" href="src/styles.css" />
+
+    </head>
+
+    <body>
+
+        <main class="page">
+
+            <nav class="global-switcher" aria-label="Bereiche">
+
+                <a class="switch-link" href="../index.html#english">Englisch</a>
+
+                <a class="switch-link active" href="index.html">D3.js</a>
+
+
+            </nav>
+
+
+
+            <section class="context-box" aria-labelledby="contextHeading">
+
+                <span class="context-label">Wo bin ich gerade?</span>
+
+                <p id="contextHeading">Du bist auf der Übungsseite für Tag 6. Hier lädst du echte Daten aus einer CSV-Datei mit <code>d3.csv()</code> und visualisierst sie.</p>
+
+            </section>
+
+
+
+            <section class="hero-banner" aria-labelledby="tag6HeroHeading">
+
+                <div>
+
+                    <span class="hero-kicker">Tag 6</span>
+
+                    <h1 id="tag6HeroHeading">D3.js Übungsseite: Echte Daten</h1>
+
+                    <p>Lade CSV- und JSON-Daten asynchron und visualisiere sie mit Typkonvertierung und Fehlerbehandlung.</p>
+
+                    <div class="hero-actions">
+
+                        <a class="hero-button" href="lernpfad.html">Zum Lernpfad</a>
+
+                        <a class="hero-button secondary" href="../index.html">Zur Startauswahl</a>
+
+                    </div>
+
+                    <div class="quick-links" aria-label="Schnellaktionen">
+
+                        <a class="quick-link" href="Lernpfad_Tag5.html">Tag 5</a>
+
+                        <a class="quick-link" href="lernpfad.html">Lernpfad</a>
+
+                        <a class="quick-link" href="Lernpfad_Tag7.html">Tag 7</a>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-panel">
+
+                    <div class="hero-card">
+
+                        <strong>Fokus heute</strong>
+
+                        <p>Asynchrones Laden mit <code>d3.csv()</code>, Typkonvertierung und Fehlerbehandlung.</p>
+
+                    </div>
+
+                    <div class="hero-card">
+
+                        <strong>Nächster Schritt</strong>
+
+                        <p>Danach: Alles zusammenführen im Mini-Projekt an Tag 7.</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag6heading">
+
+                <h2 id="tag6heading">Tag 6: Echte Daten einlesen</h2>
+
+                <p>
+
+                    Heute lädst du eine CSV-Datei statt hardcodierter Arrays.
+
+                    Schwerpunkt: <code>d3.csv()</code>, <code>d3.json()</code>,
+
+                    Typkonvertierung, <code>.then()</code> / <code>.catch()</code>.
+
+                </p>
+
+                <p>
+
+                    Für diese Seite wird die Datei <code>data/lernzeiten.csv</code> benötigt.
+
+                    Der lokale Server muss dafür im Projekt-Root laufen.
+
+                </p>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag6DetailHeading">
+
+              <h2 id="tag6DetailHeading">Tag 6 im Detail: Echte Daten einlesen</h2>
+
+              <p>
+
+                Hardcodierte Arrays reichen schnell nicht mehr aus. Mit <code>d3.csv()</code> und
+
+                <code>d3.json()</code> liest du Daten asynchron aus Dateien  wie in echten Projekten.
+
+              </p>
+
+
+
+              <div class="detail-box">
+
+                <h3>Aufgabe 1 - CSV-Datei laden und visualisieren</h3>
+
+                <p>
+
+                  Lege eine Datei <code>data/lernzeiten.csv</code> an und lade sie mit <code>d3.csv()</code>.
+
+                  Achte auf Typkonvertierung: CSV-Werte sind immer Strings.
+
+                </p>
+
+
+
+                <p><strong>CSV-Beispieldatei (data/lernzeiten.csv):</strong></p>
+
+                <pre><code>tag,minuten
+
+Mo,45
+
+Di,30
+
+Mi,60
+
+Do,20
+
+Fr,50</code></pre>
+
+
+
+                <p><strong>Startcode (in main_Tage6.js einfügen):</strong></p>
+
+                <pre><code>// Tag 6 - Echte Daten mit d3.csv()
+
+d3.csv("data/lernzeiten.csv", d => ({
+
+  tag: d.tag,
+
+  minuten: +d.minuten       // + konvertiert String zu Number
+
+})).then(data => {
+
+
+
+  const width = 760, height = 420;
+
+  const margin = { top: 24, right: 20, bottom: 52, left: 64 };
+
+  const innerWidth = width - margin.left - margin.right;
+
+  const innerHeight = height - margin.top - margin.bottom;
+
+
+
+  const svg = d3.select("#chart").attr("viewBox", `0 0 ${width} ${height}`);
+
+  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+
+  const x = d3.scaleBand().domain(data.map(d => d.tag)).range([0, innerWidth]).padding(0.2);
+
+  const y = d3.scaleLinear().domain([0, d3.max(data, d => d.minuten)]).nice().range([innerHeight, 0]);
+
+
+
+  g.append("g").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(x));
+
+  g.append("g").call(d3.axisLeft(y).ticks(6));
+
+
+
+  // Y-Achsen-Beschriftung
+
+  g.append("text")
+
+    .attr("transform", "rotate(-90)")
+
+    .attr("x", -innerHeight / 2)
+
+    .attr("y", -48)
+
+    .attr("text-anchor", "middle")
+
+    .attr("fill", "#64748b")
+
+    .attr("font-size", "13px")
+
+    .text("Minuten");
+
+
+
+  g.selectAll("rect")
+
+    .data(data)
+
+    .join("rect")
+
+    .attr("x", d => x(d.tag))
+
+    .attr("y", d => y(d.minuten))
+
+    .attr("width", x.bandwidth())
+
+    .attr("height", d => innerHeight - y(d.minuten))
+
+    .attr("fill", "#2563eb");
+
+
+
+}).catch(err => console.error("Fehler beim Laden:", err));</code></pre>
+
+
+
+                <h3>Was du dabei lernst</h3>
+
+                <ul>
+
+                  <li><code>d3.csv(url, rowFn)</code> - Datei laden + Zeilen umwandeln in einem Schritt</li>
+
+                  <li><code>+d.minuten</code> - Unärer Plus: String zu Number</li>
+
+                  <li><code>.then(data => { ... })</code> - Promise-basierter Async-Flow</li>
+
+                  <li><code>.catch(err => ...)</code> - Fehlerbehandlung wenn Datei fehlt</li>
+
+                  <li>Warum der Server laufen muss (CORS-Restriction bei lokalen Dateien)</li>
+
+                </ul>
+
+
+
+                <h3>Aufgabe 2 - Selbst ausprobieren</h3>
+
+                <ol>
+
+                  <li>Erweitere die CSV um eine Spalte <code>kategorie</code> und färbe die Balken je Kategorie.</li>
+
+                  <li>Lade stattdessen eine JSON-Datei mit <code>d3.json()</code>.</li>
+
+                  <li>Zeige eine Fehlermeldung im HTML, wenn die Datei nicht gefunden wird.</li>
+
+                </ol>
+
+
+
+                <div class="tip">
+
+                  <strong>Profi-Tipp:</strong> Starte immer mit <code>console.log(data)</code> direkt nach dem Laden,
+
+                  um die Datenstruktur zu prüfen, bevor du visualisierst.
+
+                  Viele Fehler entstehen durch falsche Feldnamen oder fehlende Typkonvertierung.
+
+                </div>
+
+              </div>
+
+
+
+              <h3>Weiterführende Links für Tag 6</h3>
+
+              <ul>
+
+                <li><a href="https://www.d3indepth.com/requests/" target="_blank" rel="noopener">D3 in Depth: Requests (CSV/JSON)</a></li>
+
+                <li><a href="https://observablehq.com/@d3/fetch" target="_blank" rel="noopener">Observable: d3-fetch Beispiele</a></li>
+
+                <li><a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="noopener">MDN: JavaScript Promises</a></li>
+
+              </ul>
+
+            </section>
+
+
+
+            <svg id="chart" width="80%" height="80%" role="img" aria-label="Balkendiagramm aus CSV-Daten"></svg>
+
+        </main>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+        <script src="main_Tage6.js"></script>
+
+        <script src="progress.js"></script>
+
+        <a class="floating-start-button" href="../index.html">Zur Startauswahl</a>
+
+    </body>
+
+</html>
+
+
+

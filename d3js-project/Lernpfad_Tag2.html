@@ -1,0 +1,329 @@
+﻿<!doctype html>
+
+<html lang="de">
+
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>D3.js Tag 2</title>
+
+      <script src="../js/theme.js"></script>
+
+        <link rel="stylesheet" href="src/styles.css" />
+
+    </head>
+
+    <body>
+
+        <main class="page">
+
+            <nav class="global-switcher" aria-label="Bereiche">
+
+                <a class="switch-link" href="../index.html#english">Englisch</a>
+
+                <a class="switch-link active" href="index.html">D3.js</a>
+
+
+            </nav>
+
+
+
+            <section class="context-box" aria-labelledby="contextHeading">
+
+                <span class="context-label">Wo bin ich gerade?</span>
+
+                <p id="contextHeading">Du bist auf der Übungsseite für Tag 2. Hier geht es um Scales, Achsen und eine saubere visuelle Struktur.</p>
+
+            </section>
+
+
+
+            <section class="hero-banner" aria-labelledby="tag2HeroHeading">
+
+                <div>
+
+                    <span class="hero-kicker">Tag 2</span>
+
+                    <h1 id="tag2HeroHeading">D3.js Übungsseite: Scales und Achsen</h1>
+
+                    <p>Hier arbeitest du am nächsten Schritt nach den Grundlagen und kommst jederzeit zur Startseite oder zum Lernpfad zurück.</p>
+
+                    <div class="hero-actions">
+
+                        <a class="hero-button" href="lernpfad.html">Zum Lernpfad</a>
+
+                        <a class="hero-button secondary" href="../index.html">Zur Startauswahl</a>
+
+                    </div>
+
+                    <div class="quick-links" aria-label="Schnellaktionen">
+
+                        <a class="quick-link" href="index.html">Basisdiagramm</a>
+
+                        <a class="quick-link" href="Lernpfad_Tag1.html">Tag 1</a>
+
+                        <a class="quick-link" href="lernpfad.html">Lernpfad</a>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-panel">
+
+                    <div class="hero-card">
+
+                        <strong>Fokus heute</strong>
+
+                        <p>Scales, Achsen und aus Rohdaten klare visuelle Struktur bauen.</p>
+
+                    </div>
+
+                    <div class="hero-card">
+
+                        <strong>Praxisziel</strong>
+
+                        <p>Ein Diagramm, das nicht nur funktioniert, sondern auch lesbar ist.</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag2">
+
+                <h2 id="tag2">Tag 2: Scales und Achsen</h2>
+
+                <p>
+
+                    Heute baust du aus Rohdaten ein sauber skaliertes Balkendiagramm.
+
+                    Schwerpunkt: <code>scaleOrdinal</code>, <code>scaleLinear</code>,
+
+                    <code>axisBottom</code>, <code>axisLeft</code>.
+
+                </p>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag2DetailHeading">
+
+              <h2 id="tag2DetailHeading">Tag 2 im Detail: Scales und Achsen</h2>
+
+              <p>
+
+                Heute übersetzt du Datenwerte sauber in Pixelpositionen.
+
+                Mit der <strong>Margin Convention</strong> zeichnest du Achsen und Balken
+
+                in einem inneren Zeichenbereich, damit Beschriftungen genug Platz haben.
+
+              </p>
+
+
+
+              <div class="detail-box">
+
+                <h3>Aufgabe 1 - Balkendiagramm mit Scales aufbauen</h3>
+
+                <p>
+
+                  Nutze in <code>main_Tage2.js</code> ein Array aus Objekten und erzeuge
+
+                  ein Diagramm mit kategorischer X-Achse und numerischer Y-Achse.
+
+                </p>
+
+
+
+                <p><strong>Startcode (in main_Tage2.js einfügen):</strong></p>
+
+                <pre><code>// Tag 2 - Scales und Achsen
+
+const data = [
+
+  { name: "Mo", value: 12 },
+
+  { name: "Di", value: 18 },
+
+  { name: "Mi", value: 9 },
+
+  { name: "Do", value: 24 },
+
+  { name: "Fr", value: 15 }
+
+];
+
+
+
+const width = 760;
+
+const height = 420;
+
+const margin = { top: 24, right: 20, bottom: 52, left: 56 };
+
+
+
+const innerWidth = width - margin.left - margin.right;
+
+const innerHeight = height - margin.top - margin.bottom;
+
+
+
+const svg = d3.select("#chart")
+
+  .attr("viewBox", `0 0 ${width} ${height}`);
+
+
+
+const g = svg.append("g")
+
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+
+const x = d3.scaleBand()
+
+  .domain(data.map(d => d.name))
+
+  .range([0, innerWidth])
+
+  .padding(0.2);
+
+
+
+const y = d3.scaleLinear()
+
+  .domain([0, d3.max(data, d => d.value)])
+
+  .nice()
+
+  .range([innerHeight, 0]);
+
+
+
+g.selectAll("rect")
+
+  .data(data)
+
+  .join("rect")
+
+  .attr("x", d => x(d.name))
+
+  .attr("y", d => y(d.value))
+
+  .attr("width", x.bandwidth())
+
+  .attr("height", d => innerHeight - y(d.value))
+
+  .attr("fill", "#2563eb");
+
+
+
+g.append("g")
+
+  .attr("transform", `translate(0,${innerHeight})`)
+
+  .call(d3.axisBottom(x));
+
+
+
+g.append("g")
+
+  .call(d3.axisLeft(y).ticks(6));</code></pre>
+
+
+
+                <h3>Was du dabei lernst</h3>
+
+                <ul>
+
+                  <li><code>scaleBand()</code> für Kategorien auf der X-Achse</li>
+
+                  <li><code>scaleLinear()</code> für numerische Werte auf der Y-Achse</li>
+
+                  <li><code>.range([innerHeight, 0])</code> weil SVG-Y nach unten wächst</li>
+
+                  <li><code>axisBottom(x)</code> und <code>axisLeft(y)</code> für Achsen</li>
+
+                  <li>Warum die Margin Convention die Lesbarkeit verbessert</li>
+
+                </ul>
+
+
+
+                <h3>Aufgabe 2 - Selbst ausprobieren</h3>
+
+                <ol>
+
+                  <li>Ersetze die Tagesdaten durch deine echten Lernwerte.</li>
+
+                  <li>Füge eine Y-Achsen-Beschriftung hinzu (z. B. Minuten).</li>
+
+                  <li>Experimentiere mit <code>.padding(0.1)</code> und <code>.padding(0.35)</code>.</li>
+
+                </ol>
+
+
+
+                <div class="tip">
+
+                  <strong>Profi-Tipp:</strong> Wenn Balken falsch herum aussehen,
+
+                  prüfe zuerst die Y-Scale-Range und die Balkenhöhe
+
+                  <code>innerHeight - y(d.value)</code>.
+
+                </div>
+
+              </div>
+
+
+
+              <h3>Weiterführende Links für Tag 2</h3>
+
+              <ul>
+
+                <li><a href="https://www.d3indepth.com/scales/" target="_blank" rel="noopener">D3 in Depth: Scales</a></li>
+
+                <li><a href="https://www.d3indepth.com/axes/" target="_blank" rel="noopener">D3 in Depth: Axes</a></li>
+
+                <li><a href="https://observablehq.com/@d3/learn-d3-scales" target="_blank" rel="noopener">Observable: Learn D3 Scales</a></li>
+
+              </ul>
+
+            </section>
+
+
+
+            <svg id="chart" width="80%" height="80%" role="img" aria-label=""></svg>
+
+        </main>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+        <script src="main_Tage2.js"></script>
+
+        <script src="progress.js"></script>
+
+        <a class="floating-start-button" href="../index.html">Zur Startauswahl</a>
+
+    </body>
+
+</html>
+
+
+
+
+
+
+

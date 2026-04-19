@@ -1,9 +1,9 @@
 ﻿const STORAGE_KEY = 'english-trainer-progress-v4';
 const D3JS_ENTRY_CANDIDATES = [
-    '../d3js-project/index.html',
-    '/d3js-project/index.html',
     'd3js-project/index.html',
-    './d3js-project/index.html'
+    './d3js-project/index.html',
+    '/lernzentrum/d3js-project/index.html',
+    '../d3js-project/index.html'
 ];
 const MODE_PREFERENCE_KEY = 'english-trainer-mode-preference-v1';
 const PROJECT_STATUS_STORAGE_KEY = 'english-trainer-project-status-v1';

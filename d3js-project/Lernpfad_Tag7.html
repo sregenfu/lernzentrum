@@ -1,0 +1,371 @@
+﻿<!doctype html>
+
+<html lang="de">
+
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>D3.js Tag 7</title>
+
+      <script src="../js/theme.js"></script>
+
+        <link rel="stylesheet" href="src/styles.css" />
+
+    </head>
+
+    <body>
+
+        <main class="page">
+
+            <nav class="global-switcher" aria-label="Bereiche">
+
+                <a class="switch-link" href="../index.html#english">Englisch</a>
+
+                <a class="switch-link active" href="index.html">D3.js</a>
+
+
+            </nav>
+
+
+
+            <section class="context-box" aria-labelledby="contextHeading">
+
+                <span class="context-label">Wo bin ich gerade?</span>
+
+                <p id="contextHeading">Du bist auf der Übungsseite für Tag 7. Hier schließt du das Mini-Projekt ab: responsives Diagramm mit Titel, Legende, Animation und echten Daten.</p>
+
+            </section>
+
+
+
+            <section class="hero-banner" aria-labelledby="tag7HeroHeading">
+
+                <div>
+
+                    <span class="hero-kicker">Tag 7</span>
+
+                    <h1 id="tag7HeroHeading">D3.js Übungsseite: Mini-Projekt</h1>
+
+                    <p>Bring alles zusammen: echte Daten, Animationen, Interaktion, Legende und saubere Struktur.</p>
+
+                    <div class="hero-actions">
+
+                        <a class="hero-button" href="lernpfad.html">Zum Lernpfad</a>
+
+                        <a class="hero-button secondary" href="../index.html">Zur Startauswahl</a>
+
+                    </div>
+
+                    <div class="quick-links" aria-label="Schnellaktionen">
+
+                        <a class="quick-link" href="Lernpfad_Tag6.html">Tag 6</a>
+
+                        <a class="quick-link" href="lernpfad.html">Lernpfad</a>
+
+                        <a class="quick-link" href="index.html">Basisdiagramm</a>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-panel">
+
+                    <div class="hero-card">
+
+                        <strong>Fokus heute</strong>
+
+                        <p>Responsives SVG, Titel, Legende, Quellenangabe  präsentationsreif.</p>
+
+                    </div>
+
+                    <div class="hero-card">
+
+                        <strong>Praxisziel</strong>
+
+                        <p>Eine eigene Visualisierung mit echten Daten, die du vorzeigen kannst.</p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag7heading">
+
+                <h2 id="tag7heading">Tag 7: Mini-Projekt abschließen</h2>
+
+                <p>
+
+                    Heute bringst du alle Techniken aus Tag 16 zusammen.
+
+                    Das Ergebnis: ein responsives, animiertes Diagramm mit
+
+                    Titel, Legende, Quellenangabe und echten Daten.
+
+                </p>
+
+                <p>
+
+                    Für diese Seite wird die Datei <code>data/lernzeiten.csv</code> benötigt.
+
+                    Der lokale Server muss dafür im Projekt-Root laufen.
+
+                </p>
+
+            </section>
+
+
+
+            <section aria-labelledby="tag7DetailHeading">
+
+              <h2 id="tag7DetailHeading">Tag 7 im Detail: Mini-Projekt abschließen</h2>
+
+              <p>
+
+                Du bringst alles zusammen: echte Daten, Animationen, Interaktion, saubere Struktur
+
+                und eine Dokumentation. Das Ergebnis soll präsentierbar sein.
+
+              </p>
+
+
+
+              <div class="detail-box">
+
+                <h3>Aufgabe 1 - Responsives Diagramm mit Legende und Titel</h3>
+
+                <p>
+
+                  Nutze <code>viewBox</code> und relative Breiten für Responsive-Support.
+
+                  Füge einen Titel und eine Legende hinzu, die das Diagramm selbst erklärt.
+
+                </p>
+
+
+
+                <p><strong>Startcode (in main_Tage7.js einfügen):</strong></p>
+
+                <pre><code>// Tag 7 - Mini-Projekt: Vollständiges, responsives Diagramm
+
+d3.csv("data/lernzeiten.csv", d => ({ tag: d.tag, minuten: +d.minuten }))
+
+  .then(data => {
+
+
+
+  const width = 760, height = 460;
+
+  const margin = { top: 64, right: 20, bottom: 52, left: 64 };
+
+  const innerWidth = width - margin.left - margin.right;
+
+  const innerHeight = height - margin.top - margin.bottom;
+
+
+
+  const svg = d3.select("#chart")
+
+    .attr("viewBox", `0 0 ${width} ${height}`)
+
+    .style("width", "100%")    // responsiv: passt sich der Container-Breite an
+
+    .style("height", "auto");
+
+
+
+  // Titel
+
+  svg.append("text")
+
+    .attr("x", width / 2)
+
+    .attr("y", 32)
+
+    .attr("text-anchor", "middle")
+
+    .attr("font-size", "18px")
+
+    .attr("font-weight", "600")
+
+    .attr("fill", "#1e293b")
+
+    .text("Lernminuten pro Wochentag");
+
+
+
+  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+
+  const x = d3.scaleBand().domain(data.map(d => d.tag)).range([0, innerWidth]).padding(0.25);
+
+  const y = d3.scaleLinear().domain([0, d3.max(data, d => d.minuten)]).nice().range([innerHeight, 0]);
+
+
+
+  g.append("g").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(x));
+
+  g.append("g").call(d3.axisLeft(y).ticks(6));
+
+
+
+  // Y-Beschriftung
+
+  g.append("text")
+
+    .attr("transform", "rotate(-90)")
+
+    .attr("x", -innerHeight / 2).attr("y", -48)
+
+    .attr("text-anchor", "middle").attr("fill", "#64748b").attr("font-size", "13px")
+
+    .text("Minuten");
+
+
+
+  // Balken mit Transition und Tooltip
+
+  const tooltip = d3.select("body").append("div")
+
+    .style("position", "absolute").style("background", "#1e293b")
+
+    .style("color", "#fff").style("padding", "6px 12px")
+
+    .style("border-radius", "6px").style("font-size", "13px")
+
+    .style("pointer-events", "none").style("opacity", 0);
+
+
+
+  g.selectAll("rect")
+
+    .data(data)
+
+    .join(enter => enter.append("rect")
+
+      .attr("x", d => x(d.tag)).attr("y", innerHeight)
+
+      .attr("width", x.bandwidth()).attr("height", 0).attr("fill", "#2563eb"))
+
+    .transition().duration(700).delay((d, i) => i * 80).ease(d3.easeCubicOut)
+
+    .attr("y", d => y(d.minuten))
+
+    .attr("height", d => innerHeight - y(d.minuten));
+
+
+
+  // Legende
+
+  const legend = svg.append("g").attr("transform", `translate(${margin.left}, ${height - 12})`);
+
+  legend.append("rect").attr("width", 14).attr("height", 14).attr("fill", "#2563eb").attr("rx", 2);
+
+  legend.append("text").attr("x", 20).attr("y", 12).attr("font-size", "12px").attr("fill", "#64748b")
+
+    .text("Lernminuten (Woche KW 15, 2026)");
+
+
+
+  // Quellenangabe
+
+  svg.append("text")
+
+    .attr("x", width - margin.right).attr("y", height - 2)
+
+    .attr("text-anchor", "end").attr("font-size", "11px").attr("fill", "#94a3b8")
+
+    .text("Quelle: eigene Messung");
+
+});</code></pre>
+
+
+
+                <h3>Was du dabei lernst</h3>
+
+                <ul>
+
+                  <li>Responsives SVG mit <code>viewBox + style("width","100%")</code></li>
+
+                  <li>Titel, Legende und Quellenangabe als SVG-Text platzieren</li>
+
+                  <li>Alle Techniken aus Tag 16 kombiniert in einem Diagramm</li>
+
+                  <li>Struktur und Lesbarkeit: Kommentierte, wartbare Code-Basis</li>
+
+                </ul>
+
+
+
+                <h3>Aufgabe 2 - Dein eigenes Mini-Projekt</h3>
+
+                <ol>
+
+                  <li>Wähle ein eigenes Thema (Vokabeln/Tag, Gewicht, Schlafzeiten, ...).</li>
+
+                  <li>Erstelle eine eigene CSV-Datei mit echten oder realitätsnahen Daten.</li>
+
+                  <li>Baue das Diagramm nach dem heutigen Schema auf und passe Titel, Legende und Farben an.</li>
+
+                  <li>Lege eine kurze <code>README.md</code> an: Was zeigt das Diagramm, welche Daten, wie starten?</li>
+
+                </ol>
+
+
+
+                <div class="tip">
+
+                  <strong>Profi-Tipp:</strong> Ein gutes Diagramm erklärt sich selbst.
+
+                  Teste: Würde jemand ohne Erklärung verstehen, was du zeigst?
+
+                  Titel, Achsenbeschriftung und Legende sind Pflicht, kein Schmuck.
+
+                </div>
+
+              </div>
+
+
+
+              <h3>Weiterführende Links für Tag 7</h3>
+
+              <ul>
+
+                <li><a href="https://observablehq.com/@d3/gallery" target="_blank" rel="noopener">Observable: D3 Galerie für Inspiration</a></li>
+
+                <li><a href="https://www.d3indepth.com/" target="_blank" rel="noopener">D3 in Depth: Gesamtübersicht</a></li>
+
+                <li><a href="https://github.com/d3/d3/wiki" target="_blank" rel="noopener">D3 GitHub Wiki</a></li>
+
+              </ul>
+
+            </section>
+
+
+
+            <svg id="chart" width="100%" height="auto" role="img" aria-label="Mini-Projekt: vollständiges responsives Diagramm"></svg>
+
+        </main>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+        <script src="main_Tage7.js"></script>
+
+        <script src="progress.js"></script>
+
+        <a class="floating-start-button" href="../index.html">Zur Startauswahl</a>
+
+    </body>
+
+</html>
+
+
+

@@ -1,0 +1,306 @@
+﻿<!doctype html>
+
+<html lang="de">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>D3.js Starter</title>
+
+    <script src="../js/theme.js"></script>
+
+    <link rel="stylesheet" href="src/styles.css" />
+
+  </head>
+
+  <body>
+
+    <div class="page-shell">
+
+      <nav class="global-switcher" aria-label="Bereiche">
+
+        <a class="switch-link" href="../index.html#english">Englisch</a>
+
+        <a class="switch-link active" href="index.html">D3.js</a>
+
+
+        <a class="switch-link" href="../projektstatus.html">Projektstatus</a>
+
+        <a class="switch-link" href="../terminplaner.html">Terminplaner</a>
+
+        <a class="switch-link" href="../schulungen.html">Schulungen</a>
+
+
+        <a class="switch-link" href="../index.html">Lernzentrum</a>
+
+        <span class="switcher-divider" aria-hidden="true"></span>
+
+        <a class="switch-link switch-link-shortcut" href="#d3ProgressWidget" aria-label="Zum Fortschritt springen">
+
+          <span class="switch-link-icon">📊</span>
+
+          <span>Fortschritt</span>
+
+        </a>
+
+        <a class="switch-link switch-link-shortcut" href="#tagesübersichtHeading" aria-label="Zu Übungstagen springen">
+
+          <span class="switch-link-icon">📅</span>
+
+          <span>Tage</span>
+
+        </a>
+
+        <a class="switch-link switch-link-shortcut" href="lernpfad.html" aria-label="Lernpfad öffnen">
+
+          <span class="switch-link-icon">🗺️</span>
+
+          <span>Lernpfad</span>
+
+        </a>
+
+      </nav>
+
+
+
+      <main class="page">
+
+
+
+      <section class="hero-banner reveal-up" aria-labelledby="d3HeroHeading">
+
+        <div>
+
+          <span class="hero-kicker">Visualisierung</span>
+
+          <h1 id="d3HeroHeading">D3.js Lernbereich</h1>
+
+          <p>Sieben Übungstage von den Grundlagen bis zum Mini-Projekt. Steige direkt bei einem Tag ein oder lies zuerst den Lernpfad.</p>
+
+          <div class="hero-actions">
+
+            <a class="hero-button" href="lernpfad.html">Lernpfad öffnen</a>
+
+            <a class="hero-button secondary" href="../index.html">Zur Startauswahl</a>
+
+            <a id="courseraDirectLink" class="hero-button secondary" href="../schulungen.html">Coursera Schulung</a>
+
+          </div>
+
+          <div class="quick-links" aria-label="Schnellaktionen">
+
+            <a class="quick-link" href="Lernpfad_Tag1.html">Tag 1</a>
+
+            <a class="quick-link" href="Lernpfad_Tag2.html">Tag 2</a>
+
+            <a class="quick-link" href="Lernpfad_Tag3.html">Tag 3</a>
+
+            <a class="quick-link" href="Lernpfad_Tag4.html">Tag 4</a>
+
+            <a class="quick-link" href="Lernpfad_Tag5.html">Tag 5</a>
+
+            <a class="quick-link" href="Lernpfad_Tag6.html">Tag 6</a>
+
+            <a class="quick-link" href="Lernpfad_Tag7.html">Tag 7</a>
+
+          </div>
+
+        </div>
+
+        <div class="hero-panel">
+
+          <div class="panel-card">
+
+            <span class="panel-label">Fokus</span>
+
+            <ul class="hero-list">
+
+              <li>Von Datenbindung und Scales bis zu echten CSV-Daten und einem eigenen Mini-Projekt.</li>
+
+              <li>Alle Themen werden mit Beispielen und Aufgaben auf der jeweiligen Übungsseite gelehrt.</li>
+
+              <li>Aufgaben, Startcode und Lernziele direkt auf der jeweiligen Übungsseite.</li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <section id="d3ProgressWidget" class="progress-widget reveal-up delay-1" aria-labelledby="d3ProgressHeading">
+
+        <div class="progress-top">
+
+          <strong id="d3ProgressHeading">Dein D3 Lernfortschritt</strong>
+
+          <span id="d3ProgressCount">0/7 Tage abgeschlossen</span>
+
+        </div>
+
+        <div class="progress-track" aria-hidden="true">
+
+          <div id="d3ProgressFill" class="progress-fill"></div>
+
+        </div>
+
+        <p id="d3ProgressPercent" class="day-goal" style="margin-top:8px;">0%</p>
+
+        <div id="d3ProgressPills" class="progress-pills" aria-label="Tage manuell abhaken"></div>
+
+        <button id="d3ProgressReset" class="progress-reset" type="button">Fortschritt zurücksetzen</button>
+
+      </section>
+
+
+
+      <section class="reveal-up delay-2" aria-labelledby="tagesübersichtHeading">
+
+        <h2 id="tagesübersichtHeading">Alle Übungstage im Überblick</h2>
+
+        <div class="days">
+
+          <div class="day-card highlight">
+
+            <div class="day-header">
+
+              <span class="day-badge">Tag 1 ?</span>
+
+              <span class="day-title">D3-Basics und Datenbindung</span>
+
+            </div>
+
+            <p class="day-goal">Kreise aus Daten rendern, Data Join verstehen</p>
+
+            <a href="Lernpfad_Tag1.html">? Zur Übungsseite Tag 1</a>
+
+          </div>
+
+          <div class="day-card highlight">
+
+            <div class="day-header">
+
+              <span class="day-badge">Tag 2 ?</span>
+
+              <span class="day-title">Scales und Achsen</span>
+
+            </div>
+
+            <p class="day-goal">Balkendiagramm mit scaleBand, scaleLinear und Achsen</p>
+
+            <a href="Lernpfad_Tag2.html">? Zur Übungsseite Tag 2</a>
+
+          </div>
+
+          <div class="day-card">
+
+            <div class="day-header">
+
+              <span class="day-badge">Tag 3</span>
+
+              <span class="day-title">Data Join richtig verstehen</span>
+
+            </div>
+
+            <p class="day-goal">Enter / Update / Exit mit selection.join() beherrschen</p>
+
+            <a href="Lernpfad_Tag3.html">? Zur Übungsseite Tag 3</a>
+
+          </div>
+
+          <div class="day-card">
+
+            <div class="day-header">
+
+              <span class="day-badge">Tag 4</span>
+
+              <span class="day-title">Transitionen und Animation</span>
+
+            </div>
+
+            <p class="day-goal">Balken animieren mit transition(), duration() und Easing</p>
+
+            <a href="Lernpfad_Tag4.html">? Zur Übungsseite Tag 4</a>
+
+          </div>
+
+          <div class="day-card">
+
+            <div class="day-header">
+
+              <span class="day-badge">Tag 5</span>
+
+              <span class="day-title">Interaktion und Tooltips</span>
+
+            </div>
+
+            <p class="day-goal">Hover-Effekte und schwebender Tooltip mit Mouse-Events</p>
+
+            <a href="Lernpfad_Tag5.html">? Zur Übungsseite Tag 5</a>
+
+          </div>
+
+          <div class="day-card">
+
+            <div class="day-header">
+
+              <span class="day-badge">Tag 6</span>
+
+              <span class="day-title">Echte Daten einlesen</span>
+
+            </div>
+
+            <p class="day-goal">CSV-Daten mit d3.csv() laden und visualisieren</p>
+
+            <a href="Lernpfad_Tag6.html">? Zur Übungsseite Tag 6</a>
+
+          </div>
+
+          <div class="day-card">
+
+            <div class="day-header">
+
+              <span class="day-badge">Tag 7</span>
+
+              <span class="day-title">Mini-Projekt abschließen</span>
+
+            </div>
+
+            <p class="day-goal">Responsives Diagramm mit Titel, Legende und echten Daten</p>
+
+            <a href="Lernpfad_Tag7.html">? Zur Übungsseite Tag 7</a>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      </main>
+
+    </div>
+
+
+
+    <a class="floating-start-button" href="../index.html">Zur Startauswahl</a>
+
+    <script src="progress.js"></script>
+
+  </body>
+
+</html>
+
+
+
+
+
+
+
+
+
