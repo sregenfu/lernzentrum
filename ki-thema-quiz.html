@@ -18,7 +18,16 @@
         .quiz-card fieldset { border: 1px solid var(--line); border-radius: 10px; margin: 8px 0; padding: 10px; }
         .quiz-card legend { font-weight: 700; }
         .quiz-card label { display: block; margin-top: 6px; }
+        .quiz-card fieldset.question-correct { border-color: #2f8f5b; background: rgba(47, 143, 91, 0.08); }
+        .quiz-card fieldset.question-incorrect { border-color: #b44343; background: rgba(180, 67, 67, 0.08); }
+        .quiz-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .quiz-hint { margin: 8px 0 0; color: var(--muted); font-size: 0.86rem; }
         .result { margin-top: 10px; color: var(--muted); min-height: 1.4em; }
+        .vocab-title { margin: 14px 0 8px; font-weight: 700; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+        .vocab-chip { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; background: rgba(7, 152, 167, 0.08); font-size: 0.9rem; cursor: pointer; user-select: none; }
+        .vocab-chip.flipped { background: rgba(201, 111, 59, 0.16); border-color: rgba(164, 77, 32, 0.5); }
+        .vocab-chip strong { font-weight: 700; }
         .btn, .primary { border-radius: 999px; padding: 9px 14px; text-decoration: none; font-weight: 700; font: inherit; cursor: pointer; }
         .btn { border: 1px solid var(--line); color: inherit; display: inline-flex; }
         .primary { border: 1px solid transparent; background: linear-gradient(135deg, #c96f3b, #a44d20); color: #fff; }
@@ -26,6 +35,7 @@
         @media (max-width: 980px) {
             .topic-hero-card { padding-right: 22px; min-height: unset; }
             .topic-shortcut-card { position: static; width: 100%; max-width: 400px; margin-top: 12px; margin-left: auto; }
+            .vocab-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -79,9 +89,58 @@
                         <label><input type="radio" name="q2" value="b"> Zu wenige Features</label>
                         <label><input type="radio" name="q2" value="c"> Falsches Dateiformat</label>
                     </fieldset>
+                    <fieldset>
+                        <legend>Welcher Datensatz wird fuer die finale, unabhaengige Bewertung genutzt?</legend>
+                        <label><input type="radio" name="q3" value="a"> Trainingsset</label>
+                        <label><input type="radio" name="q3" value="b"> Testset</label>
+                        <label><input type="radio" name="q3" value="c"> Feature-Set</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was beschreibt "feature" am besten?</legend>
+                        <label><input type="radio" name="q4" value="a"> Eine Zufallszahl</label>
+                        <label><input type="radio" name="q4" value="b"> Nur den Zielwert</label>
+                        <label><input type="radio" name="q4" value="c"> Eine Eingabe-Variable</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Welches Problem kann bei unausgewogenen Klassen auftreten?</legend>
+                        <label><input type="radio" name="q5" value="a"> Immer perfekte Accuracy</label>
+                        <label><input type="radio" name="q5" value="b"> Accuracy wirkt besser als das Modell wirklich ist</label>
+                        <label><input type="radio" name="q5" value="c"> Keine Vorhersagen moeglich</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wofuer steht "recall"?</legend>
+                        <label><input type="radio" name="q6" value="a"> Anteil gefundener positiver Faelle</label>
+                        <label><input type="radio" name="q6" value="b"> Trainingsgeschwindigkeit</label>
+                        <label><input type="radio" name="q6" value="c"> Anzahl Features</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was ist Data Leakage?</legend>
+                        <label><input type="radio" name="q7" value="a"> Zu kleine Datei</label>
+                        <label><input type="radio" name="q7" value="b"> Fehlende Labels</label>
+                        <label><input type="radio" name="q7" value="c"> Infos aus der Zukunft gelangen ins Training</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was ist der erste sinnvolle Schritt vor dem Training?</legend>
+                        <label><input type="radio" name="q8" value="a"> Daten pruefen und bereinigen</label>
+                        <label><input type="radio" name="q8" value="b"> Direkt deployen</label>
+                        <label><input type="radio" name="q8" value="c"> Nur Hyperparameter raten</label>
+                    </fieldset>
                     <button class="primary" type="submit">ML Quiz auswerten</button>
                 </form>
                 <p class="result" aria-live="polite"></p>
+                <p class="vocab-title">Mini-Karteikarten: wichtige ML-Englischwoerter</p>
+                <div class="vocab-grid">
+                    <div class="vocab-chip"><strong>dataset</strong> - Datensatz</div>
+                    <div class="vocab-chip"><strong>feature</strong> - Merkmal/Eingabevariable</div>
+                    <div class="vocab-chip"><strong>label</strong> - Zielwert</div>
+                    <div class="vocab-chip"><strong>training set</strong> - Trainingsdaten</div>
+                    <div class="vocab-chip"><strong>test set</strong> - Testdaten</div>
+                    <div class="vocab-chip"><strong>overfitting</strong> - Ueberanpassung</div>
+                    <div class="vocab-chip"><strong>precision</strong> - Genauigkeit positiver Treffer</div>
+                    <div class="vocab-chip"><strong>recall</strong> - Trefferquote positiver Faelle</div>
+                    <div class="vocab-chip"><strong>confusion matrix</strong> - Fehler-/Treffermatrix</div>
+                    <div class="vocab-chip"><strong>data leakage</strong> - Informationsleck im Training</div>
+                </div>
             </article>
 
             <article class="quiz-card" id="dlQuiz" data-quiz="dl">
@@ -99,9 +158,58 @@
                         <label><input type="radio" name="q2" value="b"> Nur lineare Regression</label>
                         <label><input type="radio" name="q2" value="c"> KNN</label>
                     </fieldset>
+                    <fieldset>
+                        <legend>Wofuer steht CNN?</legend>
+                        <label><input type="radio" name="q3" value="a"> Central Neural Node</label>
+                        <label><input type="radio" name="q3" value="b"> Convolutional Neural Network</label>
+                        <label><input type="radio" name="q3" value="c"> Context Numbered Network</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was ist eine Epoche (epoch)?</legend>
+                        <label><input type="radio" name="q4" value="a"> Ein einzelner Datensatz</label>
+                        <label><input type="radio" name="q4" value="b"> Nur ein Layer</label>
+                        <label><input type="radio" name="q4" value="c"> Ein kompletter Durchlauf ueber die Trainingsdaten</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was macht eine Aktivierungsfunktion?</legend>
+                        <label><input type="radio" name="q5" value="a"> Bringt Nichtlinearitaet ins Modell</label>
+                        <label><input type="radio" name="q5" value="b"> Sortiert Dateien</label>
+                        <label><input type="radio" name="q5" value="c"> Ersetzt die Loss-Funktion</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Welche Funktion reduziert haeufig Overfitting?</legend>
+                        <label><input type="radio" name="q6" value="a"> Mehr Tippfehler</label>
+                        <label><input type="radio" name="q6" value="b"> Dropout</label>
+                        <label><input type="radio" name="q6" value="c"> Dateiendung wechseln</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was optimiert ein Optimizer wie Adam?</legend>
+                        <label><input type="radio" name="q7" value="a"> Den Browser</label>
+                        <label><input type="radio" name="q7" value="b"> Nur den Datensatz</label>
+                        <label><input type="radio" name="q7" value="c"> Die Modellgewichte</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was zeigt die Loss-Kurve im Training?</legend>
+                        <label><input type="radio" name="q8" value="a"> Fehlerentwicklung</label>
+                        <label><input type="radio" name="q8" value="b"> Anzahl Layer</label>
+                        <label><input type="radio" name="q8" value="c"> Nur Dateigroesse</label>
+                    </fieldset>
                     <button class="primary" type="submit">DL Quiz auswerten</button>
                 </form>
                 <p class="result" aria-live="polite"></p>
+                <p class="vocab-title">Mini-Karteikarten: wichtige DL-Englischwoerter</p>
+                <div class="vocab-grid">
+                    <div class="vocab-chip"><strong>neural network</strong> - neuronales Netz</div>
+                    <div class="vocab-chip"><strong>backpropagation</strong> - Rueckpropagation</div>
+                    <div class="vocab-chip"><strong>epoch</strong> - Trainingsdurchlauf</div>
+                    <div class="vocab-chip"><strong>batch size</strong> - Paketgroesse pro Schritt</div>
+                    <div class="vocab-chip"><strong>learning rate</strong> - Lernrate</div>
+                    <div class="vocab-chip"><strong>activation function</strong> - Aktivierungsfunktion</div>
+                    <div class="vocab-chip"><strong>dropout</strong> - Regularisierungstechnik</div>
+                    <div class="vocab-chip"><strong>optimizer</strong> - Optimierungsverfahren</div>
+                    <div class="vocab-chip"><strong>loss function</strong> - Verlustfunktion</div>
+                    <div class="vocab-chip"><strong>inference</strong> - Modellvorhersage im Einsatz</div>
+                </div>
             </article>
 
             <article class="quiz-card" id="dsQuiz" data-quiz="ds">
@@ -119,9 +227,58 @@
                         <label><input type="radio" name="q2" value="b"> Mehr Trainingsdaten simulieren</label>
                         <label><input type="radio" name="q2" value="c"> Daten sortieren</label>
                     </fieldset>
+                    <fieldset>
+                        <legend>Was bedeutet EDA?</legend>
+                        <label><input type="radio" name="q3" value="a"> Exact Data API</label>
+                        <label><input type="radio" name="q3" value="b"> Embedded Data Architecture</label>
+                        <label><input type="radio" name="q3" value="c"> Exploratory Data Analysis</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Welche Visualisierung ist gut fuer Verteilungen?</legend>
+                        <label><input type="radio" name="q4" value="a"> Nur Tabellenname</label>
+                        <label><input type="radio" name="q4" value="b"> Histogramm</label>
+                        <label><input type="radio" name="q4" value="c"> Dateibrowser</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was ist ein Ausreisser (outlier)?</legend>
+                        <label><input type="radio" name="q5" value="a"> Ein Wert weit ausserhalb der ueblichen Verteilung</label>
+                        <label><input type="radio" name="q5" value="b"> Ein leeres Feld im HTML</label>
+                        <label><input type="radio" name="q5" value="c"> Ein Modellparameter</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wofuer wird ein Data Dictionary genutzt?</legend>
+                        <label><input type="radio" name="q6" value="a"> Fuer CSS-Variablen</label>
+                        <label><input type="radio" name="q6" value="b"> Fuer Server-Logs</label>
+                        <label><input type="radio" name="q6" value="c"> Zur Beschreibung von Spalten und Bedeutungen</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was ist ein typischer Schritt fuer reproduzierbare Analyse?</legend>
+                        <label><input type="radio" name="q7" value="a"> Zufallsgenerator nie setzen</label>
+                        <label><input type="radio" name="q7" value="b"> Versionskontrolle und dokumentierte Schritte</label>
+                        <label><input type="radio" name="q7" value="c"> Nur Screenshots speichern</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wofuer steht KPI?</legend>
+                        <label><input type="radio" name="q8" value="a"> Key Performance Indicator</label>
+                        <label><input type="radio" name="q8" value="b"> Known Python Index</label>
+                        <label><input type="radio" name="q8" value="c"> Kernel Process Input</label>
+                    </fieldset>
                     <button class="primary" type="submit">Data Science Quiz auswerten</button>
                 </form>
                 <p class="result" aria-live="polite"></p>
+                <p class="vocab-title">Mini-Karteikarten: wichtige Data-Science-Englischwoerter</p>
+                <div class="vocab-grid">
+                    <div class="vocab-chip"><strong>EDA</strong> - explorative Datenanalyse</div>
+                    <div class="vocab-chip"><strong>outlier</strong> - Ausreisser</div>
+                    <div class="vocab-chip"><strong>distribution</strong> - Verteilung</div>
+                    <div class="vocab-chip"><strong>correlation</strong> - Korrelation</div>
+                    <div class="vocab-chip"><strong>sampling</strong> - Stichprobenziehung</div>
+                    <div class="vocab-chip"><strong>data cleaning</strong> - Datenbereinigung</div>
+                    <div class="vocab-chip"><strong>data dictionary</strong> - Spaltenbeschreibung</div>
+                    <div class="vocab-chip"><strong>reproducibility</strong> - Reproduzierbarkeit</div>
+                    <div class="vocab-chip"><strong>dashboard</strong> - Kennzahlenansicht</div>
+                    <div class="vocab-chip"><strong>KPI</strong> - zentrale Leistungskennzahl</div>
+                </div>
             </article>
 
             <article class="quiz-card" id="pythonQuiz" data-quiz="python">
@@ -139,9 +296,58 @@
                         <label><input type="radio" name="q2" value="b"> Schnellere CPU erzwingen</label>
                         <label><input type="radio" name="q2" value="c"> JSON ersetzen</label>
                     </fieldset>
+                    <fieldset>
+                        <legend>Was liefert `pip list`?</legend>
+                        <label><input type="radio" name="q3" value="a"> CPU-Temperatur</label>
+                        <label><input type="radio" name="q3" value="b"> installierte Python-Pakete</label>
+                        <label><input type="radio" name="q3" value="c"> Nur Dateinamen</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wozu dient `requirements.txt`?</legend>
+                        <label><input type="radio" name="q4" value="a"> Um CSS zu speichern</label>
+                        <label><input type="radio" name="q4" value="b"> Um Screenshots abzulegen</label>
+                        <label><input type="radio" name="q4" value="c"> Um Abhaengigkeiten festzuhalten</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was ist ein Dictionary in Python?</legend>
+                        <label><input type="radio" name="q5" value="a"> Eine Key-Value-Struktur</label>
+                        <label><input type="radio" name="q5" value="b"> Nur eine Zahl</label>
+                        <label><input type="radio" name="q5" value="c"> Ein Dateityp</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was macht `len(my_list)`?</legend>
+                        <label><input type="radio" name="q6" value="a"> Sortiert die Liste</label>
+                        <label><input type="radio" name="q6" value="b"> Gibt die Laenge der Liste zurueck</label>
+                        <label><input type="radio" name="q6" value="c"> Installiert Pakete</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was bedeutet "exception"?</legend>
+                        <label><input type="radio" name="q7" value="a"> Eine neue Variable</label>
+                        <label><input type="radio" name="q7" value="b"> Ein Kommentar</label>
+                        <label><input type="radio" name="q7" value="c"> Ein Laufzeitfehler, der abgefangen werden kann</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wozu dient eine Funktion (`def`)?</legend>
+                        <label><input type="radio" name="q8" value="a"> Wiederverwendbarer Codeblock</label>
+                        <label><input type="radio" name="q8" value="b"> Browser-Tab umbenennen</label>
+                        <label><input type="radio" name="q8" value="c"> JSON automatisch rendern</label>
+                    </fieldset>
                     <button class="primary" type="submit">Python Quiz auswerten</button>
                 </form>
                 <p class="result" aria-live="polite"></p>
+                <p class="vocab-title">Mini-Karteikarten: wichtige Python-Englischwoerter</p>
+                <div class="vocab-grid">
+                    <div class="vocab-chip"><strong>variable</strong> - Variable</div>
+                    <div class="vocab-chip"><strong>function</strong> - Funktion</div>
+                    <div class="vocab-chip"><strong>loop</strong> - Schleife</div>
+                    <div class="vocab-chip"><strong>list</strong> - Liste</div>
+                    <div class="vocab-chip"><strong>dictionary</strong> - Schluessel-Wert-Struktur</div>
+                    <div class="vocab-chip"><strong>package</strong> - Paket/Bibliothek</div>
+                    <div class="vocab-chip"><strong>virtual environment</strong> - isolierte Umgebung</div>
+                    <div class="vocab-chip"><strong>exception</strong> - Ausnahmefehler</div>
+                    <div class="vocab-chip"><strong>import</strong> - Modul einbinden</div>
+                    <div class="vocab-chip"><strong>dependency</strong> - Abhaengigkeit</div>
+                </div>
             </article>
 
             <article class="quiz-card" id="mcpTransfer" data-quiz="mcp">
@@ -159,9 +365,58 @@
                         <label><input type="radio" name="q2" value="b"> Tool-Aufrufe verstecken</label>
                         <label><input type="radio" name="q2" value="c"> Antworten verlängern</label>
                     </fieldset>
+                    <fieldset>
+                        <legend>Was bedeutet "scope" bei Tools?</legend>
+                        <label><input type="radio" name="q3" value="a"> Farbthema</label>
+                        <label><input type="radio" name="q3" value="b"> Erlaubter Einsatzbereich eines Tools</label>
+                        <label><input type="radio" name="q3" value="c"> Dateigroesse</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Welche Struktur hilft fuer stabile Antworten?</legend>
+                        <label><input type="radio" name="q4" value="a"> Nur Emojis</label>
+                        <label><input type="radio" name="q4" value="b"> Kein Kontext</label>
+                        <label><input type="radio" name="q4" value="c"> Klares Ausgabeformat (z. B. JSON)</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Was ist ein Hand-off?</legend>
+                        <label><input type="radio" name="q5" value="a"> Cache leeren</label>
+                        <label><input type="radio" name="q5" value="b"> Uebergabe an Mensch/System</label>
+                        <label><input type="radio" name="q5" value="c"> Browser schließen</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Wozu dient ein System-Prompt?</legend>
+                        <label><input type="radio" name="q6" value="a"> Rolle und Regeln festlegen</label>
+                        <label><input type="radio" name="q6" value="b"> Nur Farben setzen</label>
+                        <label><input type="radio" name="q6" value="c"> Netzwerkadapter steuern</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Warum ist Logging in Agent-Workflows wichtig?</legend>
+                        <label><input type="radio" name="q7" value="a"> Fuer groessere Dateinamen</label>
+                        <label><input type="radio" name="q7" value="b"> Fuer bunte Diagramme</label>
+                        <label><input type="radio" name="q7" value="c"> Nachvollziehbarkeit und Debugging</label>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Welche Regel verbessert Tool-Sicherheit?</legend>
+                        <label><input type="radio" name="q8" value="a"> Nur explizit erlaubte Tool-Aufrufe</label>
+                        <label><input type="radio" name="q8" value="b"> Alle Tools immer erlauben</label>
+                        <label><input type="radio" name="q8" value="c"> Keine Eingabe validieren</label>
+                    </fieldset>
                     <button class="primary" type="submit">MCP Check auswerten</button>
                 </form>
                 <p class="result" aria-live="polite"></p>
+                <p class="vocab-title">Mini-Karteikarten: wichtige MCP-Englischwoerter</p>
+                <div class="vocab-grid">
+                    <div class="vocab-chip"><strong>context</strong> - Kontext</div>
+                    <div class="vocab-chip"><strong>scope</strong> - erlaubter Bereich</div>
+                    <div class="vocab-chip"><strong>tool call</strong> - Tool-Aufruf</div>
+                    <div class="vocab-chip"><strong>fallback</strong> - Ersatzpfad bei Fehlern</div>
+                    <div class="vocab-chip"><strong>handoff</strong> - Uebergabe</div>
+                    <div class="vocab-chip"><strong>constraint</strong> - Begrenzung/Regel</div>
+                    <div class="vocab-chip"><strong>instruction</strong> - Anweisung</div>
+                    <div class="vocab-chip"><strong>output schema</strong> - Ausgabeformat</div>
+                    <div class="vocab-chip"><strong>guardrail</strong> - Sicherheitsleitplanke</div>
+                    <div class="vocab-chip"><strong>audit log</strong> - Protokollspur</div>
+                </div>
             </article>
         </section>
     </main>

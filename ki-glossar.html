@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossar: Abkürzungen & Begriffe - KI Lernzentrum</title>
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .shell { width: 100%; max-width: none; margin: 0; padding: 0 0 64px; }
+        .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; margin-bottom: 14px; }
+        .topic-hero-card { position: relative; padding-right: 450px; min-height: 220px; }
+        .topic-shortcut-card { position: absolute; top: 22px; right: 22px; width: 400px; max-width: calc(100% - 44px); }
+        .muted { color: var(--muted); line-height: 1.65; }
+        
+        .glossary-grid { display: grid; gap: 14px; }
+        .glossary-section { border: 1px solid var(--line); border-radius: 14px; padding: 22px; background: rgba(15,23,42,0.04); }
+        .glossary-section h2 { margin: 0 0 14px; font-size: 1.2rem; color: var(--accent, #0798a7); }
+        
+        .glossary-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        
+        .card-flip { 
+            position: relative;
+            width: 100%;
+            height: 160px;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+        
+        .card-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .card-flip-inner.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-flip-inner > div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            font-weight: 600;
+            font-size: 0.95rem;
+            line-height: 1.3;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, rgba(7, 152, 167, 0.1), rgba(7, 152, 167, 0.05));
+            color: var(--ink, #1a1a1a);
+            border-color: rgba(7, 152, 167, 0.3);
+        }
+        
+        .card-back {
+            background: linear-gradient(135deg, rgba(201, 111, 59, 0.1), rgba(201, 111, 59, 0.05));
+            color: var(--ink, #1a1a1a);
+            border-color: rgba(201, 111, 59, 0.3);
+            transform: rotateY(180deg);
+        }
+        
+        .card-flip:hover .card-front,
+        .card-flip:hover .card-back {
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+        }
+        
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 14px;
+            align-items: center;
+        }
+        
+        .filter-btn {
+            border-radius: 999px;
+            padding: 8px 14px;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 150ms ease;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #0798a7, #06778f);
+            color: #fff;
+            border-color: transparent;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--accent, #0798a7);
+        }
+        
+        .glossary-hint {
+            margin: 8px 0 14px;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+        
+        .btn { border-radius: 999px; padding: 9px 14px; text-decoration: none; font-weight: 700; font: inherit; cursor: pointer; border: 1px solid var(--line); color: inherit; display: inline-flex; }
+        .primary { border: 1px solid transparent; background: linear-gradient(135deg, #c96f3b, #a44d20); color: #fff; }
+        
+        @media (max-width: 980px) {
+            .topic-hero-card { padding-right: 22px; min-height: unset; }
+            .topic-shortcut-card { position: static; width: 100%; max-width: 400px; margin-top: 12px; margin-left: auto; }
+            .glossary-cards { grid-template-columns: 1fr; }
+            .card-flip { height: 140px; }
+        }
+
+        :root[data-theme='dark'] .card-flip-inner > div {
+            border-color: rgba(159, 176, 202, 0.3);
+        }
+
+        :root[data-theme='dark'] .card-front {
+            background: linear-gradient(135deg, rgba(0, 179, 191, 0.15), rgba(0, 179, 191, 0.08));
+            color: #eef5ff;
+            border-color: rgba(20, 184, 196, 0.3);
+        }
+
+        :root[data-theme='dark'] .card-back {
+            background: linear-gradient(135deg, rgba(239, 130, 67, 0.15), rgba(239, 130, 67, 0.08));
+            color: #eef5ff;
+            border-color: rgba(239, 130, 67, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-shell">
+    <nav class="global-switcher" aria-label="Bereiche">
+        <a class="switch-link" href="index.html#english">Englisch</a>
+        <a class="switch-link" href="zeiten.html">Zeiten</a>
+        <a class="switch-link active" href="ki-lernzentrum.html">KI Lernzentrum</a>
+        <a class="switch-link" href="d3js-project/index.html">D3.js</a>
+    </nav>
+
+    <main class="shell">
+        <section class="card topic-hero-card">
+            <h1 style="margin:0;">Glossar: Abkürzungen & Begriffe</h1>
+            <p class="muted">Alle wichtigen Fachbegriffe, Abkürzungen und deren Bedeutungen zu KI & ML Themen. Klick auf die Karten zum Umdrehen!</p>
+            <a class="btn" href="ki-lernzentrum.html">Zur Themenauswahl</a>
+            <div class="panel-card accent-card topic-shortcut-card">
+                <span class="panel-label">Navigation</span>
+                <strong>Glossar</strong>
+                <div class="shortcut-features">
+                    <a class="shortcut-item" href="#glossary" aria-label="Zu Glossar springen">
+                        <span class="shortcut-icon">📖</span>
+                        <span class="shortcut-label">Alle</span>
+                    </a>
+                    <a class="shortcut-item" href="ki-lernzentrum.html" aria-label="Zur Themenauswahl">
+                        <span class="shortcut-icon">🔙</span>
+                        <span class="shortcut-label">Hub</span>
+                    </a>
+                    <a class="shortcut-item" href="index.html" aria-label="Zur Startseite">
+                        <span class="shortcut-icon">🏠</span>
+                        <span class="shortcut-label">Start</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="glossary">
+            <div class="filter-controls" style="margin-bottom: 20px;">
+                <strong style="display: inline-block; margin-right: 6px;">Themenfilter:</strong>
+                <button class="filter-btn active" data-filter="all">Alle Themen</button>
+                <button class="filter-btn" data-filter="dl">Deep Learning</button>
+                <button class="filter-btn" data-filter="ml">Machine Learning</button>
+                <button class="filter-btn" data-filter="ds">Data Science</button>
+                <button class="filter-btn" data-filter="python">Python</button>
+                <button class="filter-btn" data-filter="mcp">MCP</button>
+            </div>
+
+            <div class="glossary-grid" id="glossaryContent">
+                <!-- Deep Learning -->
+                <article class="glossary-section" data-topic="dl">
+                    <h2>Deep Learning (Tiefes Lernen)</h2>
+                    <p class="glossary-hint">Klick auf eine Karte zum Umdrehen: Vorderseite = Abkürzung/Englisch, Rückseite = Erklärung</p>
+                    <div class="glossary-cards">
+                        <div class="card-flip" tabindex="0" role="button" aria-label="ANN - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">ANN</div>
+                                <div class="card-back">Artificial Neural Network - Künstliches Neuronales Netz</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="DNN - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">DNN</div>
+                                <div class="card-back">Deep Neural Network - Tiefes Neuronales Netz mit mehreren Schichten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="CNN - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">CNN</div>
+                                <div class="card-back">Convolutional Neural Network - Spezialisiert auf Bildverarbeitung &amp; Mustererkennung</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="RNN - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">RNN</div>
+                                <div class="card-back">Recurrent Neural Network - Für sequentielle Daten wie Text oder Audio</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="LSTM - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">LSTM</div>
+                                <div class="card-back">Long Short-Term Memory - RNN mit besserem Langzeit-Gedächtnis</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="GRU - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">GRU</div>
+                                <div class="card-back">Gated Recurrent Unit - Vereinfachte LSTM Variante</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Attention - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Attention</div>
+                                <div class="card-back">Mechanismus für das Modell, wichtige Eingabeteile zu fokussieren</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Transformer - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Transformer</div>
+                                <div class="card-back">Moderne Architektur für Sprachverarbeitung - Basis für LLMs</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Backpropagation - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Backprop</div>
+                                <div class="card-back">Backpropagation - Algorithmus zum Trainieren von neuronalen Netzen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Dropout - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Dropout</div>
+                                <div class="card-back">Regularisierungstechnik - Deaktiviert zufällig Neuronen beim Training</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Batch Norm - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Batch Norm</div>
+                                <div class="card-back">Batch Normalization - Normalisiert Eingaben pro Trainings-Batch</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Epoch - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Epoch</div>
+                                <div class="card-back">Eine komplette Durchlauf durch alle Trainingsdaten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Activation Function - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Aktiv.Funktion</div>
+                                <div class="card-back">z.B. ReLU, Sigmoid, Tanh - Nichtlinearität in Neuronen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="ReLU - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">ReLU</div>
+                                <div class="card-back">Rectified Linear Unit - Häufige Aktivierungsfunktion (max(0,x))</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Optimizer - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Optimizer</div>
+                                <div class="card-back">z.B. Adam, SGD - Algorithmen zur Gewichtsanpassung</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Loss Function - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Loss Function</div>
+                                <div class="card-back">Fehlerfunktion - Misst wie weit Vorhersage von echtem Wert entfernt ist</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Overfitting - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Overfitting</div>
+                                <div class="card-back">Modell lernt Trainingsdaten zu gut - schwache Generalisierung auf neue Daten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Underfitting - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Underfitting</div>
+                                <div class="card-back">Modell ist zu simpel - schlechte Performance auf Train &amp; Test</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Gradient Descent - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Gradient Descent</div>
+                                <div class="card-back">Optimierungsmethode - Folgt Gradienten bergab zum Minimum</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Hyperparameter - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Hyperparameter</div>
+                                <div class="card-back">Einstellungen VOR dem Training (Lernrate, Batch-Größe, etc.)</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Machine Learning -->
+                <article class="glossary-section" data-topic="ml">
+                    <h2>Machine Learning (Maschinelles Lernen)</h2>
+                    <p class="glossary-hint">Klick auf eine Karte zum Umdrehen: Vorderseite = Abkürzung/Englisch, Rückseite = Erklärung</p>
+                    <div class="glossary-cards">
+                        <div class="card-flip" tabindex="0" role="button" aria-label="ML - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">ML</div>
+                                <div class="card-back">Machine Learning - Computerprogramme, die aus Daten lernen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Labeled Data - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Label</div>
+                                <div class="card-back">Zielwert/Antwort in Trainings-Daten (z.B. Katze vs. Hund)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Feature - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Feature</div>
+                                <div class="card-back">Eingabe-Variable oder Merkmal (z.B. Größe, Farbe)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Supervised Learning - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Supervised</div>
+                                <div class="card-back">Lernen mit Etiketten/Labels in Trainingsdaten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Unsupervised - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Unsupervised</div>
+                                <div class="card-back">Lernen OHNE Labels - findet selbst Muster (z.B. Clustering)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Clustering - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Clustering</div>
+                                <div class="card-back">Gruppierung ähnlicher Datenpunkte ohne vorgegebene Klassen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Classification - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Classification</div>
+                                <div class="card-back">Vorhersage diskreter Klassen (Spam vs. kein Spam)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Regression - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Regression</div>
+                                <div class="card-back">Vorhersage kontinuierlicher Werte (z.B. Hauspreise)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Decision Tree - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Decision Tree</div>
+                                <div class="card-back">Baum aus Ja/Nein-Entscheidungen zur Klassifizierung</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Random Forest - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Random Forest</div>
+                                <div class="card-back">Kombination vieler Decision Trees für bessere Vorhersagen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="SVM - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">SVM</div>
+                                <div class="card-back">Support Vector Machine - Findet beste Trennlinie zwischen Klassen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="KNN - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">KNN</div>
+                                <div class="card-back">K-Nearest Neighbors - Klassifiziert mit ähnlichsten Nachbarn</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Accuracy - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Accuracy</div>
+                                <div class="card-back">Anteil korrekter Vorhersagen von alles insgesamt</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Precision - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Precision</div>
+                                <div class="card-back">Anteil korrekt erkannter positiver Fälle unter allen positiv vorhergesagt</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Recall - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Recall</div>
+                                <div class="card-back">Anteil korrekt erkannter positiver Fälle unter tatsächlich positiv</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="F1-Score - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">F1-Score</div>
+                                <div class="card-back">Harmonischer Mittelwert aus Precision und Recall</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Confusion Matrix - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Confusion Matrix</div>
+                                <div class="card-back">Tabelle mit True Pos./Neg. und False Pos./Neg.</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="ROC/AUC - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">ROC/AUC</div>
+                                <div class="card-back">Kurve zur Bewertung Klassifizierungs-Performance bei verschiedenen Schwellwerten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Cross-Validation - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Cross-Val.</div>
+                                <div class="card-back">Trainiere mehrfach mit verschiedenen Train/Test Splits</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Data Science -->
+                <article class="glossary-section" data-topic="ds">
+                    <h2>Data Science (Datenwissenschaft)</h2>
+                    <p class="glossary-hint">Klick auf eine Karte zum Umdrehen: Vorderseite = Abkürzung/Englisch, Rückseite = Erklärung</p>
+                    <div class="glossary-cards">
+                        <div class="card-flip" tabindex="0" role="button" aria-label="EDA - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">EDA</div>
+                                <div class="card-back">Exploratory Data Analysis - Daten visualisieren und verstehen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Outlier - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Outlier</div>
+                                <div class="card-back">Anomale Datenpunkte, die stark vom Trend abweichen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Distribution - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Distribution</div>
+                                <div class="card-back">Häufigkeitsverteilung eines Merkmals (Normal, Uniform, etc.)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Correlation - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Correlation</div>
+                                <div class="card-back">Beziehung zwischen zwei Variablen (wie stark verknüpft)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Missing Values - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Missing Values</div>
+                                <div class="card-back">Fehlende Datenpunkte - erfordern Imputation oder Löschung</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Sampling - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Sampling</div>
+                                <div class="card-back">Auswahl eine Teilmenge aus einer größeren Menge</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Normalization - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Normalization</div>
+                                <div class="card-back">Skaliere Features auf vergleichbaren Bereich (z.B. 0-1)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Standardization - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Standardization</div>
+                                <div class="card-back">Zentriere auf Null, skaliere mit Standardabweichung</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Data Cleaning - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Data Cleaning</div>
+                                <div class="card-back">Entfernt Fehler, Duplikate, und inconsistente Daten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Feature Engineering - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Feature Eng.</div>
+                                <div class="card-back">Erstelle neue Features aus bestehenden Daten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Pipeline - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Pipeline</div>
+                                <div class="card-back">Verkettete Schritte: Clean → Transform → Model → Evaluate</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Reproducibility - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Reproducibility</div>
+                                <div class="card-back">Gleiche Ergebnisse bei wiederholter Ausführung (Random Seed!)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="KPI - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">KPI</div>
+                                <div class="card-back">Key Performance Indicator - Hauptleistungsmessgröße</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Baseline - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Baseline</div>
+                                <div class="card-back">Einfaches Minimum-Modell zum Vergleich</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Bias - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Bias</div>
+                                <div class="card-back">Systematischer Fehler oder Vereinfachungen im Modell</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Variance - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Variance</div>
+                                <div class="card-back">Empfindlichkeit gegenüber zufälligen Schwankungen in Trainingsdaten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Dimensionality Reduction - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Dim. Reduction</div>
+                                <div class="card-back">Reduziere Feature-Anzahl (PCA, t-SNE)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="PCA - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">PCA</div>
+                                <div class="card-back">Principal Component Analysis - Findet Haupt-Varianzen</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Python -->
+                <article class="glossary-section" data-topic="python">
+                    <h2>Python (Programmierung &amp; Datenstrukturen)</h2>
+                    <p class="glossary-hint">Klick auf eine Karte zum Umdrehen: Vorderseite = Abkürzung/Englisch, Rückseite = Erklärung</p>
+                    <div class="glossary-cards">
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Mutable - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Mutable</div>
+                                <div class="card-back">Änderbar nach Erstellung (Listen, Dicts, Sets)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Immutable - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Immutable</div>
+                                <div class="card-back">Nicht änderbar nach Erstellung (Tuples, Strings, Ints)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Virtual Environment - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Virtualenv</div>
+                                <div class="card-back">Isolierte Python-Umgebung für Projekt-Dependencies</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="PIP - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">PIP</div>
+                                <div class="card-back">Python Package Installer - Installiert externe Pakete</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="PyPI - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">PyPI</div>
+                                <div class="card-back">Python Package Index - Repository für Python-Pakete</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Requirements - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">requirements.txt</div>
+                                <div class="card-back">Datei mit allen benötigten Projekt-Paketen und Versionen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Dictionary - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Dict</div>
+                                <div class="card-back">Schlüssel-Wert Paare {key: value} - mutable</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="List - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">List</div>
+                                <div class="card-back">Geordnete Sammlung [item1, item2] - mutable</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Tuple - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Tuple</div>
+                                <div class="card-back">Geordnete Sammlung (item1, item2) - immutable</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Set - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Set</div>
+                                <div class="card-back">Ungeordnete Sammlung ohne Duplikate - mutable</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="List Comprehension - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">List Comp.</div>
+                                <div class="card-back">[x*2 for x in list] - kompakte Listenerstellung</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Lambda - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Lambda</div>
+                                <div class="card-back">Anonyme Funktion: lambda x: x*2</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Decorator - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Decorator</div>
+                                <div class="card-back">@decorator - verändert Funktion ohne Code näher zu ändern</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Generator - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Generator</div>
+                                <div class="card-back">Lazy Iterator mit yield - speichert nicht alle Werte</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Exception - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Exception</div>
+                                <div class="card-back">Fehlerbehandlung mit try/except Blöcken</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Module/Package - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Module</div>
+                                <div class="card-back">Python-Datei (.py) mit Funktionen und Variablen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="NumPy - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">NumPy</div>
+                                <div class="card-back">Numerische Berechnungen mit Arrays und Matrizen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Pandas - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Pandas</div>
+                                <div class="card-back">Tabellenbearbeitung (DataFrame) - SQL-ähnlich</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Matplotlib - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Matplotlib</div>
+                                <div class="card-back">Datenvisualisierung - Plots, Grafiken, Charts</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Scikit-learn - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Scikit-learn</div>
+                                <div class="card-back">ML-Algorithmen: Klassifikation, Regression, Clustering</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- MCP -->
+                <article class="glossary-section" data-topic="mcp">
+                    <h2>Model Context Protocol (MCP)</h2>
+                    <p class="glossary-hint">Klick auf eine Karte zum Umdrehen: Vorderseite = Abkürzung/Englisch, Rückseite = Erklärung</p>
+                    <div class="glossary-cards">
+                        <div class="card-flip" tabindex="0" role="button" aria-label="MCP - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">MCP</div>
+                                <div class="card-back">Model Context Protocol - Standard für KI-Agentenkompetenzen</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Context Window - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Context Window</div>
+                                <div class="card-back">Anzahl Tokens, die ein Modell verarbeiten kann</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Token - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Token</div>
+                                <div class="card-back">Grundeinheit von Text (Wörter, Zeichen, Subwörter)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Tool - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Tool</div>
+                                <div class="card-back">Externe Funktion, die ein KI-Agent aufrufen kann</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Tool Scope - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Tool Scope</div>
+                                <div class="card-back">Zugriff-Berechtigungen eines Werkzeugs definieren</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="System Prompt - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">System Prompt</div>
+                                <div class="card-back">Grundanleitung für Verhalten des KI-Modells</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Agent - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Agent</div>
+                                <div class="card-back">Autonomes KI System mit Entscheidungslogik</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Fallback - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Fallback</div>
+                                <div class="card-back">Alternative Aktion bei Werkzeug-Ausfall</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Handoff - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Handoff</div>
+                                <div class="card-back">Agent übergibt Kontrolle an einen anderen Agent</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Output Schema - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Output Schema</div>
+                                <div class="card-back">Definiert Struktur der Antwort eines Werkzeugs</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Input Validation - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Input Validation</div>
+                                <div class="card-back">Überprüfe Werkzeug-Eingaben auf Sicherheit &amp; Korrektheit</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Prompt Engineering - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Prompt Eng.</div>
+                                <div class="card-back">Optimierung von Text-Anweisungen für bessere KI-Antworten</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="RAG - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">RAG</div>
+                                <div class="card-back">Retrieval-Augmented Generation - Wissen + Generierung kombiniert</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Embedding - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Embedding</div>
+                                <div class="card-back">Numerische Darstellung von Text im mehrdimensionalen Raum</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Vector Database - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Vector DB</div>
+                                <div class="card-back">DB für Embeddings mit Ähnlichkeitssuche</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Logging - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Logging</div>
+                                <div class="card-back">Protokollierung von Agent-Aktivitäten und Fehlern</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Rate Limiting - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Rate Limiting</div>
+                                <div class="card-back">Begrenzung von Anfragen pro Zeit zur Ressourcenschonung</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="LLM - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">LLM</div>
+                                <div class="card-back">Large Language Model - Großes Sprachmodell (ChatGPT, Claude)</div>
+                            </div>
+                        </div>
+                        <div class="card-flip" tabindex="0" role="button" aria-label="Fine-Tuning - Schaltfläche" onclick="flipCard(this)" onkeypress="handleKeyFlip(event, this)">
+                            <div class="card-flip-inner">
+                                <div class="card-front">Fine-Tuning</div>
+                                <div class="card-back">Anpassung eines vortrainierten Modells an eigene Daten</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+    </div>
+
+    <script>
+        function flipCard(cardElement) {
+            const inner = cardElement.querySelector('.card-flip-inner');
+            inner.classList.toggle('flipped');
+        }
+
+        function handleKeyFlip(event, cardElement) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                flipCard(cardElement);
+            }
+        }
+
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const filterValue = this.dataset.filter;
+                
+                // Update active button
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter sections
+                document.querySelectorAll('.glossary-section').forEach(section => {
+                    const topic = section.dataset.topic;
+                    if (filterValue === 'all' || topic === filterValue) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Make cards keyboard accessible
+        document.querySelectorAll('.card-flip').forEach(card => {
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    flipCard(this);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

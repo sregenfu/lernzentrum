@@ -12,7 +12,7 @@
         .topic-hero-card { position: relative; padding-right: 450px; min-height: 220px; }
         .topic-shortcut-card { position: absolute; top: 22px; right: 22px; width: 400px; max-width: calc(100% - 44px); }
         .muted { color: var(--muted); line-height: 1.65; }
-        .list { display: grid; gap: 10px; margin-top: 12px; }
+        .list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
         .item { border: 1px solid var(--line); border-radius: 12px; padding: 12px; background: rgba(15,23,42,0.04); }
         .actions { display: flex; gap: 10px; flex-wrap: wrap; }
         .btn { border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; text-decoration: none; color: inherit; font-weight: 700; }
@@ -20,6 +20,7 @@
         @media (max-width: 980px) {
             .topic-hero-card { padding-right: 22px; min-height: unset; }
             .topic-shortcut-card { position: static; width: 100%; max-width: 400px; margin-top: 12px; margin-left: auto; }
+            .list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -65,7 +66,7 @@
             <div class="list">
                 <article class="item"><strong>1. Kontextmodell</strong><p class="muted">Definiere, welche Informationen ein Agent vor jeder Aktion sehen muss.</p></article>
                 <article class="item"><strong>2. Tool-Scopes</strong><p class="muted">Lege erlaubte Tools, Inputs und erwartete Outputs fest.</p></article>
-                <article class="item"><strong>3. Guardrails</strong><p class="muted">Formuliere Regeln fuer Unsicherheit, Abbrueche und sichere Alternativen.</p></article>
+                <article class="item"><strong>3. Guardrails</strong><p class="muted">Formuliere Regeln für Unsicherheit, Abbrüche und sichere Alternativen.</p></article>
                 <article class="item"><strong>4. Agent-Prompt</strong><p class="muted">Nutze eine klare Struktur: Ziel, Kontext, Tools, Grenzen, Ausgabeformat.</p></article>
             </div>
         </section>
@@ -73,9 +74,9 @@
         <section class="card" id="tasks">
             <h2 style="margin-top:0;">Mini-Aufgaben</h2>
             <ul class="list" style="list-style:none; padding:0;">
-                <li class="item"><strong>Aufgabe A</strong><p class="muted">Schreibe einen MCP-Agentenprompt fuer einen Datenbank-Agenten mit 2 erlaubten Tools.</p></li>
-                <li class="item"><strong>Aufgabe B</strong><p class="muted">Erstelle einen Fallback-Block fuer den Fall, dass ein Tool nicht erreichbar ist.</p></li>
-                <li class="item"><strong>Aufgabe C</strong><p class="muted">Dokumentiere einen Ablauf: Input -> Tool-Wahl -> Ergebnispruefung -> Ausgabe.</p></li>
+                <li class="item"><strong>Aufgabe A</strong><p class="muted">Schreibe einen MCP-Agentenprompt für einen Datenbank-Agenten mit 2 erlaubten Tools.</p></li>
+                <li class="item"><strong>Aufgabe B</strong><p class="muted">Erstelle einen Fallback-Block für den Fall, dass ein Tool nicht erreichbar ist.</p></li>
+                <li class="item"><strong>Aufgabe C</strong><p class="muted">Dokumentiere einen Ablauf: Input -> Tool-Wahl -> Ergebnisprüfung -> Ausgabe.</p></li>
             </ul>
         </section>
     </main>
